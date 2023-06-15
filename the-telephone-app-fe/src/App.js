@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import StartGame from "./Components/StartGame";
+import { Route, Routes } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Lobby from "./Components/Lobby";
+import WriteASentence from "./Components/WriteASentence";
+import Canvas from "./Components/Canvas";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path={"/"} element={<StartGame />}></Route>
+        <Route path={"/lobby"} element={<Lobby />}></Route>
+        <Route path={"/sentence"} element={<WriteASentence />}></Route>
+        <Route path={"/draw"} element={<Canvas 
+        width={700}
+        height={500} />}></Route>
+      </Routes>
+    </>
   );
 }
 
