@@ -186,7 +186,7 @@ span {
 .btn-action {
     cursor: pointer;
     margin: 8px;
-    /* padding: 0px 8px; */
+    /* padding: 0px 8px; */ 
     height: 42px;
     width: 80px;
     background-color: rgb(94, 201, 255);
