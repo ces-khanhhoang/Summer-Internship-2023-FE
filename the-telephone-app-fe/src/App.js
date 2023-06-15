@@ -1,16 +1,14 @@
-import StartGame from "./Components/StartGame";
+import StartGame from "./components/StartGame";
 import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Lobby from "./Components/Lobby";
-import WriteASentence from "./Components/WriteASentence";
-import DrawAPicture from "./Components/DrawAPicture";
+import WriteASentence from "./components/WriteASentence";
+import DrawAPicture from "./components/DrawAPicture";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path={"/"} element={<StartGame />}></Route>
-        <Route path={"/lobby"} element={<Lobby />}></Route>
         <Route path={"/sentence"} element={<WriteASentence />}></Route>
         <Route path={"/draw"} element={<DrawAPicture
           width={700}
