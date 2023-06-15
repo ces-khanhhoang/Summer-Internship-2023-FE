@@ -17,7 +17,6 @@ function App() {
         height={500} />}></Route>
       </Routes>
     </>
-  );
-}
+
 
 export default App;
