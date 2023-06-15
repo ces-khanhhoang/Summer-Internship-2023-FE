@@ -60,7 +60,7 @@ const JoinRoom = () => {
                             </button>
                             <button className="btn-action">
                                 <BsFillArrowRightSquareFill />
-                                Start
+                                Start 
                             </button>
                         </div>
                     </div>
