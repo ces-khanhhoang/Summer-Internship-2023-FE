@@ -32,8 +32,9 @@ export default function StartGame() {
                     <div className="col-12">
                         <div
                             className="card vh-100"
-                            style={{ backgroundImage: 
-                                'url("https://marketplace.canva.com/EAFHm4JWsu8/1/0/1600w/canva-pink-landscape-desktop-wallpaper-HGxdJA_xIx0.jpg")' 
+                            style={{
+                                backgroundImage:
+                                    'url("https://marketplace.canva.com/EAFHm4JWsu8/1/0/1600w/canva-pink-landscape-desktop-wallpaper-HGxdJA_xIx0.jpg")'
                             }}
                         >
                             <div
@@ -55,14 +56,14 @@ export default function StartGame() {
                                         <div className="row">
                                             <div className="col-2"></div>
                                             <div className="col-4">
-                                            <img
-                                            style={{
-                                                width: "10rem",
-                                                border: "solid 0.1rem",
-                                                borderRadius: "50%"
-                                            }}
-                                            src="https://img.freepik.com/premium-vector/cute-baby-boy-profile-picture-kid-avatar_176411-4644.jpg?w=2000">
-                                        </img>
+                                                <img
+                                                    style={{
+                                                        width: "10rem",
+                                                        border: "solid 0.1rem",
+                                                        borderRadius: "50%"
+                                                    }}
+                                                    src="https://img.freepik.com/premium-vector/cute-baby-boy-profile-picture-kid-avatar_176411-4644.jpg?w=2000">
+                                                </img>
                                             </div>
                                             <div className="col-6"></div>
                                         </div>
@@ -88,12 +89,12 @@ export default function StartGame() {
                                 <div className=" row mt-2 mb-5">
                                     <div className="col-5"></div>
                                     <div className="col-2">
-                                        <button type="button" 
-                                        style={{
-                                            minWidth: "6rem",
-                                            border: "solid 0.1rem",
-                                            marginLeft: "4.9rem"
-                                        }}
+                                        <button type="button"
+                                            style={{
+                                                minWidth: "6rem",
+                                                border: "solid 0.1rem",
+                                                marginLeft: "4.9rem"
+                                            }}
                                             onClick={() => handleSubmit()}
                                             className="btn btn-light mt-5 p-2">
                                             <FontAwesomeIcon icon={icon({ name: 'play' })} />

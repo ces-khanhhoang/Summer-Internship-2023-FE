@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { storage } from './firebase';
 import { ref, uploadBytes } from 'firebase/storage';
-import { v4 } from "uuid";
-const Canvas = ({
+
+const DrawAPicture = ({
     width,
     height
 }) => {
@@ -84,7 +84,7 @@ const Canvas = ({
     )
 }
 
-export default Canvas;
+export default DrawAPicture;
 
 const canvasStyle = {
     border: "1px solid black",
