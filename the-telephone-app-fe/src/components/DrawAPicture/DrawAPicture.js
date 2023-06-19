@@ -8,19 +8,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 const DrawAPicture = ({
     width,
     height
-    // 1516 848
 }) => {
-
-    // const uploadPicture = () => {
-    //     if (picture == null) return;
-    //     const canvas = document.getElementById('myCanvas');
-    //     // const imageDataURL = canvas.toDataURL('image/png');
-    //     const pictureRef = ref(storage, '/${picture.name + v4()}');
-    //     uploadBytes(pictureRef, picture).then(() => {
-    //         alert("Picture uploaded");
-    //     })
-    // };
-
 
     const convertToImage = () => {
         const canvas = document.getElementById('myCanvas');
@@ -91,58 +79,6 @@ const DrawAPicture = ({
     }
 
     return (
-        // <div className='container-fluid card vh-100'
-        //     style={{
-        //         backgroundImage:
-        //             'url("https://marketplace.canva.com/EAFHm4JWsu8/1/0/1600w/canva-pink-landscape-desktop-wallpaper-HGxdJA_xIx0.jpg")'
-        //     }}>
-        //     <div className='row mt-5'>
-        //         <div className='col-3'></div>
-        //         <div className='col-6'>
-        //             <div className='card'
-        //                 style={{ border: "solid 0.2rem" }}>
-        //                 <div className='card-header headerColor'
-        //                     style={{
-        //                         borderBottom: "solid 0.2rem",
-        //                     }}>
-        //                     <h3 className='text-uppercase mt-2 text-center text-white '>
-        //                         Hey, it's time to draw</h3>
-        //                     <h4 className='text-center text-white'>sentence</h4>
-        //                 </div>
-        //                 <div className='card-body borderColor'
-        //                 >
-        //                     <canvas
-        //                         id="myCanvas"
-        //                         width={width}
-        //                         height={height}
-        //                         onMouseDown={onMouseDown}
-        //                         ref={setCanvasRef}
-        //                         style={canvasStyle}
-        //                         className='rounded'
-        //                     />
-        //                 </div>
-        //             </div>
-        //             <div className='text-center mt-3'>
-        //                 <button
-        //                     className='btn btn-light'
-        //                     style={{
-        //                         minWidth: "6rem",
-        //                         border: "solid 0.1rem",
-        //                     }} onClick={convertToImage}>
-        //                     <FontAwesomeIcon icon={icon({ name: 'circle-check' })} />  Done</button>
-        //                 <button
-        //                     className='btn btn-light'
-        //                     style={{
-        //                         minWidth: "6rem",
-        //                         border: "solid 0.1rem",
-        //                     }} onClick={clear}>
-        //                     <FontAwesomeIcon icon={icon({ name: 'rotate' })} /> Reset</button>
-        //             </div>
-        //         </div>
-        //         <div className='col-3'></div>
-        //     </div>
-
-        // </div>
         <div>
             <div className="dp-content">
                 <div className="dp-sub-left">
