@@ -15,7 +15,7 @@ const JoinRoom = () => {
                     <button className="jr-btn-back">
                         <BsFillCaretLeftFill />
                         BACK
-                    </button>
+                    </button> 
                     <img src={imgLogo} alt="logo"  className='jr-img-logo'/>
                     <button className="jr-btn-sound">
                         <BsFillVolumeUpFill size={'24px'} />
@@ -27,7 +27,21 @@ const JoinRoom = () => {
                         <div className="jr-user">
                             <span className='jr-choice-number'>
                                 <select name="" id="">
-                                    <option value="">1</option>
+                                    <option value="4">4 PLAYERS</option>
+                                    <option value="5">5 PLAYERS</option>
+                                    <option value="6">6 PLAYERS</option>
+                                    <option value="7">7 PLAYERS</option>
+                                    <option value="8">8 PLAYERS</option>
+                                    <option value="9">9 PLAYERS</option>
+                                    <option value="10">10 PLAYERS</option>
+                                    <option value="12">12 PLAYERS</option>
+                                    <option value="14">14 PLAYERS</option>
+                                    <option value="16">16 PLAYERS</option>
+                                    <option value="18">18 PLAYERS</option>
+                                    <option value="20">4 PLAYERS</option>
+                                    <option value="30">30 PLAYERS</option>
+                                    <option value="50">50 PLAYERS</option>
+
                                 </select>
                             </span>
                             <div className="jr-player">

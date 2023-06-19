@@ -12,13 +12,13 @@ function App() {
       <Routes>
 
         <Route path={"/"} element={<StartGame />}></Route>
-        <Route path={"/join"} element={<JoinRoom />}></Route>
+        <Route path={"/lobby"} element={<JoinRoom />}></Route>
         <Route path={"/result"} element={<ShowResult />}></Route>
 
         <Route path={"/sentence"} element={<WriteASentence />}></Route>
         <Route path={"/draw"} element={<DrawAPicture
           width={700}
-          height={500} />}></Route>
+          height={500} />}></Route> 
       </Routes>
     </>   
   );

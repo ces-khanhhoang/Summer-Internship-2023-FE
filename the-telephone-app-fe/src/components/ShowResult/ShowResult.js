@@ -58,7 +58,7 @@ const ShowResult = () => {
                                 </div>
                             </div>  
                             <img src={imgAvatar} alt="" className='sr-mess-avatar'/>
-                        </div>
+                        </div> 
                         <div className="sr-message sr-mess-right ">
                             <div className="sr-mess-content">
                                 <div className="sr-content-name">Name Name Name</div>
