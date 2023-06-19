@@ -56,7 +56,7 @@ const ShowResult = () => {
                                     <img src={imgAvatar} alt="" className='sr-content-img'/>
                                     
                                 </div>
-                            </div>
+                            </div>  
                             <img src={imgAvatar} alt="" className='sr-mess-avatar'/>
                         </div>
                         <div className="sr-message sr-mess-right ">

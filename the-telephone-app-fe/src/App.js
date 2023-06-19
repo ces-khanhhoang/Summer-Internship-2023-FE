@@ -20,7 +20,7 @@ function App() {
           width={700}
           height={500} />}></Route>
       </Routes>
-    </>
+    </>   
   );
 }
 
