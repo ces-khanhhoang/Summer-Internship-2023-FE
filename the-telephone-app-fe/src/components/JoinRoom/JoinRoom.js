@@ -8,7 +8,7 @@ import imgAvatar from '../../assets/avatar-1.svg';
 import imgLogo from '../../assets/gartic-phone.svg';
 import imgNormal from '../../assets/normal.svg';
 const JoinRoom = () => {
-    return (  
+    return (    
         <div className="jr-screen">
             <div className="jr-content">
                 <div className="jr-header">
