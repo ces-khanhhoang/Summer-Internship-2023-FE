@@ -6,6 +6,8 @@ import DrawAPicture from "./components/DrawAPicture";
 import JoinRoom from './components/JoinRoom/JoinRoom';
 import ShowResult from './components/ShowResult/ShowResult'
 import DescribePicture from "./components/DescribePicture/DescribePicture";
+
+
 function App() {
   return (
     <>
@@ -15,11 +17,12 @@ function App() {
         <Route path={"/lobby"} element={<JoinRoom />}></Route>
         <Route path={"/book"} element={<ShowResult />}></Route>
         <Route path={"/write_describe"} element={<DescribePicture />}></Route>
-
         <Route path={"/start"} element={<WriteASentence />}></Route>
         <Route path={"/draw"} element={<DrawAPicture
           width={700}
           height={500} />}></Route> 
+          width={'950 rem'}
+          height={'405 rem'} />}></Route>
       </Routes>
     </>   
   );

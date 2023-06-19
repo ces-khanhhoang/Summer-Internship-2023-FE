@@ -6,6 +6,8 @@ body {
 
 }
 .jr-content {
+    background-color: rgb(140, 103, 234);
+
     width: 70vw;
     height: 80vh;
     border: 4px rgba(29,29,27,.15) solid;
@@ -18,7 +20,11 @@ body {
     flex-direction: column;
 }  
 .jr-header {
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
+    flex-direction: column;
+
     align-items: center;
     height: 20%;
 }
@@ -141,6 +147,7 @@ span {
     
 }
 .jr-setting {
+
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -161,12 +168,15 @@ span {
     flex: 1;
 }
 .jr-data {
+
+
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
     height: 85%;
 }
 .jr-detail {
+
     cursor: pointer;
     height: 35%;
     width: 31%;
@@ -175,6 +185,7 @@ span {
     margin: 6px;
 }
 .jr-detail-setting {
+
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -185,15 +196,17 @@ span {
     width: auto;
 }
 .jr-action {
+
+
     height: 15%;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 .jr-btn-action {
+
     cursor: pointer;
     margin: 8px;
-    /* padding: 0px 8px; */ 
     height: 42px;
     width: 80px;
     background-color: rgb(94, 201, 255);
