@@ -2,7 +2,7 @@ import StartGame from "./components/StartGame";
 import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WriteASentence from "./components/WriteASentence";
-import DrawAPicture from "./components/DrawAPicture";
+import DrawAPicture from "./components/DrawAPicture/DrawAPicture";
 import JoinRoom from './components/JoinRoom/JoinRoom';
 
 
@@ -12,11 +12,10 @@ function App() {
       <Routes>
         <Route path={"/"} element={<StartGame />}></Route>
         <Route path={"/join"} element={<JoinRoom />}></Route>
-
         <Route path={"/sentence"} element={<WriteASentence />}></Route>
         <Route path={"/draw"} element={<DrawAPicture
-          width={700}
-          height={500} />}></Route>
+          width={'950 rem'}
+          height={'405 rem'} />}></Route>
       </Routes>
     </>
   );
