@@ -1,11 +1,11 @@
 
 body {
-    background-color: rgb(140, 103, 234);
+    background-color: #6f90b3;
 }
-.screen {
+.jr-screen {
 
 }
-.content {
+.jr-content {
     width: 70vw;
     height: 80vh;
     border: 4px rgba(29,29,27,.15) solid;
@@ -17,12 +17,12 @@ body {
     display: flex;
     flex-direction: column;
 }
-.header {
+.jr-header {
     display: flex;
     align-items: center;
     height: 20%;
 }
-.btn-back {
+.jr-btn-back {
     cursor: pointer;
     margin: 8px;
     padding: 0px 8px;
@@ -35,37 +35,40 @@ body {
     color: rgba(255, 255, 255, 0.6);
     justify-content: center;
 }
-.img-logo {
+.jr-img-logo {
     height: 100px;
     width: 125px;
     margin: 0 auto;
 }
-.btn-sound {
+.jr-btn-sound {
     cursor: pointer;
     margin: 8px;
     padding: 0px 8px;
     height: 42px;
     width: 80px;
     justify-content: center;
+    border: 2px solid #6f90b3;
+    border-radius: 7px;
+
+
 }
-.center {
+.jr-center {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     height: 80%;
 
 }
-.left {
+.jr-left {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
     background-color: rgba(38, 28, 92, 0.5);
-    /* overflow: auto; */
     width: 32%;
     margin: 8px 0 8px 8px;
     height: 95%;
 }
-.left-player {
+.jr-left-player {
     height: 20%;
     background-color: rgba(38, 28, 92, 0.5);
     border-radius: 10px 10px 0px 0px;
@@ -78,12 +81,12 @@ h4 {
     justify-content: center;
     margin: 0;
 }
-.user {
+.jr-user {
     display: flex;
     flex-direction: column;
     height: 80%;
 }
-.choice-number {
+.jr-choice-number {
     display: flex;
     flex-direction: row;
     background-color: transparent;
@@ -105,16 +108,16 @@ option {
     font-size: 20px;
     color: rgb(0, 0, 0);
 }
-.player {
+.jr-player {
     display: flex;
     flex-direction: column;
     height: 70%;
     overflow: auto;
 }
-.detail-player {
+.jr-detail-player {
     height: 20%;
 }
-.img-avatar {
+.jr-img-avatar {
     height: 80%;
     width: auto;
 }
@@ -123,7 +126,7 @@ span {
     line-height: 16px;
     color: rgb(48, 26, 107);
 }
-.right {
+.jr-right {
     display: flex;
     flex-direction: column;
     width: 64%;
@@ -133,7 +136,7 @@ span {
 
     
 }
-.setting {
+.jr-setting {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -142,7 +145,7 @@ span {
     border-radius: 10px ;
 
 }
-.tab {
+.jr-tab {
     display: flex;
     flex-direction: row;
     background-color: rgba(38, 28, 92, 0.5);
@@ -150,16 +153,16 @@ span {
     align-items: center;
     height: 25%;
 }
-.column {
+.jr-column {
     flex: 1;
 }
-.data {
+.jr-data {
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
     height: 85%;
 }
-.detail {
+.jr-detail {
     cursor: pointer;
     height: 35%;
     width: 31%;
@@ -167,23 +170,23 @@ span {
     border-radius: 10px;
     margin: 6px;
 }
-.detail-setting {
+.jr-detail-setting {
     display: flex;
     flex-direction: column;
     height: 100%;
 
 }
-.img-setting {
+.jr-img-setting {
     height: 80%;
     width: auto;
 }
-.action {
+.jr-action {
     height: 15%;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-.btn-action {
+.jr-btn-action {
     cursor: pointer;
     margin: 8px;
     /* padding: 0px 8px; */ 
