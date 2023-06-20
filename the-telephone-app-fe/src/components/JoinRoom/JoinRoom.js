@@ -72,10 +72,7 @@ const JoinRoom = () => {
                                 <BsFillSendXFill className='jr-btn-icon' />
                                 Invite
                             </button>
-                            <button className="jr-btn-action">
-                                <BsFillArrowRightSquareFill className='jr-btn-icon'/>
-                                Start 
-                            </button>
+
                         </div>
                     </div>
                 </div>
