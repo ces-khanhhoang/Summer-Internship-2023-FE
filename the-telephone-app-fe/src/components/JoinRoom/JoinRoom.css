@@ -8,6 +8,7 @@ body {
 
 }
 .jr-content {
+
     width: 70vw;
     height: 80vh;
     border: 4px rgba(29,29,27,.15) solid;
@@ -18,13 +19,13 @@ body {
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-}  
 .jr-header {
     display: flex;
     align-items: center;
     height: 20%;
 }
 .jr-btn-back {
+
     cursor: pointer;
     margin: 8px;
     padding: 0px 8px;
@@ -39,11 +40,13 @@ body {
     justify-content: center;
 }
 .jr-img-logo {
+ 
     height: 100px;
     width: 125px;
     margin: 0 auto;
 }
 .jr-btn-sound {
+
     cursor: pointer;
     margin: 8px;
     padding: 0px 8px;
@@ -57,6 +60,7 @@ body {
 
 }
 .jr-center {
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -151,6 +155,7 @@ span {
     
 }
 .jr-setting {
+
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -163,6 +168,7 @@ span {
     display: flex;
     flex-direction: row;
     background-color: #a89079;
+
     border-radius: 10px 10px 0px 0px;
     align-items: center;
     height: 25%;
@@ -173,12 +179,14 @@ span {
     font-size: 16px;
 }
 .jr-data {
+
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
     height: 85%;
 }
 .jr-detail {
+
     cursor: pointer;
     height: 35%;
     width: 31%;
@@ -187,6 +195,7 @@ span {
     margin: 6px;
 }
 .jr-detail-setting {
+
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -201,6 +210,7 @@ span {
     width: auto;
 }
 .jr-action {
+
     height: 15%;
     display: flex;
     flex-direction: row;
@@ -222,4 +232,5 @@ span {
 .jr-btn-icon {
     margin: 0 4px;
 }
+
 
