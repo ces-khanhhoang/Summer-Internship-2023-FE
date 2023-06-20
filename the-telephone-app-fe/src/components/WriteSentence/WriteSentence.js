@@ -1,8 +1,9 @@
-import './DescribePicture.css';
+import '../DescribePicture/DescribePicture.css';
+import './WriteSentence.css';
 import imgLogo from '../../assets/gartic.svg';
-import imgGalaxy from '../../assets/galaxy.jpg';
+import imgWrite from '../../assets/write.png';
 import { BsClockFill } from "react-icons/bs";
-const DescribePicture = () => {
+const WriteSentence = () => {
     return ( 
         <div className="dp-screen">
             <div className="dp-content">
@@ -14,15 +15,16 @@ const DescribePicture = () => {
                         <div className="dp-logo">
                             <img src={imgLogo} alt="" className='dp-img-logo-gartic'/>
                         </div>
-                        <div className="dp-title">
-                        NOW IT'S YOUR TURN TO DESCRIBE THIS SCENE
+                        
+                    </div>
+                    <div className="ws-main-content">
+                        <img src={imgWrite} alt="img-content" className='ws-img-content' />
+                        <div className="ws-title">
+                        WRITE A SENTENCE
                         </div>
                     </div>
-                    <div className="dp-main-content">
-                        <img src={imgGalaxy} alt="img-content" className='dp-img-content' />
-                    </div>
                     <div className="dp-action">
-                        <input type="text" className='dp-input' placeholder='Type your description for this scene here ...'/>
+                        <input type="text" className='dp-input' placeholder=' ... '/>
                         <button className='dp-btn-done'>DONE!</button>
                     </div>
                 </div>
@@ -34,4 +36,5 @@ const DescribePicture = () => {
      );
 }
  
-export default DescribePicture;
+export default WriteSentence;
+

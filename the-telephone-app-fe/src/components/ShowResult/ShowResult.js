@@ -14,7 +14,7 @@ const ShowResult = () => {
                 <div className="sr-header">
                     <button className="sr-btn-back">
                         <BsFillCaretLeftFill />
-                        BACK
+                        Back
                     </button>
                     <img src={imgLogo} alt="logo"  className='sr-img-logo'/>
                     <button className="sr-btn-sound">
@@ -43,7 +43,7 @@ const ShowResult = () => {
                             <div className="sr-mess-content">
                                 <div className="sr-content-name">Name Name Name</div>
                                 <div className="sr-content-text">
-                                    ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+                                    thoa thoa thoa thoa thoa thoa thoa thoa
                                 </div>
                             </div>
                             <img src={imgAvatar} alt="" className='sr-mess-avatar'/>
@@ -63,7 +63,7 @@ const ShowResult = () => {
                             <div className="sr-mess-content">
                                 <div className="sr-content-name">Name Name Name</div>
                                 <div className="sr-content-text">
-                                    ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+                                    thoa truowngg
                                 </div>
                             </div>
                             <img src={imgAvatar} alt="" className='sr-mess-avatar'/>

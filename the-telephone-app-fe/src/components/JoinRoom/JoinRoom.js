@@ -14,7 +14,7 @@ const JoinRoom = () => {
                 <div className="jr-header">
                     <button className="jr-btn-back">
                         <BsFillCaretLeftFill />
-                        BACK
+                        Back
                     </button> 
                     <img src={imgLogo} alt="logo"  className='jr-img-logo'/>
                     <button className="jr-btn-sound">
@@ -23,7 +23,7 @@ const JoinRoom = () => {
                 </div>
                 <div className="jr-center">
                     <div className="jr-left">
-                        <h4 className="jr-left-player">Player</h4>
+                        <h4 className="jr-left-player">PLAYERS</h4>
                         <div className="jr-user">
                             <span className='jr-choice-number'>
                                 <select name="" id="">
@@ -47,7 +47,7 @@ const JoinRoom = () => {
                             <div className="jr-player">
                                 <div className="jr-detail-player">
                                     <img src={imgAvatar} alt="avatar" className='jr-img-avatar' />
-                                    <span>CoolNickName</span>
+                                    <span className='jr-text'>CoolNickName</span>
                                 </div>
                             </div>
                         </div>
@@ -55,25 +55,25 @@ const JoinRoom = () => {
                     <div className="jr-right">
                         <div className="jr-setting">
                             <div className="jr-tab">
-                                <h4 className="jr-column">Preset</h4>
-                                <h4 className="jr-column">setting</h4>
+                                <h4 className="jr-column">PRESET</h4>
+                                <h4 className="jr-column">CUSTOM SETTINGS</h4>
                             </div>
                             <div className="jr-data">
                                 <div className="jr-detail">
                                     <div className="jr-detail-setting">
                                         <img src={imgNormal} alt="img-setting" className='jr-img-setting' />
-                                        <span>CoolNickName</span>
+                                        <span className='jr-box'>CoolNickName</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="jr-action">
                             <button className="jr-btn-action">
-                                <BsFillSendXFill />
+                                <BsFillSendXFill className='jr-btn-icon' />
                                 Invite
                             </button>
                             <button className="jr-btn-action">
-                                <BsFillArrowRightSquareFill />
+                                <BsFillArrowRightSquareFill className='jr-btn-icon'/>
                                 Start 
                             </button>
                         </div>
