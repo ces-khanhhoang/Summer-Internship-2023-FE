@@ -1,0 +1,27 @@
+.d-btn-done {
+    width: 20%;
+    height: 70%;
+    margin: 0 12px;
+
+    cursor: pointer;
+    padding: 0px 8px;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    font-weight: bold;
+    border-radius: 7px;
+    background-color: #C6A88F;
+    transform: translateX(392%);
+}
+.d-title {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-color: #DFD4CB;
+
+}
+.d-text {
+    width: 100%;
+    font-color: #DFD4CB;
+    text-align: center;
+
+}
