@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import WriteASentence from "./components/WriteASentence";
 import DrawAPicture from "./components/DrawAPicture/DrawAPicture";
-import JoinRoom from './components/JoinRoom/JoinRoom';
 
 
 import JoinRoom from './components/JoinRoom/JoinRoom';
