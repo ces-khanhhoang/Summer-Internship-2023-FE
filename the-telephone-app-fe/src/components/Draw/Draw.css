@@ -9,19 +9,17 @@
     border: 2px solid rgba(255, 255, 255, 0.6);
     font-weight: bold;
     border-radius: 7px;
-    background-color: #C6A88F;
+    background-color: #c6a88f;
     transform: translateX(392%);
 }
 .d-title {
     width: 100%;
     text-align: center;
     font-weight: bold;
-    font-color: #DFD4CB;
-
+    font-color: #dfd4cb;
 }
 .d-text {
     width: 100%;
-    font-color: #DFD4CB;
+    font-color: #dfd4cb;
     text-align: center;
-
 }

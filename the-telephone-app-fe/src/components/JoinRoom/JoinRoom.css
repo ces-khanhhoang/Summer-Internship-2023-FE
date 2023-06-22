@@ -2,36 +2,38 @@ body {
     /* background-image: url('../../assets/galaxy.jpg');
     background-size: cover;
     filter: brightness(70%) blur(3px); */
-    background-color: #FCF5ED;
+    background-color: #fcf5ed;
 }
+
 .jr-screen {
-
 }
-.jr-content {
 
+.jr-content {
     width: 70vw;
     height: 80vh;
-    border: 4px rgba(29,29,27,.15) solid;
+    border: 4px rgba(29, 29, 27, 0.15) solid;
     border-radius: 12px;
     position: absolute;
     top: 50%;
-    left: 50%; 
+    left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
+}
+
 .jr-header {
     display: flex;
     align-items: center;
     height: 20%;
 }
-.jr-btn-back {
 
+.jr-btn-back {
     cursor: pointer;
     margin: 8px;
     padding: 0px 8px;
     height: 42px;
     width: 80px;
-    background-color: #C6A88F;
+    background-color: #c6a88f;
     border: 2px solid rgba(255, 255, 255, 0.6);
     font-weight: bold;
     border-radius: 7px;
@@ -39,14 +41,14 @@ body {
     color: #000000;
     justify-content: center;
 }
+
 .jr-img-logo {
- 
     height: 100px;
     width: 125px;
     margin: 0 auto;
 }
-.jr-btn-sound {
 
+.jr-btn-sound {
     cursor: pointer;
     margin: 8px;
     padding: 0px 8px;
@@ -56,26 +58,26 @@ body {
     border: 2px solid rgba(255, 255, 255, 0.6);
     font-weight: bold;
     border-radius: 7px;
-    background-color: #C6A88F;
-
+    background-color: #c6a88f;
 }
-.jr-center {
 
+.jr-center {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     height: 80%;
-
 }
+
 .jr-left {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    background-color: #E7CCB1;
+    background-color: #e7ccb1;
     width: 32%;
     margin: 8px 0 8px 8px;
     height: 95%;
 }
+
 .jr-left-player {
     height: 20%;
     background-color: #a89079;
@@ -83,6 +85,7 @@ body {
     font-weight: bold;
     font-size: 16px;
 }
+
 h4 {
     color: #000000;
     display: flex;
@@ -90,11 +93,13 @@ h4 {
     justify-content: center;
     margin: 0;
 }
+
 .jr-user {
     display: flex;
     flex-direction: column;
     height: 80%;
 }
+
 .jr-choice-number {
     display: flex;
     flex-direction: row;
@@ -109,61 +114,65 @@ select {
     font-size: 12px;
     line-height: 24px;
     color: #000000;
-    background: #C8BFB7;
+    background: #c8bfb7;
     padding: 0px 30px 0px 10px;
     width: 100%;
     border-radius: 4px;
 }
+
 option {
     font-size: 20px;
     color: #000000;
 }
+
 .jr-player {
     display: flex;
     flex-direction: column;
     height: 70%;
     overflow: auto;
 }
+
 .jr-detail-player {
     height: 20%;
     margin: 8px;
-    background-color:#C6A88F;
+    background-color: #c6a88f;
     border-radius: 20px 8px 8px 20px;
     padding: 4px 0 0 8px;
 }
+
 .jr-img-avatar {
     height: 80%;
     width: auto;
 }
+
 span {
     font-size: 12px;
     line-height: 16px;
-    color:#000000;
+    color: #000000;
 }
+
 .jr-text {
     margin-left: 8px;
-
 }
+
 .jr-right {
     display: flex;
     flex-direction: column;
     width: 64%;
     border-radius: 10px;
-    margin: 8px ;
+    margin: 8px;
     height: 95%;
-
-    
 }
-.jr-setting {
 
+.jr-setting {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 85%;
-    background-color: #E7CCB1;
-    border-radius: 10px ;
-
+    background-color: #e7ccb1;
+    border-radius: 10px;
 }
+
 .jr-tab {
     display: flex;
     flex-direction: row;
@@ -173,20 +182,21 @@ span {
     align-items: center;
     height: 25%;
 }
+
 .jr-column {
     flex: 1;
     font-weight: bold;
     font-size: 16px;
 }
-.jr-data {
 
+.jr-data {
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
     height: 85%;
 }
-.jr-detail {
 
+.jr-detail {
     cursor: pointer;
     height: 35%;
     width: 31%;
@@ -194,34 +204,36 @@ span {
     border-radius: 10px;
     margin: 6px;
 }
-.jr-detail-setting {
 
+.jr-detail-setting {
     display: flex;
     flex-direction: column;
     height: 100%;
-
 }
+
 .jr-box {
     display: flex;
     justify-content: center;
 }
+
 .jr-img-setting {
     height: 80%;
     width: auto;
 }
-.jr-action {
 
+.jr-action {
     height: 15%;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
+
 .jr-btn-action {
     cursor: pointer;
     margin: 8px;
     height: 42px;
     width: 80px;
-    background-color: #C6A88F;
+    background-color: #c6a88f;
     border: 2px solid rgba(255, 255, 255, 0.6);
     font-weight: bold;
     border-radius: 7px;
@@ -229,8 +241,7 @@ span {
     color: #000000;
     justify-content: center;
 }
+
 .jr-btn-icon {
     margin: 0 4px;
 }
-
-

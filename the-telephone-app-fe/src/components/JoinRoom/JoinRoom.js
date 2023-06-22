@@ -1,22 +1,22 @@
-import './JoinRoom.css';
-import { BsFillCaretLeftFill } from "react-icons/bs";
-import { BsFillVolumeUpFill } from "react-icons/bs";
-import { BsFillSendXFill } from "react-icons/bs";
-import { BsFillArrowRightSquareFill } from "react-icons/bs";
+import './JoinRoom.css'
+import { BsFillCaretLeftFill } from 'react-icons/bs'
+import { BsFillVolumeUpFill } from 'react-icons/bs'
+import { BsFillSendXFill } from 'react-icons/bs'
+import { BsFillArrowRightSquareFill } from 'react-icons/bs'
 
-import imgAvatar from '../../assets/avatar-1.svg';
-import imgLogo from '../../assets/gartic-phone.svg';
-import imgNormal from '../../assets/normal.svg';
+import imgAvatar from '../../assets/avatar-1.svg'
+import imgLogo from '../../assets/gartic-phone.svg'
+import imgNormal from '../../assets/normal.svg'
 const JoinRoom = () => {
-    return (    
+    return (
         <div className="jr-screen">
             <div className="jr-content">
                 <div className="jr-header">
                     <button className="jr-btn-back">
                         <BsFillCaretLeftFill />
                         Back
-                    </button> 
-                    <img src={imgLogo} alt="logo"  className='jr-img-logo'/>
+                    </button>
+                    <img src={imgLogo} alt="logo" className="jr-img-logo" />
                     <button className="jr-btn-sound">
                         <BsFillVolumeUpFill size={'24px'} />
                     </button>
@@ -25,7 +25,7 @@ const JoinRoom = () => {
                     <div className="jr-left">
                         <h4 className="jr-left-player">PLAYERS</h4>
                         <div className="jr-user">
-                            <span className='jr-choice-number'>
+                            <span className="jr-choice-number">
                                 <select name="" id="">
                                     <option value="4">4 PLAYERS</option>
                                     <option value="5">5 PLAYERS</option>
@@ -41,13 +41,18 @@ const JoinRoom = () => {
                                     <option value="20">4 PLAYERS</option>
                                     <option value="30">30 PLAYERS</option>
                                     <option value="50">50 PLAYERS</option>
-
                                 </select>
                             </span>
                             <div className="jr-player">
                                 <div className="jr-detail-player">
-                                    <img src={imgAvatar} alt="avatar" className='jr-img-avatar' />
-                                    <span className='jr-text'>CoolNickName</span>
+                                    <img
+                                        src={imgAvatar}
+                                        alt="avatar"
+                                        className="jr-img-avatar"
+                                    />
+                                    <span className="jr-text">
+                                        CoolNickName
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -61,26 +66,29 @@ const JoinRoom = () => {
                             <div className="jr-data">
                                 <div className="jr-detail">
                                     <div className="jr-detail-setting">
-                                        <img src={imgNormal} alt="img-setting" className='jr-img-setting' />
-                                        <span className='jr-box'>CoolNickName</span>
+                                        <img
+                                            src={imgNormal}
+                                            alt="img-setting"
+                                            className="jr-img-setting"
+                                        />
+                                        <span className="jr-box">
+                                            CoolNickName
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="jr-action">
                             <button className="jr-btn-action">
-                                <BsFillSendXFill className='jr-btn-icon' />
+                                <BsFillSendXFill className="jr-btn-icon" />
                                 Invite
                             </button>
-
                         </div>
                     </div>
                 </div>
             </div>
-            
         </div>
-    );
+    )
 }
- 
-export default JoinRoom;
 
+export default JoinRoom

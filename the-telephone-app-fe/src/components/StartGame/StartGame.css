@@ -1,15 +1,15 @@
 .sg-content {
     width: 70vw;
     height: 80vh;
-    border: 4px rgba(29,29,27,.15) solid;
+    border: 4px rgba(29, 29, 27, 0.15) solid;
     border-radius: 12px;
     position: absolute;
     top: 50%;
-    left: 50%; 
+    left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-}  
+}
 .sg-header {
     display: flex;
     align-items: center;
@@ -26,7 +26,6 @@
     height: 80%;
     width: 100%;
     justify-content: center;
-    
 }
 .sg-left {
     display: flex;
@@ -34,7 +33,7 @@
     height: 95%;
     width: 60%;
     border-radius: 10px;
-    background-color: #E7CCB1;
+    background-color: #e7ccb1;
     margin: 8px;
 }
 .sg-title {
@@ -68,13 +67,10 @@
     width: 70%;
     margin-bottom: 16px;
     font-weight: bold;
-
 }
 .sg-input {
     width: 80%;
     height: 100%;
-
-    
 }
 .sg-left-action {
     height: 15%;
@@ -89,16 +85,14 @@
     margin: 8px;
     padding: 0px 8px;
     height: 42px;
-    width:36% ;
-    background-color: #C6A88F;
+    width: 36%;
+    background-color: #c6a88f;
     border: 2px solid rgba(255, 255, 255, 0.6);
     font-weight: bold;
     border-radius: 7px;
     font-size: 15px;
     color: #000000;
     justify-content: center;
-
-    
 }
 .sg-icon {
     margin-right: 8px;
@@ -110,9 +104,7 @@
     height: 95%;
     width: 36%;
     border-radius: 10px;
-    background-color: #E7CCB1;
+    background-color: #e7ccb1;
     margin: 8px 0 8px 8px;
     height: 95%;
-
 }
-

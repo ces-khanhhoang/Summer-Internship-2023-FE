@@ -11,9 +11,8 @@
 }
 .ws-title {
     font-weight: bold;
-    font-color: #DFD4CB;
+    font-color: #dfd4cb;
     margin: 8px;
     display: flex;
     transform: translateX(10%);
-
 }
