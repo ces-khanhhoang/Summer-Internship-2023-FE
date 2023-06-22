@@ -1,11 +1,11 @@
 import './StartGame.css';
 import imgLogo from '../../assets/gartic-phone.svg';
 import { BsFillCaretRightFill } from "react-icons/bs";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { over } from 'stompjs';
-import SockJS from 'sockjs-client';
+// import { over } from 'stompjs';
+// import SockJS from 'sockjs-client';
 
 const StartGame = () => {
 
@@ -17,7 +17,7 @@ const StartGame = () => {
     }
 
     const generateRandomName = () => {
-        let defaultName = 'CoolNickname' + Math.floor(Math.random() * (9999 - 1000 + 1));
+        let defaultName = 'CoolNickname' + Math.floor(Math.random() * 9999);
         return defaultName;
     }
 
@@ -25,82 +25,80 @@ const StartGame = () => {
 
     let navigate = useNavigate();
 
-    const [userData, setUserData] = useState({
-        id: 0,
-        nickname: "",
-        connected: false,
-        id_room: 0,
-        status: ""
-    })
-
     function handleSubmit() {
         // event.preventDefault();
         let nick = data.nickname;
-        console.log(nick);
+        // console.log(nick);
         if (nick == "") {
             nick = defaultName;
         }
         // navigate("/lobby", { state: { data: nick } });
         console.log(nick);
         axios.post('http://192.168.101.44:9090/user/create/' + nick).then(data => {
-            setUserData(data.data);
-            console.log(data.data);
-            console.log(userData);
-            // navigate("/lobby", { state: { data: userData } });
+            // console.log(data.data);
+            // console.log(userData);
+            navigate("/lobby", { state: { data: data.data } });
             // connect();
         })
     }
 
+    // const [userData, setUserData] = useState({
+    //     id: 0,
+    //     nickname: "",
+    //     connected: false,
+    //     id_room: 0,
+    //     status: ""
+    // })
 
-    var stompClient = null;
+    // var stompClient = null;
 
-    const onError = (err) => {
-        console.log(err);
+    // const onError = (err) => {
+    //     console.log(err);
 
-    }
-
-
-    const connect = () => {
-        let Sock = new SockJS('http://192.168.101.178:8080/ws')
-        stompClient = over(Sock)
-        stompClient.connect({}, onConnected, onError);
-    }
-
-    const onConnected = () => {
-        console.log("tên user " + userData.username)
-        setUserData({ ...userData, "connected": true });
-        // stompClient.subscribe('/chatroom/public', onPublicMessageReceived);
-        stompClient.subscribe('/user/' + userData.id_room + '/private', onPrivateMessageReceived);
-        // userJoin();
-    }
+    // }
 
 
-    const onPrivateMessageReceived = (payload) => {
-        console.log("hiii");
-        var payloadData = JSON.parse(payload.body);
-        console.log(payloadData);
-        console.log(payloadData.senderName)
-        console.log(privateChats);
+    // const connect = () => {
+    //     let Sock = new SockJS('http://192.168.101.178:8080/ws')
+    //     stompClient = over(Sock)
+    //     stompClient.connect({}, onConnected, onError);
+    // }
+
+    // const onConnected = () => {
+    //     console.log("tên user " + userData.username)
+    //     setUserData({ ...userData, "connected": true });
+    //     // stompClient.subscribe('/chatroom/public', onPublicMessageReceived);
+    //     stompClient.subscribe('/user/' + userData.id_room + '/private', onPrivateMessageReceived);
+    //     // userJoin();
+    // }
 
 
-        if (privateChats.get(payloadData.senderName)) {
-
-            privateChats.get(payloadData.senderName).push(payloadData);
-            console.log(privateChats);
-            setPrivateChats(new Map(privateChats));
-        } else {
-            let list = []
-            list.push(payloadData);
-            privateChats.set(payloadData.senderName, list);
-
-            setPrivateChats(new Map(privateChats));
-        }
-    }
+    // const onPrivateMessageReceived = (payload) => {
+    //     console.log("hiii");
+    //     var payloadData = JSON.parse(payload.body);
+    //     console.log(payloadData);
+    //     console.log(payloadData.senderName)
+    //     console.log(privateChats);
 
 
-    const [publicChats, setpublicChats] = useState([])
-    const [privateChats, setPrivateChats] = useState(new Map())
-    const [tab, setTab] = useState("CHATROOM")
+    //     if (privateChats.get(payloadData.senderName)) {
+
+    //         privateChats.get(payloadData.senderName).push(payloadData);
+    //         console.log(privateChats);
+    //         setPrivateChats(new Map(privateChats));
+    //     } else {
+    //         let list = []
+    //         list.push(payloadData);
+    //         privateChats.set(payloadData.senderName, list);
+
+    //         setPrivateChats(new Map(privateChats));
+    //     }
+    // }
+
+
+    // const [publicChats, setpublicChats] = useState([])
+    // const [privateChats, setPrivateChats] = useState(new Map())
+    // const [tab, setTab] = useState("CHATROOM")
 
 
     return (
