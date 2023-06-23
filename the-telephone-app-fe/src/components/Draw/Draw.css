@@ -1,25 +1,25 @@
 .d-btn-done {
-    width: 20%;
-    height: 70%;
-    margin: 0 12px;
+  width: 20%;
+  height: 70%;
+  margin: 0 12px;
 
-    cursor: pointer;
-    padding: 0px 8px;
-    justify-content: center;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    font-weight: bold;
-    border-radius: 7px;
-    background-color: #c6a88f;
-    transform: translateX(392%);
+  cursor: pointer;
+  padding: 0px 8px;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  font-weight: bold;
+  border-radius: 7px;
+  background-color: #c6a88f;
+  transform: translateX(392%);
 }
 .d-title {
-    width: 100%;
-    text-align: center;
-    font-weight: bold;
-    font-color: #dfd4cb;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-color: #dfd4cb;
 }
 .d-text {
-    width: 100%;
-    font-color: #dfd4cb;
-    text-align: center;
+  width: 100%;
+  font-color: #dfd4cb;
+  text-align: center;
 }

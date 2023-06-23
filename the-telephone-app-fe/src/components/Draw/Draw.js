@@ -11,90 +11,86 @@ import { storage } from '../firebase'
 import { ref, uploadBytes } from 'firebase/storage'
 
 const Draw = ({ width = '670%', height = '300%' }) => {
-    const [picture, setPicture] = useState(null)
+  const [picture, setPicture] = useState(null)
 
-    const uploadPicture = () => {
-        if (picture == null) return
-        const canvas = document.getElementById('myCanvas')
-        // const imageDataURL = canvas.toDataURL('image/png');
-        const pictureRef = ref(storage, 'picture/${picture.name +}')
-        uploadBytes(pictureRef, picture).then(() => {
-            alert('Picture uploaded')
-        })
-    }
-
-    const testing = () => {
-        const canvas = document.getElementById('myCanvas')
-        const imageDataURL = canvas.toDataURL('image/png')
-        document.write('<img src="' + imageDataURL + '"/>')
-        console.log(canvas.toDataURL('image/png'))
-    }
-
-    const { onMouseDown, setCanvasRef } = useOnDraw(onDraw)
-
-    function onDraw(ctx, point, prevPoint) {
-        drawLine(prevPoint, point, ctx, '#000000', 5)
-    }
-
-    // const canvas = document.getElementById('myCanvas');
+  const uploadPicture = () => {
+    if (picture == null) return
+    const canvas = document.getElementById('myCanvas')
     // const imageDataURL = canvas.toDataURL('image/png');
+    const pictureRef = ref(storage, 'picture/${picture.name +}')
+    uploadBytes(pictureRef, picture).then(() => {
+      alert('Picture uploaded')
+    })
+  }
 
-    function drawLine(start, end, ctx, color, width) {
-        start = start ?? end
-        ctx.beginPath()
-        ctx.lineWidth = width
-        ctx.strokeStyle = color
-        ctx.moveTo(start.x, start.y)
-        ctx.lineTo(end.x, end.y)
-        ctx.stroke()
+  const testing = () => {
+    const canvas = document.getElementById('myCanvas')
+    const imageDataURL = canvas.toDataURL('image/png')
+    document.write('<img src="' + imageDataURL + '"/>')
+    console.log(canvas.toDataURL('image/png'))
+  }
 
-        ctx.fillStyle = color
-        ctx.beginPath()
-        ctx.arc(start.x, start.y, 2, 0, 2 * Math.PI)
+  const { onMouseDown, setCanvasRef } = useOnDraw(onDraw)
 
-        // ctx.stroke();
-        ctx.fill()
-        // ctx.stroke();
-    }
+  function onDraw(ctx, point, prevPoint) {
+    drawLine(prevPoint, point, ctx, '#000000', 5)
+  }
 
-    return (
-        <div className="dp-screen">
-            <div className="dp-content">
-                <div className="dp-sub-left">?/?</div>
-                <div className="dp-main">
-                    <div className="dp-header">
-                        <div className="dp-logo">
-                            <img
-                                src={imgLogo}
-                                alt=""
-                                className="dp-img-logo-gartic"
-                            />
-                        </div>
-                        <div className="d-title">HEY, IT'S TIME TO DRAW!</div>
-                        <div className="d-text">
-                            Vetagarian confectioner in the sewer ... =)) ahihi
-                        </div>
-                    </div>
-                    <div className="dp-main-content">
-                        <canvas
-                            id="myCanvas"
-                            width={width}
-                            height={height}
-                            onMouseDown={onMouseDown}
-                            // style={canvasStyle}
-                            ref={setCanvasRef}
-                        />
-                    </div>
-                    <div className="dp-action">
-                        <button className="d-btn-done">DONE!</button>
-                    </div>
-                </div>
-                <div className="dp-sub-right">
-                    <BsClockFill size="30px" />
-                </div>
+  // const canvas = document.getElementById('myCanvas');
+  // const imageDataURL = canvas.toDataURL('image/png');
+
+  function drawLine(start, end, ctx, color, width) {
+    start = start ?? end
+    ctx.beginPath()
+    ctx.lineWidth = width
+    ctx.strokeStyle = color
+    ctx.moveTo(start.x, start.y)
+    ctx.lineTo(end.x, end.y)
+    ctx.stroke()
+
+    ctx.fillStyle = color
+    ctx.beginPath()
+    ctx.arc(start.x, start.y, 2, 0, 2 * Math.PI)
+
+    // ctx.stroke();
+    ctx.fill()
+    // ctx.stroke();
+  }
+
+  return (
+    <div className="dp-screen">
+      <div className="dp-content">
+        <div className="dp-sub-left">?/?</div>
+        <div className="dp-main">
+          <div className="dp-header">
+            <div className="dp-logo">
+              <img src={imgLogo} alt="" className="dp-img-logo-gartic" />
             </div>
+            <div className="d-title">HEY, IT'S TIME TO DRAW!</div>
+            <div className="d-text">
+              Vetagarian confectioner in the sewer ... =)) ahihi
+            </div>
+          </div>
+          <div className="dp-main-content">
+            <canvas
+              id="myCanvas"
+              width={width}
+              height={height}
+              onMouseDown={onMouseDown}
+              // style={canvasStyle}
+              ref={setCanvasRef}
+            />
+          </div>
+          <div className="dp-action">
+            <button className="d-btn-done">DONE!</button>
+          </div>
         </div>
-    )
+        <div className="dp-sub-right">
+          <BsClockFill size="30px" />
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default Draw
