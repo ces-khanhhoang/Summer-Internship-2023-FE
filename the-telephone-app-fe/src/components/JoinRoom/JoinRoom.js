@@ -1,13 +1,38 @@
 import './JoinRoom.css';
+import React, { useState, useEffect } from 'react';
 import { BsFillCaretLeftFill } from "react-icons/bs";
 import { BsFillVolumeUpFill } from "react-icons/bs";
 import { BsFillSendXFill } from "react-icons/bs";
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
-
+import { useLocation } from 'react-router-dom';
 import imgAvatar from '../../assets/avatar-1.svg';
 import imgLogo from '../../assets/gartic-phone.svg';
 import imgNormal from '../../assets/normal.svg';
 const JoinRoom = () => {
+    // useState [id_room, setIdRoom] = (location.state?.id_room);
+    const location = useLocation();
+    // console.log(location.state?.data);
+    const host = location.state?.host;
+    const users = location.state?.data;
+    const id_room = location.state?.id_room;
+    
+
+    
+  
+
+    console.log('host'+host);
+
+    console.log(users);
+    console.log(id_room);
+    
+     
+   
+    const [roomLink, setRoomLink] = useState('');
+    const handleInviteClick = () => {
+        const link =  `http://localhost:3000/${id_room}`;
+        setRoomLink(link);
+        navigator.clipboard.writeText(link);
+    };
     return (    
         <div className="jr-screen">
             <div className="jr-content">
@@ -45,10 +70,20 @@ const JoinRoom = () => {
                                 </select>
                             </span>
                             <div className="jr-player">
-                                <div className="jr-detail-player">
-                                    <img src={imgAvatar} alt="avatar" className='jr-img-avatar' />
-                                    <span className='jr-text'>CoolNickName</span>
-                                </div>
+                                {users && users.length >= 2 ? (
+                                    users.map((user, index) => (
+                                    <div className="jr-detail-player" >
+                                        <img src={imgAvatar} alt="avatar" className='jr-img-avatar' />
+                                        <span className='jr-text'>{user.nickname}</span>
+                                    </div>
+                                    ))
+                                ):
+                                (
+                                    <div className="jr-detail-player" >
+                                        <img src={imgAvatar} alt="avatar" className='jr-img-avatar' />
+                                        <span className='jr-text'>{users.nickname}</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -62,20 +97,49 @@ const JoinRoom = () => {
                                 <div className="jr-detail">
                                     <div className="jr-detail-setting">
                                         <img src={imgNormal} alt="img-setting" className='jr-img-setting' />
-                                        <span className='jr-box'>CoolNickName</span>
+                                        <span className='jr-box'></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="jr-action">
-                            <button className="jr-btn-action">
+                        
+                        {host==1 && (
+                            <div className="jr-action">
+                                <button className="jr-btn-action" onClick={handleInviteClick}>
+                                <BsFillSendXFill className='jr-btn-icon' />
+                                Invite
+                                </button>
+
+                                <button className="jr-btn-action">
+                                <BsFillArrowRightSquareFill className='jr-btn-icon' />
+                                Start
+                                </button>
+                            </div>
+                        )}
+                        {
+                            host==0 && (
+                                <div className="jr-action ">
+                                    <div className="jr-text-player">
+                                      WAITING FOR THE HOST TO SET UP AND TO START THE GAME 
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                        {/* <div className="jr-action">
+                            <button className="jr-btn-action" onClick={handleInviteClick}>
                                 <BsFillSendXFill className='jr-btn-icon' />
                                 Invite
                             </button>
 
-                        </div>
+                            <button className="jr-btn-action">
+                                <BsFillArrowRightSquareFill className='jr-btn-icon' />
+                                Start
+                            </button>
+                        </div> */}
                     </div>
                 </div>
+
             </div>
             
         </div>
@@ -83,4 +147,3 @@ const JoinRoom = () => {
 }
  
 export default JoinRoom;
-

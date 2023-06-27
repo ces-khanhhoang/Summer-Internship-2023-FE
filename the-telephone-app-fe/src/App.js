@@ -10,7 +10,7 @@ function App() {
     <>
       <Routes>
         <Route path={"/lobby"} element={<JoinRoom />}></Route>
-        <Route path={"/"} element={<StartGame />}></Route>
+        <Route path={"/:id_room?"} element={<StartGame />}></Route>
         <Route path={"/start"} element={<WriteSentence />}></Route>
         <Route path={"/draw"} element={<Draw />}></Route>
         <Route path={"/write"} element={<DescribePicture />}></Route>
