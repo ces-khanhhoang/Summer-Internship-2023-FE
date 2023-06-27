@@ -131,6 +131,8 @@ option {
     background-color:#C6A88F;
     border-radius: 20px 8px 8px 20px;
     padding: 4px 0 0 8px;
+    display: flex;
+    align-items: center;
 }
 .jr-img-avatar {
     height: 80%;
@@ -143,7 +145,6 @@ span {
 }
 .jr-text {
     margin-left: 8px;
-
 }
 .jr-right {
     display: flex;
@@ -235,3 +236,8 @@ span {
 }
 
 
+.jr-text-player {
+    padding: 40px;
+    font-weight: bold;
+
+}
