@@ -39,14 +39,13 @@ const JoinRoom = () => {
     const checkNicknameExistence = (nickname) => {
         console.log(users);
         if (users.length > 1) {
-        console.log('2 neusers');
             return users.some((user) => user.nickname === nickname);
         }
         if(role ==1){
             return true;
         }
     };
-      const handleNavigate = () => {
+    const handleNavigateKick = () => {
         confirmAlert({
           title: 'KICKED OUT',
           message: 'You have been kicked out from the room by the host',
@@ -57,7 +56,11 @@ const JoinRoom = () => {
             }
           ]
         });
-      };
+    };
+    const handlePlay = async () =>{
+        const response = await axios.post(`http://192.168.101.177:9090/user/start/${id_room}`);
+    };
+    
     return checkNicknameExistence(currentName)?(
             <div className="jr-screen">
             <div className="jr-content">
@@ -149,8 +152,8 @@ const JoinRoom = () => {
                                 Invite
                                 </button>
 
-                                <button className="jr-btn-action">
-                                <BsFillArrowRightSquareFill className='jr-btn-icon' />
+                                <button className="jr-btn-action" onClick={handlePlay}>
+                                <BsFillArrowRightSquareFill className='jr-btn-icon'  />
                                 Start
                                 </button>
                             </div>
@@ -172,7 +175,7 @@ const JoinRoom = () => {
             
         </div>
     ):(
-        handleNavigate()
+        handleNavigateKick()
     );
 }
  
