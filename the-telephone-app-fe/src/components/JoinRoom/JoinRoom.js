@@ -12,7 +12,7 @@ const JoinRoom = () => {
         <div className="jr-screen">
             <div className="jr-content">
                 <div className="jr-header">
-                    <button className="jr-btn-back">
+                    <button className="jr-btn-back"> 
                         <BsFillCaretLeftFill />
                         Back
                     </button> 

@@ -21,7 +21,7 @@ const WriteSentence = () => {
                         <img src={imgWrite} alt="img-content" className='ws-img-content' />
                         <div className="ws-title">
                         WRITE A SENTENCE
-                        </div>
+                        </div> 
                     </div>
                     <div className="dp-action">
                         <input type="text" className='dp-input' placeholder=' ... '/>

@@ -76,7 +76,7 @@ body {
 .dp-action {
     width: 100%;
     height: 12%;
-    display: flex;
+    display: flex; 
     flex-direction: row;
 }
 .dp-input {

@@ -44,7 +44,7 @@ const ShowResult = () => {
                                 <div className="sr-content-name">Name Name Name</div>
                                 <div className="sr-content-text">
                                     thoa thoa thoa thoa thoa thoa thoa thoa
-                                </div>
+                                </div> 
                             </div>
                             <img src={imgAvatar} alt="" className='sr-mess-avatar'/>
                         </div>

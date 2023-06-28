@@ -7,7 +7,7 @@ const StartGame = () => {
             <div className="sg-content">
                 <div className="sg-header">
                     <img src={imgLogo} alt="" className='sg-img-logo' />
-                </div>
+                </div> 
                 <div className="sg-center">
                     <div className="sg-left">
                         <div className="sg-title">
