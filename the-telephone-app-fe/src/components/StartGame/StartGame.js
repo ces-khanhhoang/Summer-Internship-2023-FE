@@ -24,14 +24,20 @@ const StartGame = () => {
     const { id_room } = useParams();
     console.log(id_room);
     var client = null;
+
     const onConnected = (id_room,data,role) => {
         client.subscribe('/topic/'+id_room,
         function (response) {
-             data = JSON.parse(response.body);
-             navigate('/lobby', { state: { data, id_room,  role, name} });
+            data = JSON.parse(response.body);
+            navigate('/lobby', { state: { data, id_room,  role, name} });
+            let startGame = data[0].status;
+            if(startGame === 'IN_PROGRESS'){
+                navigate('/start')
+            }
         }
     );
     navigate('/lobby', { state: { data,id_room ,role, name} });
+    console.log('hi');
     }
     const handleStartClick = async ()=> {
         const response = await axios.post(`http://192.168.101.177:9090/user/create/${name}`);
