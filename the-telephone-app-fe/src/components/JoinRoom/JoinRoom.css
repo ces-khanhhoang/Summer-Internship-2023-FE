@@ -133,6 +133,15 @@ option {
     padding: 4px 0 0 8px;
     display: flex;
     align-items: center;
+
+}
+.jr-icon {
+    height: 80%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    padding-right: 4px;
 }
 .jr-img-avatar {
     height: 80%;
@@ -237,7 +246,9 @@ span {
 
 
 .jr-text-player {
-    padding: 40px;
+    display: flex;
+    align-items: center;
     font-weight: bold;
+    text-align: center;
 
 }
