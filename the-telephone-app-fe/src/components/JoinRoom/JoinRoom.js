@@ -4,37 +4,62 @@ import { BsFillCaretLeftFill } from "react-icons/bs";
 import { BsFillVolumeUpFill } from "react-icons/bs";
 import { BsFillSendXFill } from "react-icons/bs";
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
+import { BiXCircle } from "react-icons/bi";
+import { BiCrown } from "react-icons/bi";
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import imgAvatar from '../../assets/avatar-1.svg';
 import imgLogo from '../../assets/gartic-phone.svg';
 import imgNormal from '../../assets/normal.svg';
+import axios from 'axios';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 const JoinRoom = () => {
-    // useState [id_room, setIdRoom] = (location.state?.id_room);
     const location = useLocation();
-    // console.log(location.state?.data);
-    const host = location.state?.host;
-    const users = location.state?.data;
+    const role = location.state?.role;
+    const [users, setUsers] = useState(location.state?.data);
+    useEffect(() => {
+        setUsers(location.state?.data);
+      }, [location.state?.data]);
     const id_room = location.state?.id_room;
-    
-
-    
-  
-
-    console.log('host'+host);
-
-    console.log(users);
-    console.log(id_room);
-    
-     
-   
+    const currentName = location.state?.name;
+    const navigate = useNavigate();
     const [roomLink, setRoomLink] = useState('');
     const handleInviteClick = () => {
         const link =  `http://localhost:3000/${id_room}`;
         setRoomLink(link);
         navigator.clipboard.writeText(link);
     };
-    return (    
-        <div className="jr-screen">
+    const handleKick= async (nickname) =>{
+        const response = await axios.post(`http://192.168.101.177:9090/user/delete/${id_room}/${nickname}`);
+        setUsers(response.data);
+    }
+    const checkNicknameExistence = (nickname) => {
+        console.log(users);
+        if (users.length > 1) {
+        console.log('2 neusers');
+            return users.some((user) => user.nickname === nickname);
+        }
+        if(role ==1){
+            return true;
+        }
+    };
+      const handleNavigate = () => {
+        confirmAlert({
+          title: 'KICKED OUT',
+          message: 'You have been kicked out from the room by the host',
+          buttons: [
+            {
+              label: 'OK',
+              onClick: () => navigate('/')
+            }
+          ]
+        });
+      };
+    return checkNicknameExistence(currentName)?(
+            <div className="jr-screen">
             <div className="jr-content">
                 <div className="jr-header">
                     <button className="jr-btn-back">
@@ -70,11 +95,22 @@ const JoinRoom = () => {
                                 </select>
                             </span>
                             <div className="jr-player">
-                                {users && users.length >= 2 ? (
+                                {users && users.length >= 1 ? (
                                     users.map((user, index) => (
                                     <div className="jr-detail-player" >
                                         <img src={imgAvatar} alt="avatar" className='jr-img-avatar' />
                                         <span className='jr-text'>{user.nickname}</span>
+                                        <i className="jr-icon">
+                                            {
+                                                user.role[0].name == 'ROLE_HOST' ?(
+                                                    <BiCrown/>
+                                                ):(
+                                                    role ==1 && (
+                                                        <BiXCircle onClick={() => handleKick(user.nickname)}/>
+                                                    )
+                                                )
+                                            }
+                                        </i>
                                     </div>
                                     ))
                                 ):
@@ -82,6 +118,9 @@ const JoinRoom = () => {
                                     <div className="jr-detail-player" >
                                         <img src={imgAvatar} alt="avatar" className='jr-img-avatar' />
                                         <span className='jr-text'>{users.nickname}</span>
+                                        <i className="jr-icon">
+                                            <BiCrown/>
+                                        </i>
                                     </div>
                                 )}
                             </div>
@@ -103,7 +142,7 @@ const JoinRoom = () => {
                             </div>
                         </div>
                         
-                        {host==1 && (
+                        {role==1 && (
                             <div className="jr-action">
                                 <button className="jr-btn-action" onClick={handleInviteClick}>
                                 <BsFillSendXFill className='jr-btn-icon' />
@@ -117,7 +156,7 @@ const JoinRoom = () => {
                             </div>
                         )}
                         {
-                            host==0 && (
+                            role==0 && (
                                 <div className="jr-action ">
                                     <div className="jr-text-player">
                                       WAITING FOR THE HOST TO SET UP AND TO START THE GAME 
@@ -126,23 +165,14 @@ const JoinRoom = () => {
                             )
                         }
 
-                        {/* <div className="jr-action">
-                            <button className="jr-btn-action" onClick={handleInviteClick}>
-                                <BsFillSendXFill className='jr-btn-icon' />
-                                Invite
-                            </button>
-
-                            <button className="jr-btn-action">
-                                <BsFillArrowRightSquareFill className='jr-btn-icon' />
-                                Start
-                            </button>
-                        </div> */}
                     </div>
                 </div>
 
             </div>
             
         </div>
+    ):(
+        handleNavigate()
     );
 }
  
