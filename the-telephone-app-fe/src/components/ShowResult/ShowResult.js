@@ -2,19 +2,25 @@ import './ShowResult.css'
 import { BsFillCaretLeftFill } from "react-icons/bs";
 import { BsFillVolumeUpFill } from "react-icons/bs";
 import imgLogo from '../../assets/gartic-phone.svg';
+import { useNavigate } from 'react-router-dom';
 
 import imgAvatar from '../../assets/avatar-1.svg';
 import imgNormal from '../../assets/normal.svg';
 import { BsFillSendXFill } from "react-icons/bs";
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
 const ShowResult = () => {
+    const navigate = useNavigate();
+
+    const handleButtonHome= () =>{
+        navigate('/');
+    }
     return ( 
         <div className="sr-screen">
             <div className="sr-content">
                 <div className="sr-header">
-                    <button className="sr-btn-back">
+                    <button className="sr-btn-back" onClick={handleButtonHome}>
                         <BsFillCaretLeftFill />
-                        Back
+                        HOME
                     </button>
                     <img src={imgLogo} alt="logo"  className='sr-img-logo'/>
                     <button className="sr-btn-sound">

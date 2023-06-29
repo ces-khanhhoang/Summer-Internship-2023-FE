@@ -3,7 +3,7 @@ import './Draw.css';
 import imgLogo from '../../assets/gartic.svg';
 import imgGalaxy from '../../assets/galaxy.jpg';
 import { BsClockFill } from "react-icons/bs";
-
+import { useLocation } from 'react-router-dom';
 import { useOnDraw } from '../Hooks'
 import { useEffect, useState } from 'react';
 // import { collection, onSnapshot } from 'firebase/firestore';
@@ -14,8 +14,14 @@ const Draw = ({
     width = '670%',
     height = '300%'
 }) => {
-    const [picture, setPicture] = useState(null);
+    const location = useLocation();
+    const turn = location.state?.turn;
+    const id_room = location.state?.id_room;
+    const currentName = location.state?.name;
+    const dataReceive = location.state?.dataReceive;
 
+    console.log(dataReceive);
+    const [picture, setPicture] = useState(null);
     const uploadPicture = () => {
         if (picture == null) return;
         const canvas = document.getElementById('myCanvas');
@@ -32,9 +38,6 @@ const Draw = ({
         document.write('<img src="' + imageDataURL + '"/>');
         console.log(canvas.toDataURL('image/png'));
     }
-
-
-
     const {
         onMouseDown,
         setCanvasRef
@@ -44,11 +47,6 @@ const Draw = ({
     function onDraw(ctx, point, prevPoint) {
         drawLine(prevPoint, point, ctx, '#000000', 5);
     }
-
-
-    // const canvas = document.getElementById('myCanvas');
-    // const imageDataURL = canvas.toDataURL('image/png');
-
 
     function drawLine(
         start,
@@ -89,7 +87,7 @@ const Draw = ({
                         HEY, IT'S TIME TO DRAW!
                         </div>
                         <div className="d-text">
-                        Vetagarian confectioner in the sewer ... =)) ahihi
+                        {dataReceive.value}
                         </div>
                     </div>
                     <div className="dp-main-content">
