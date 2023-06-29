@@ -18,22 +18,20 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const JoinRoom = () => {
     const location = useLocation();
-    const role = location.state?.role;
     const [users, setUsers] = useState(location.state?.data);
     useEffect(() => {
         setUsers(location.state?.data);
       }, [location.state?.data]);
-    const id_room = location.state?.id_room;
-    const currentName = location.state?.name;
+    const UserDto = location.state?.UserDto;
     const navigate = useNavigate();
     const [roomLink, setRoomLink] = useState('');
     const handleInviteClick = () => {
-        const link =  `http://localhost:3000/${id_room}`;
+        const link =  `http://localhost:3000/${UserDto.id_room}`;
         setRoomLink(link);
         navigator.clipboard.writeText(link);
     };
     const handleKick= async (nickname) =>{
-        const response = await axios.post(`http://192.168.101.177:9090/user/delete/${id_room}/${nickname}`);
+        const response = await axios.post(`http://192.168.101.177:9090/user/delete/${UserDto.id_room}/${UserDto.nickname}`);
         setUsers(response.data);
     }
     const checkNicknameExistence = (nickname) => {
@@ -41,7 +39,7 @@ const JoinRoom = () => {
         if (users.length > 1) {
             return users.some((user) => user.nickname === nickname);
         }
-        if(role ==1){
+        if(UserDto.role ==1){
             return true;
         }
     };
@@ -58,14 +56,14 @@ const JoinRoom = () => {
         });
     };
     const handlePlay = async () =>{
-        const response = await axios.post(`http://192.168.101.177:9090/user/start/${id_room}`);
+        const response = await axios.post(`http://192.168.101.177:9090/user/start/${UserDto.id_room}`);
     };
     const [statusBack, setStatusBack] = useState(0);
     const handleButtonBack =  () =>{
         
     };
     
-    return checkNicknameExistence(currentName)?(
+    return checkNicknameExistence(UserDto.nickname)?(
             <div className="jr-screen">
             <div className="jr-content">
                 <div className="jr-header">
@@ -113,7 +111,7 @@ const JoinRoom = () => {
                                                 // role ==1 ?(
                                                     <BiCrown/>
                                                 ):(
-                                                    role ==1 && (
+                                                    UserDto.role ==1 && (
                                                         <BiXCircle onClick={() => handleKick(user.nickname)}/>
                                                     )
                                                 )
@@ -150,7 +148,7 @@ const JoinRoom = () => {
                             </div>
                         </div>
                         
-                        {role==1 && (
+                        {UserDto.role==1 && (
                             <div className="jr-action">
                                 <button className="jr-btn-action" onClick={handleInviteClick}>
                                 <BsFillSendXFill className='jr-btn-icon' />
@@ -164,7 +162,7 @@ const JoinRoom = () => {
                             </div>
                         )}
                         {
-                            role==0 && (
+                            UserDto.role==0 && (
                                 <div className="jr-action ">
                                     <div className="jr-text-player">
                                       WAITING FOR THE HOST TO SET UP AND TO START THE GAME 

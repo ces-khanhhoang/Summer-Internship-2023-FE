@@ -10,12 +10,19 @@ import { useLocation } from "react-router-dom";
 import "../firebase";
 import axios from "axios";
 
-const Draw = ({ width = "861 rem", height = "373 rem" }) => {
+const Draw = ({ width = "670%", height = "300%" }) => {
   const location = useLocation();
   const turn = location.state?.turn;
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
+
+  let UserDto = {
+    id_room: id_room,
+    nickname: currentName,
+    data: "",
+    turn: turn,
+  };
 
   const convertToImage = () => {
     setIsClicked(true);
@@ -38,14 +45,22 @@ const Draw = ({ width = "861 rem", height = "373 rem" }) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
         console.log("Download link to your file: ", downloadURL);
         const image = downloadURL;
-        handleUploadImage(id_room, currentName, image, turn);
+        UserDto.data = image;
+        handleUploadImage(UserDto);
       });
     });
   };
 
-  const handleUploadImage = async (id_room, nickname, image, turn) => {
+  const handleUploadImage = async (UserDto) => {
+    turn = turn + 1;
+    console.log("turn:" + turn);
+    // image =  encodeURI( encodeURIComponent);
+    // let image1 = URLDecoder.decode(image, "UTF-8");
+    // console.log (image + 'và' +image1)
+    // image = 'h';
     const response = await axios.post(
-      `http://192.168.101.177:9090/user/done/${id_room}/${nickname}/${image}/${turn}`
+      //   `http://192.168.101.177:9090/user/done/${id_room}/${dataReceive.receiver}/${image}/${turn}`
+      `http://192.168.101.177:9090/user/done/${UserDto}`
     );
   };
 
