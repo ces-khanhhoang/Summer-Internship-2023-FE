@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './StartGame.css';
@@ -9,6 +9,11 @@ import SockJS from "sockjs-client";
 import { useParams } from 'react-router-dom';
 const StartGame = () => {
     const [name, setName] = useState('Nickname' + Math.round(Math.random() * 100000) );
+    const [turn, setTurn] = useState(0);
+    let startGame;
+    useEffect(() => {
+                setTurn(turn => turn +1);
+              }, [startGame]);
     const handleNameChange = (e) => {
         if(e.target.value) {
             setName(e.target.value);
@@ -22,7 +27,6 @@ const StartGame = () => {
         console.log(err);
     }
     const { id_room } = useParams();
-    console.log(id_room);
     var client = null;
 
     const onConnected = (id_room,data,role) => {
@@ -30,15 +34,29 @@ const StartGame = () => {
         function (response) {
             data = JSON.parse(response.body);
             navigate('/lobby', { state: { data, id_room,  role, name} });
-            let startGame = data[0].status;
+            startGame = data[0].status;
             if(startGame === 'IN_PROGRESS'){
-                navigate('/start')
+                navigate('/start',{ state: {id_room, name, turn} })
             }
         }
-    );
+        );
+
+        client.subscribe('/topic/'+name,
+        function (response) {
+            const dataReceive = JSON.parse(response.body);
+            console.log(dataReceive);
+            // if(startGame === 'DRAW'){
+            navigate('/draw', { state: { dataReceive, id_room, name, turn} });
+            // }
+
+        }
+        );
     navigate('/lobby', { state: { data,id_room ,role, name} });
-    console.log('hi');
     }
+
+
+    
+
     const handleStartClick = async ()=> {
         const response = await axios.post(`http://192.168.101.177:9090/user/create/${name}`);
         const host = response.data;

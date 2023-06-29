@@ -6,10 +6,14 @@ import { BsClockFill } from "react-icons/bs";
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import axios from 'axios';
 
 const WriteSentence = () => {
-    // const location = useLocation();
+    const location = useLocation();
+    const id_room = location.state?.id_room;
+    const currentName = location.state?.name;
+    const turn = location.state?.turn;
+
     const [timer, setTimer] = useState(50);
     const buttonDoneRef = useRef(null);
     useEffect(() => {
@@ -32,7 +36,13 @@ const WriteSentence = () => {
       };
       const handleDone= async () =>{
         // console.log('done'+content);
-        // const response = await axios.post(`http://192.168.101.177:9090/user/delete/${id_room}/${nickname}`);
+        const response = await axios.post(`http://192.168.101.177:9090/user/done/${id_room}/${currentName}/${content}/${turn}`);
+        console.log('content'+content);
+        console.log('id_room'+id_room);
+        console.log('currentName'+currentName);
+        console.log('turn'+turn);
+
+
 
     }
 

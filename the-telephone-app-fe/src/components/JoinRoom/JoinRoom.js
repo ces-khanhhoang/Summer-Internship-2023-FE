@@ -60,12 +60,16 @@ const JoinRoom = () => {
     const handlePlay = async () =>{
         const response = await axios.post(`http://192.168.101.177:9090/user/start/${id_room}`);
     };
+    const [statusBack, setStatusBack] = useState(0);
+    const handleButtonBack =  () =>{
+        
+    };
     
     return checkNicknameExistence(currentName)?(
             <div className="jr-screen">
             <div className="jr-content">
                 <div className="jr-header">
-                    <button className="jr-btn-back">
+                    <button className="jr-btn-back" onClick={handleButtonBack}>
                         <BsFillCaretLeftFill />
                         Back
                     </button> 
@@ -106,6 +110,7 @@ const JoinRoom = () => {
                                         <i className="jr-icon">
                                             {
                                                 user.role[0].name == 'ROLE_HOST' ?(
+                                                // role ==1 ?(
                                                     <BiCrown/>
                                                 ):(
                                                     role ==1 && (
