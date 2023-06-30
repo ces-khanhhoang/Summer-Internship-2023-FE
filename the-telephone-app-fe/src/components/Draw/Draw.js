@@ -17,6 +17,19 @@ const Draw = ({ width = "861 rem", height = "373 rem" }) => {
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
 
+  let SendData = {
+    idRoom: id_room,
+    nickname: currentName,
+    data: "",
+    turn: turn,
+  };
+
+  // let SendData2 = new Object();
+  // SendData2.id_room = id_room;
+  // SendData2.nickname = currentName;
+  // SendData2.data = "";
+  // SendData2.turn = turn;
+
   const convertToImage = () => {
     setIsClicked(true);
     const canvas = document.getElementById("myCanvas");
@@ -36,16 +49,18 @@ const Draw = ({ width = "861 rem", height = "373 rem" }) => {
     const storageRef = ref(storage, "images/" + randomName);
     uploadBytes(storageRef, file).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
-        console.log("Download link to your file: ", downloadURL);
-        const image = downloadURL;
-        handleUploadImage(id_room, currentName, image, turn);
+        console.log("Download link to your file: ", downloadURL.toString());
+        const image = downloadURL.toString();
+        SendData.data = image;
+        console.log(SendData);
+        // handleUploadImage(SendData);
       });
     });
   };
 
-  const handleUploadImage = async (id_room, nickname, image, turn) => {
+  const handleUploadImage = async (sendData) => {
     const response = await axios.post(
-      `http://192.168.101.177:9090/user/done/${id_room}/${nickname}/${image}/${turn}`
+      `http://192.168.101.177:9090/user/done/` + sendData
     );
   };
 
@@ -81,7 +96,7 @@ const Draw = ({ width = "861 rem", height = "373 rem" }) => {
               <img src={imgLogo} alt="" className="dp-img-logo-gartic" />
             </div>
             <div className="d-title">HEY, IT'S TIME TO DRAW!</div>
-            <div className="d-text">{dataReceive.value}</div>
+            {/* <div className="d-text">{dataReceive.value}</div> */}
           </div>
           <div className="dp-main-content">
             <canvas
