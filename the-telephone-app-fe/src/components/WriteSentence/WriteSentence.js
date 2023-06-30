@@ -35,15 +35,11 @@ const WriteSentence = () => {
         setContent(event.target.value);
       };
       const handleDone= async () =>{
-        // console.log('done'+content);
-        const response = await axios.post(`http://192.168.101.177:9090/user/done/${id_room}/${currentName}/${content}/${turn}`);
+        const response = await axios.post(`http://192.168.101.177:9090/user/done/${id_room}/${currentName}/${content}/${turn}`  );
         console.log('content'+content);
         console.log('id_room'+id_room);
         console.log('currentName'+currentName);
         console.log('turn'+turn);
-
-
-
     }
 
 
@@ -82,4 +78,3 @@ const WriteSentence = () => {
 }
  
 export default WriteSentence;
-

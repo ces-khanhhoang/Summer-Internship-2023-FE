@@ -8,12 +8,9 @@ import {over} from 'stompjs';
 import SockJS from "sockjs-client";
 import { useParams } from 'react-router-dom';
 const StartGame = () => {
-    const [name, setName] = useState('Nickname' + Math.round(Math.random() * 100000) );
-    const [turn, setTurn] = useState(0);
+    const [name, setName] = useState('name0' + Math.round(Math.random() * 100000) );
+    let [turn, setTurn] = useState(1);
     let startGame;
-    useEffect(() => {
-                setTurn(turn => turn +1);
-              }, [startGame]);
     const handleNameChange = (e) => {
         if(e.target.value) {
             setName(e.target.value);
@@ -28,7 +25,6 @@ const StartGame = () => {
     }
     const { id_room } = useParams();
     var client = null;
-
     const onConnected = (id_room,data,role) => {
         client.subscribe('/topic/'+id_room,
         function (response) {
@@ -44,10 +40,18 @@ const StartGame = () => {
         client.subscribe('/topic/'+name,
         function (response) {
             const dataReceive = JSON.parse(response.body);
+            startGame = dataReceive.status;
             console.log(dataReceive);
-            // if(startGame === 'DRAW'){
+            console.log(startGame);
+
+            if(startGame === 'WRITE'){
+                turn = turn +1;
             navigate('/draw', { state: { dataReceive, id_room, name, turn} });
-            // }
+            }
+            if(startGame === 'DRAW'){
+                turn = turn+1;
+                navigate('/write', { state: { dataReceive, id_room, name, turn} });
+            }
 
         }
         );
