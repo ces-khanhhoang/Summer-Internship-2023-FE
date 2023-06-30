@@ -18,7 +18,6 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 
 const JoinRoom = () => {
-
   const location = useLocation();
   const role = location.state?.role;
   const [users, setUsers] = useState(location.state?.data);

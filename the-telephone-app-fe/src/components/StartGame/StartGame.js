@@ -8,7 +8,6 @@ import {over} from 'stompjs';
 import SockJS from "sockjs-client";
 import { useParams } from 'react-router-dom';
 const StartGame = () => {
-
     const [name, setName] = useState('name0' + Math.round(Math.random() * 100000) );
     let [turn, setTurn] = useState(1);
     let startGame;
@@ -20,8 +19,6 @@ const StartGame = () => {
             setName('Nickname' + Math.round(Math.random() * 1000));
         }
     }
-
-    
     const navigate = useNavigate();
     const onError =(err)=>{
         console.log(err);
@@ -31,12 +28,11 @@ const StartGame = () => {
     const onConnected = (id_room,data,role) => {
         client.subscribe('/topic/'+id_room,
         function (response) {
-            UserDto.role = role;
             data = JSON.parse(response.body);
-            navigate('/lobby', { state: { data, UserDto} });
+            navigate('/lobby', { state: { data, id_room,  role, name} });
             startGame = data[0].status;
             if(startGame === 'IN_PROGRESS'){
-                navigate('/start',{ state: {UserDto} })
+                navigate('/start',{ state: {id_room, name, turn} })
             }
         }
         );
@@ -46,7 +42,6 @@ const StartGame = () => {
             const dataReceive = JSON.parse(response.body);
             startGame = dataReceive.status;
             console.log(dataReceive);
-
             console.log(startGame);
 
             if(startGame === 'WRITE'){
@@ -60,7 +55,7 @@ const StartGame = () => {
 
         }
         );
-    navigate('/lobby', { state: { data,UserDto} });
+    navigate('/lobby', { state: { data,id_room ,role, name} });
     }
 
 
