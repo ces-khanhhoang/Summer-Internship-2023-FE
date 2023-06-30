@@ -10,7 +10,9 @@ import axios from 'axios';
 
 const WriteSentence = () => {
     const location = useLocation();
-    const UserDto = location.state?.UserDto;
+    const id_room = location.state?.id_room;
+    const currentName = location.state?.name;
+    const turn = location.state?.turn;
 
     const [timer, setTimer] = useState(50);
     const buttonDoneRef = useRef(null);
@@ -33,7 +35,6 @@ const WriteSentence = () => {
         setContent(event.target.value);
       };
       const handleDone= async () =>{
-
         const response = await axios.post(`http://192.168.101.177:9090/user/done/${id_room}/${currentName}/${content}/${turn}`  );
         console.log('content'+content);
         console.log('id_room'+id_room);
