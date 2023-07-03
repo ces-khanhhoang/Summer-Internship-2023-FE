@@ -10,19 +10,12 @@ import { useLocation } from "react-router-dom";
 import "../firebase";
 import axios from "axios";
 
-const Draw = ({ width = "670%", height = "300%" }) => {
+const Draw = ({ width = '670%', height = '300%' }) => {
   const location = useLocation();
   const turn = location.state?.turn;
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
-
-  let UserDto = {
-    id_room: id_room,
-    nickname: currentName,
-    data: "",
-    turn: turn,
-  };
 
   const convertToImage = () => {
     setIsClicked(true);
@@ -45,22 +38,18 @@ const Draw = ({ width = "670%", height = "300%" }) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
         console.log("Download link to your file: ", downloadURL);
         const image = downloadURL;
-        UserDto.data = image;
-        handleUploadImage(UserDto);
+        handleUploadImage(id_room, currentName, image, turn);
       });
     });
   };
 
-  const handleUploadImage = async (UserDto) => {
-    turn = turn + 1;
-    console.log("turn:" + turn);
-    // image =  encodeURI( encodeURIComponent);
-    // let image1 = URLDecoder.decode(image, "UTF-8");
-    // console.log (image + 'và' +image1)
-    // image = 'h';
+  const handleUploadImage = async (id_room, nickname, image, turn) => {
+    image = image.replace("https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%", "(1)");//1
+    image = image.replace("?alt=media&token=", "(2)");//2
+
+    console.log(image);
     const response = await axios.post(
-      //   `http://192.168.101.177:9090/user/done/${id_room}/${dataReceive.receiver}/${image}/${turn}`
-      `http://192.168.101.177:9090/user/done/${UserDto}`
+      `http://192.168.101.177:9090/user/done/${id_room}/${nickname}/${image}/${turn}`
     );
   };
 

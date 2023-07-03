@@ -8,9 +8,9 @@ import {over} from 'stompjs';
 import SockJS from "sockjs-client";
 import { useParams } from 'react-router-dom';
 const StartGame = () => {
-    const [name, setName] = useState('Nickname' + Math.round(Math.random() * 100000) );
+    const [name, setName] = useState('name0' + Math.round(Math.random() * 100000) );
+    let [turn, setTurn] = useState(1);
     let startGame;
-    
     const handleNameChange = (e) => {
         if(e.target.value) {
             setName(e.target.value);
@@ -19,35 +19,20 @@ const StartGame = () => {
             setName('Nickname' + Math.round(Math.random() * 1000));
         }
     }
-
-    let UserDto = {
-        id_room: id_room,
-        nickname: name,
-        data: "",
-        turn: 0,
-        role: 0,
-        content: "",
-        image:''
-      };
-    //   useEffect(() => {
-    //     setTurn(UserDto.turn => UserDto.turn +1);
-    //   }, [startGame]);
     const navigate = useNavigate();
     const onError =(err)=>{
         console.log(err);
     }
     const { id_room } = useParams();
     var client = null;
-
     const onConnected = (id_room,data,role) => {
         client.subscribe('/topic/'+id_room,
         function (response) {
-            UserDto.role = role;
             data = JSON.parse(response.body);
-            navigate('/lobby', { state: { data, UserDto} });
+            navigate('/lobby', { state: { data, id_room,  role, name} });
             startGame = data[0].status;
             if(startGame === 'IN_PROGRESS'){
-                navigate('/start',{ state: {UserDto} })
+                navigate('/start',{ state: {id_room, name, turn} })
             }
         }
         );
@@ -55,13 +40,22 @@ const StartGame = () => {
         client.subscribe('/topic/'+name,
         function (response) {
             const dataReceive = JSON.parse(response.body);
+            startGame = dataReceive.status;
             console.log(dataReceive);
-            if(startGame === 'DRAW'){
-            navigate('/draw', { state: { dataReceive, UserDto} });
+            console.log(startGame);
+
+            if(startGame === 'WRITE'){
+                turn = turn +1;
+            navigate('/draw', { state: { dataReceive, id_room, name, turn} });
             }
+            if(startGame === 'DRAW'){
+                turn = turn+1;
+                navigate('/write', { state: { dataReceive, id_room, name, turn} });
+            }
+
         }
         );
-    navigate('/lobby', { state: { data,UserDto} });
+    navigate('/lobby', { state: { data,id_room ,role, name} });
     }
 
 
