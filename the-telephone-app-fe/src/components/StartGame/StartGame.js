@@ -8,6 +8,8 @@ import {over} from 'stompjs';
 import SockJS from "sockjs-client";
 import { useParams } from 'react-router-dom';
 const StartGame = () => {
+  const ip = 'http://192.168.101.180:9090/';
+
     const [name, setName] = useState('name0' + Math.round(Math.random() * 100000) );
     let [turn, setTurn] = useState(1);
     let startGame;
@@ -29,11 +31,18 @@ const StartGame = () => {
         client.subscribe('/topic/'+id_room,
         function (response) {
             data = JSON.parse(response.body);
+            console.log(data);
             navigate('/lobby', { state: { data, id_room,  role, name} });
-            startGame = data[0].status;
-            if(startGame === 'IN_PROGRESS'){
-                navigate('/start',{ state: {id_room, name, turn} })
+            if(data.length > 0){
+                startGame = data[0].status;
+                if(startGame === 'IN_PROGRESS'){
+                    navigate('/start',{ state: {id_room, name, turn} })
+                }
             }
+            else{
+                navigate('/');
+            }
+            
         }
         );
 
@@ -62,17 +71,17 @@ const StartGame = () => {
     
 
     const handleStartClick = async ()=> {
-        const response = await axios.post(`http://192.168.101.177:9090/user/create/${name}`);
+        const response = await axios.post(ip+`user/create/${name}`);
         const host = response.data;
-        var Sock = new SockJS('http://192.168.101.177:9090/gameplay') 
+        var Sock = new SockJS(ip+'gameplay') 
         client = over(Sock);
         client.connect({},() =>onConnected(host.id_room,host,1), onError);
     } 
 
     const handleJoinClick = async ()=> {
-        const response = await axios.post(`http://192.168.101.177:9090/user/join/${id_room}/${name}`);
+        const response = await axios.post(ip+`user/join/${id_room}/${name}`);
         const users = response.data;
-         var Sock = new SockJS('http://192.168.101.177:9090/gameplay') 
+         var Sock = new SockJS(ip+'gameplay') 
          client = over(Sock);
          client.connect({},() => onConnected(id_room,users,0), onError);
     }
