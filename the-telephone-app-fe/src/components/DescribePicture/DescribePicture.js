@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const DescribePicture = () => {
+    let ip = 'http://192.168.101.180:9090/';
     const location = useLocation();
   let turn = location.state?.turn;
   const id_room = location.state?.id_room;
@@ -19,7 +20,7 @@ const DescribePicture = () => {
       };
       const handleDone= async () =>{
         
-        const response = await axios.post(`http://192.168.101.177:9090/user/done/${id_room}/${currentName}/${content}/${turn}`);
+        const response = await axios.post(ip+`user/done/${id_room}/${currentName}/${content}/${turn}`);
         console.log('content'+content);
         console.log('id_room'+id_room);
         console.log('currentName'+currentName);
