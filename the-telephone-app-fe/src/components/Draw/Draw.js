@@ -1,24 +1,36 @@
 import "../DescribePicture/DescribePicture.css";
 import "./Draw.css";
 import imgLogo from "../../assets/gartic.svg";
-import { BsClockFill } from "react-icons/bs";
 import { ref, uploadBytes, getStorage, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { useOnDraw } from "../Hooks";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../firebase";
 import axios from "axios";
-
-const Draw = ({ width = '670%', height = '300%' }) => {
-  let ip = 'http://192.168.101.180:9090/';
-
+const Draw = ({ width = "670%", height = "300%" }) => {
+  let ip = "http://192.168.101.180:9090/";
   const location = useLocation();
   const turn = location.state?.turn;
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
+  const [timer, setTimer] = useState(30);
+  const buttonDoneRef = useRef(null);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimer((prevTimer) => prevTimer - 1);
+    }, 1000);
 
+    if (timer === 0) {
+      clearInterval(intervalId);
+      buttonDoneRef.current.click();
+    }
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [timer]);
   const convertToImage = () => {
     setIsClicked(true);
     const canvas = document.getElementById("myCanvas");
@@ -46,17 +58,16 @@ const Draw = ({ width = '670%', height = '300%' }) => {
   };
 
   const handleUploadImage = async (id_room, nickname, image, turn) => {
-    image = image.replace("https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%", "(1)");//1
-    image = image.replace("?alt=media&token=", "(2)");//2
+    image = image.replace(
+      "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
+      "(1)"
+    ); //1
+    image = image.replace("?alt=media&token=", "(2)"); //2
 
     console.log(image);
     const response = await axios.post(
-      ip+`user/done/${id_room}/${nickname}/${image}/${turn}`
+      ip + `user/done/${id_room}/${dataReceive.receiver}/${image}/${turn}`
     );
-
-    // https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%2Ff53937e0-243d-449e-b845-7f2aac50c803?alt=media&token=abbc11a1-c20d-4d52-901e-49b4c3dd896b
-    // https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%2Ffbf26bec-9006-41cb-a318-6e7e619a683f?alt=media&token=19b4ad2f-20ce-4afb-81cb-d7abf391c6d5
-
   };
 
   const { onMouseDown, setCanvasRef } = useOnDraw(onDraw);
@@ -108,14 +119,19 @@ const Draw = ({ width = '670%', height = '300%' }) => {
                 DONE!
               </button>
             ) : (
-              <button onClick={convertToImage} className="d-btn-done">
+              <button
+                ref={buttonDoneRef}
+                onClick={convertToImage}
+                className="d-btn-done"
+              >
                 DONE!
               </button>
             )}
           </div>
         </div>
         <div className="dp-sub-right">
-          <BsClockFill size="30px" />
+          {/* <BsClockFill size="30px" /> */}
+          {timer}
         </div>
       </div>
     </div>
