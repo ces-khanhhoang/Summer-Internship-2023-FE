@@ -18,6 +18,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 
 const JoinRoom = () => {
+  const ip = 'http://192.168.101.180:9090/';
   const location = useLocation();
   const role = location.state?.role;
   const [users, setUsers] = useState(location.state?.data);
@@ -27,6 +28,7 @@ const JoinRoom = () => {
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const navigate = useNavigate();
+  let statusBack = false;
   const [roomLink, setRoomLink] = useState("");
   const handleInviteClick = () => {
     const link = `http://localhost:3000/${id_room}`;
@@ -35,7 +37,7 @@ const JoinRoom = () => {
   };
   const handleKick = async (nickname) => {
     const response = await axios.post(
-      `http://192.168.101.177:9090/user/delete/${id_room}/${nickname}`
+      ip+`user/delete/${id_room}/${nickname}`
     );
     setUsers(response.data);
   };
@@ -49,9 +51,17 @@ const JoinRoom = () => {
     }
   };
   const handleNavigateKick = () => {
+    let mess;
+    if(role == 1){
+      mess = 'You canceled the game room';
+    }
+    else {
+      mess = 'You have been kicked out from the room by the host';
+    }
+
     confirmAlert({
       title: "KICKED OUT",
-      message: "You have been kicked out from the room by the host",
+      message: mess,
       buttons: [
         {
           label: "OK",
@@ -62,11 +72,21 @@ const JoinRoom = () => {
   };
   const handlePlay = async () => {
     const response = await axios.post(
-      `http://192.168.101.177:9090/user/start/${id_room}`
+      ip+`user/start/${id_room}`
     );
   };
-  const [statusBack, setStatusBack] = useState(0);
-  const handleButtonBack = () => {};
+  
+  const handleButtonBack = () => {
+    statusBack = true;
+    if(role == 1){
+      for(let i=0;i<users.length;i++){
+        handleKick(users[i].nickname);
+      }
+    }
+    else{
+      handleKick(currentName);
+    }
+  };
 
   return checkNicknameExistence(currentName) ? (
     <div className="jr-screen">

@@ -11,6 +11,8 @@ import "../firebase";
 import axios from "axios";
 
 const Draw = ({ width = '670%', height = '300%' }) => {
+  const ip = 'http://192.168.101.180:9090/';
+
   const location = useLocation();
   const turn = location.state?.turn;
   const id_room = location.state?.id_room;
@@ -49,8 +51,9 @@ const Draw = ({ width = '670%', height = '300%' }) => {
 
     console.log(image);
     const response = await axios.post(
-      `http://192.168.101.177:9090/user/done/${id_room}/${nickname}/${image}/${turn}`
+      ip+`user/done/${id_room}/${nickname}/${image}/${turn}`
     );
+
   };
 
   const { onMouseDown, setCanvasRef } = useOnDraw(onDraw);
