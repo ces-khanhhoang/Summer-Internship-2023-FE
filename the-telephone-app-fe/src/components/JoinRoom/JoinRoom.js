@@ -18,6 +18,8 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 
 const JoinRoom = () => {
+  let ip = 'http://192.168.101.180:9090/';
+
   const location = useLocation();
   const role = location.state?.role;
   const [users, setUsers] = useState(location.state?.data);
@@ -35,7 +37,7 @@ const JoinRoom = () => {
   };
   const handleKick = async (nickname) => {
     const response = await axios.post(
-      `http://192.168.101.177:9090/user/delete/${id_room}/${nickname}`
+      ip+`user/delete/${id_room}/${nickname}`
     );
     setUsers(response.data);
   };
@@ -49,9 +51,17 @@ const JoinRoom = () => {
     }
   };
   const handleNavigateKick = () => {
+    let mess, title;
+    if(role ===1){
+      mess = 'You canceled the room';
+      title = 'CENCEL PLAYROOM'
+    }else{
+      mess = 'You have been kicked out from the room by the host';
+      title = 'KICKED OUT'
+    }
     confirmAlert({
-      title: "KICKED OUT",
-      message: "You have been kicked out from the room by the host",
+      title: title,
+      message: mess,
       buttons: [
         {
           label: "OK",
@@ -62,11 +72,19 @@ const JoinRoom = () => {
   };
   const handlePlay = async () => {
     const response = await axios.post(
-      `http://192.168.101.177:9090/user/start/${id_room}`
+      ip+`user/start/${id_room}`
     );
   };
-  const [statusBack, setStatusBack] = useState(0);
-  const handleButtonBack = () => {};
+  const handleButtonBack = () => {
+    if(role===1){
+      for(let i=0;i<users.length;i++){
+        handleKick(users[i].nickname)
+    }}
+    else
+    {
+      handleKick(currentName)
+    }
+  };
 
   return checkNicknameExistence(currentName) ? (
     <div className="jr-screen">

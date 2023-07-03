@@ -11,6 +11,8 @@ import "../firebase";
 import axios from "axios";
 
 const Draw = ({ width = '670%', height = '300%' }) => {
+  let ip = 'http://192.168.101.180:9090/';
+
   const location = useLocation();
   const turn = location.state?.turn;
   const id_room = location.state?.id_room;
@@ -49,7 +51,7 @@ const Draw = ({ width = '670%', height = '300%' }) => {
 
     console.log(image);
     const response = await axios.post(
-      `http://192.168.101.177:9090/user/done/${id_room}/${nickname}/${image}/${turn}`
+      ip+`user/done/${id_room}/${nickname}/${image}/${turn}`
     );
 
     // https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%2Ff53937e0-243d-449e-b845-7f2aac50c803?alt=media&token=abbc11a1-c20d-4d52-901e-49b4c3dd896b

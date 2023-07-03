@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const WriteSentence = () => {
+  let ip = 'http://192.168.101.180:9090/';
+
     const location = useLocation();
     const id_room = location.state?.id_room;
     const currentName = location.state?.name;
@@ -35,7 +37,7 @@ const WriteSentence = () => {
         setContent(event.target.value);
       };
       const handleDone= async () =>{
-        const response = await axios.post(`http://192.168.101.177:9090/user/done/${id_room}/${currentName}/${content}/${turn}`  );
+        const response = await axios.post(ip+`user/done/${id_room}/${currentName}/${content}/${turn}`  );
         console.log('content'+content);
         console.log('id_room'+id_room);
         console.log('currentName'+currentName);
