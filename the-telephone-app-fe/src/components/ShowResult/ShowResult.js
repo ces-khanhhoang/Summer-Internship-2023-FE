@@ -23,9 +23,12 @@ const ShowResult = () => {
     getResult();
   };
 
+  let ip = "http://192.168.101.180:9090/";
+
   const getResult = async () => {
     const response = await axios.post(
-      `http://192.168.101.180:9090/user/result/${location.state?.data[player].nickname}/${location.state?.id_room}`
+      ip +
+        `user/result/${location.state?.data[player].nickname}/${location.state?.id_room}`
     );
     const responseResult = response.data;
     setResult(responseResult);
@@ -111,13 +114,23 @@ const ShowResult = () => {
               ""
             ) : (
               <div>
-                <button onClick={previousPlayer} className="sr-next-button">
-                  Back
-                </button>
+                {player == 0 ? (
+                  <button disabled className="sr-next-button">
+                    Back
+                  </button>
+                ) : (
+                  <button onClick={previousPlayer} className="sr-next-button">
+                    Back
+                  </button>
+                )}
 
-                <button onClick={nextPlayer} className="sr-next-button">
-                  Next
-                </button>
+                {player == location.state?.data.length - 1 ? (
+                  <button className="sr-next-button">Play Again</button>
+                ) : (
+                  <button onClick={nextPlayer} className="sr-next-button">
+                    Next
+                  </button>
+                )}
               </div>
             )}
           </div>
