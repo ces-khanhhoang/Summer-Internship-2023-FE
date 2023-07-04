@@ -15,8 +15,6 @@ function App() {
           <Route path={"/draw"} element={<Draw />}></Route>
           <Route path={"/write"} element={<DescribePicture />}></Route>
           <Route path={"/book"} element={<ShowResult />}></Route>
-
-
         </Routes>
       </>   
     

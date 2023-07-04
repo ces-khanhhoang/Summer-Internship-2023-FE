@@ -40,10 +40,6 @@ const WriteSentence = () => {
     const response = await axios.post(
       ip + `user/done/${id_room}/${currentName}/${content}/${turn}`
     );
-    console.log("content" + content);
-    console.log("id_room" + id_room);
-    console.log("currentName" + currentName);
-    console.log("turn" + turn);
   };
 
   return (
