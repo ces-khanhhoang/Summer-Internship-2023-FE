@@ -25,6 +25,7 @@ const JoinRoom = () => {
   const [users, setUsers] = useState(location.state?.data);
   useEffect(() => {
     setUsers(location.state?.data);
+    console.log(location.state?.data);
   }, [location.state?.data]);
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;

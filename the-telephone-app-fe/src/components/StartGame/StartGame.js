@@ -56,6 +56,17 @@ const StartGame = () => {
         turn = turn + 1;
         navigate("/write", { state: { dataReceive, id_room, name, turn } });
       }
+      if (turn > dataReceive.number) {
+        console.log(dataReceive);
+        axios.post(
+          `http://192.168.101.180:9090/user/result/${data[0].nickname}/${id_room}`
+        );
+      }
+      if (Array.isArray(dataReceive)) {
+        navigate("/book", {
+          state: { data, id_room, role, name, dataReceive, turn },
+        });
+      }
     });
     navigate("/lobby", { state: { data, id_room, role, name } });
   };
@@ -75,7 +86,6 @@ const StartGame = () => {
     client = over(Sock);
     client.connect({}, () => onConnected(id_room, users, 0), onError);
   };
-
   return (
     <div className="sg-screen">
       <div className="sg-content">
