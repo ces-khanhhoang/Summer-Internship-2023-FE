@@ -16,19 +16,18 @@ import axios from "axios";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
-
 const JoinRoom = () => {
   let ip = "http://192.168.101.180:9090/";
 
   const location = useLocation();
-  const role = location.state?.role;
-  const [users, setUsers] = useState(location.state?.data);
+  let role = location.state?.role;
+  let [users, setUsers] = useState(location.state?.data);
   useEffect(() => {
     setUsers(location.state?.data);
     console.log(location.state?.data);
   }, [location.state?.data]);
-  const id_room = location.state?.id_room;
-  const currentName = location.state?.name;
+  let id_room = location.state?.id_room;
+  let currentName = location.state?.name;
   const navigate = useNavigate();
   const [roomLink, setRoomLink] = useState("");
   const handleInviteClick = () => {
@@ -43,12 +42,25 @@ const JoinRoom = () => {
     setUsers(response.data);
   };
   const checkNicknameExistence = (nickname) => {
-    console.log(users);
-    if (users.length > 1) {
-      return users.some((user) => user.nickname === nickname);
-    }
+    // if(!users){
+    //   users = location.state?.users;
+    //   currentName = location.state?.currentName;
+    //   role = location.state?.role;
+
+    //   console.log(users);
+    //   console.log(currentName);
+
+    // }
     if (role == 1) {
+      console.log("i");
       return true;
+    }
+    if (users.length > 0) {
+      console.log(users.some((user) => user.nickname === nickname));
+      // id_room = users.id_room;
+      // console.log('hi'+id_room);
+
+      return users.some((user) => user.nickname === nickname);
     }
   };
   const handleNavigateKick = () => {

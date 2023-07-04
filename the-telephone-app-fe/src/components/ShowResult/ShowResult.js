@@ -8,8 +8,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 const ShowResult = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
+  const currentName = location.state?.name;
+  let ip = "http://192.168.101.180:9090/";
 
+  const navigate = useNavigate();
   const handleButtonHome = () => {
     navigate("/");
   };
@@ -22,8 +25,6 @@ const ShowResult = () => {
     setPlayer((player -= 1));
     getResult();
   };
-
-  let ip = "http://192.168.101.180:9090/";
 
   const getResult = async () => {
     const response = await axios.post(
@@ -42,7 +43,6 @@ const ShowResult = () => {
     return <img className="sr-content-img" src={data}></img>; //2
   }
 
-  const location = useLocation();
   const [users, setUsers] = useState(location.state?.data);
   const role = location.state?.role;
   const [results, setResult] = useState([]);
@@ -53,7 +53,10 @@ const ShowResult = () => {
     setUsers(location.state?.data);
     setResult(resultSet);
   }, [location.state?.data]);
-
+  const handleButtonPlayAgain = async () => {
+    let id_room = users[0].id_room;
+    const response = await axios.post(ip + `user/again/${id_room}`);
+  };
   return (
     <div className="sr-screen">
       <div className="sr-content">
@@ -125,7 +128,12 @@ const ShowResult = () => {
                 )}
 
                 {player == location.state?.data.length - 1 ? (
-                  <button className="sr-next-button">Play Again</button>
+                  <button
+                    className="sr-next-button"
+                    onClick={handleButtonPlayAgain}
+                  >
+                    Play Again
+                  </button>
                 ) : (
                   <button onClick={nextPlayer} className="sr-next-button">
                     Next
