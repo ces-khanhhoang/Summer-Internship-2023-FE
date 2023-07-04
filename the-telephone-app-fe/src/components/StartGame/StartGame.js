@@ -58,9 +58,7 @@ const StartGame = () => {
       }
       if (turn > dataReceive.number) {
         console.log(dataReceive);
-        axios.post(
-          `http://192.168.101.180:9090/user/result/${data[0].nickname}/${id_room}`
-        );
+        axios.post(ip + `user/result/${data[0].nickname}/${id_room}`);
       }
       if (Array.isArray(dataReceive)) {
         navigate("/book", {
