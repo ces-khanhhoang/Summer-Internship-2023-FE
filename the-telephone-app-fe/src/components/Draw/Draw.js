@@ -8,6 +8,7 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../firebase";
 import axios from "axios";
+import "../style.css";
 const Draw = ({ width = "670%", height = "300%" }) => {
   let ip = "http://192.168.101.180:9090/";
   const location = useLocation();
@@ -101,8 +102,8 @@ const Draw = ({ width = "670%", height = "300%" }) => {
             <div className="dp-logo">
               <img src={imgLogo} alt="" className="dp-img-logo-gartic" />
             </div>
-            <div className="d-title">HEY, IT'S TIME TO DRAW!</div>
-            <div className="d-text">{dataReceive.value}</div>
+            <div className="d-title font-roboto">HEY, IT'S TIME TO DRAW!</div>
+            <div className="d-text font-roboto">{dataReceive.value}</div>
           </div>
           <div className="dp-main-content">
             <canvas
@@ -115,21 +116,21 @@ const Draw = ({ width = "670%", height = "300%" }) => {
           </div>
           <div className="dp-action">
             {isClicked ? (
-              <button disabled className="d-btn-done">
+              <button disabled className="d-btn-done font-roboto">
                 DONE!
               </button>
             ) : (
               <button
                 ref={buttonDoneRef}
                 onClick={convertToImage}
-                className="d-btn-done"
+                className="d-btn-done font-roboto"
               >
                 DONE!
               </button>
             )}
           </div>
         </div>
-        <div className="dp-sub-right">
+        <div className="dp-sub-right font-roboto">
           {/* <BsClockFill size="30px" /> */}
           {timer}
         </div>

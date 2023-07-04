@@ -16,6 +16,7 @@ import axios from "axios";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
+import "../style.css";
 
 const JoinRoom = () => {
   let ip = "http://192.168.101.180:9090/";
@@ -89,7 +90,10 @@ const JoinRoom = () => {
       <div className="jr-content">
         <div className="jr-header">
           <Link to={"/"}>
-            <button className="jr-btn-back" onClick={handleButtonBack}>
+            <button
+              className="jr-btn-back font-roboto"
+              onClick={handleButtonBack}
+            >
               <BsFillCaretLeftFill />
               Back
             </button>
@@ -101,10 +105,10 @@ const JoinRoom = () => {
         </div>
         <div className="jr-center">
           <div className="jr-left">
-            <h4 className="jr-left-player">PLAYERS</h4>
+            <h4 className="jr-left-player font-roboto">PLAYERS</h4>
             <div className="jr-user">
               <span className="jr-choice-number">
-                <select name="" id="">
+                <select name="" id="" className="font-roboto">
                   <option value="4">4 PLAYERS</option>
                   <option value="5">5 PLAYERS</option>
                   <option value="6">6 PLAYERS</option>
@@ -116,7 +120,7 @@ const JoinRoom = () => {
                   <option value="14">14 PLAYERS</option>
                   <option value="16">16 PLAYERS</option>
                   <option value="18">18 PLAYERS</option>
-                  <option value="20">4 PLAYERS</option>
+                  <option value="20">20 PLAYERS</option>
                   <option value="30">30 PLAYERS</option>
                   <option value="50">50 PLAYERS</option>
                 </select>
@@ -130,7 +134,9 @@ const JoinRoom = () => {
                         alt="avatar"
                         className="jr-img-avatar"
                       />
-                      <span className="jr-text">{user.nickname}</span>
+                      <span className="jr-text font-roboto">
+                        {user.nickname}
+                      </span>
                       <i className="jr-icon">
                         {user.role[0].name == "ROLE_HOST" ? (
                           // role ==1 ?(
@@ -152,7 +158,9 @@ const JoinRoom = () => {
                       alt="avatar"
                       className="jr-img-avatar"
                     />
-                    <span className="jr-text">{users.nickname}</span>
+                    <span className="jr-text font-roboto">
+                      {users.nickname}
+                    </span>
                     <i className="jr-icon">
                       <BiCrown />
                     </i>
@@ -164,8 +172,8 @@ const JoinRoom = () => {
           <div className="jr-right">
             <div className="jr-setting">
               <div className="jr-tab">
-                <h4 className="jr-column">PRESET</h4>
-                <h4 className="jr-column">CUSTOM SETTINGS</h4>
+                <h4 className="jr-column font-roboto">PRESET</h4>
+                <h4 className="jr-column font-roboto">CUSTOM SETTINGS</h4>
               </div>
               <div className="jr-data">
                 <div className="jr-detail">
@@ -183,12 +191,18 @@ const JoinRoom = () => {
 
             {role == 1 && (
               <div className="jr-action">
-                <button className="jr-btn-action" onClick={handleInviteClick}>
+                <button
+                  className="jr-btn-action font-roboto"
+                  onClick={handleInviteClick}
+                >
                   <BsFillSendXFill className="jr-btn-icon" />
                   Invite
                 </button>
 
-                <button className="jr-btn-action" onClick={handlePlay}>
+                <button
+                  className="jr-btn-action font-roboto"
+                  onClick={handlePlay}
+                >
                   <BsFillArrowRightSquareFill className="jr-btn-icon" />
                   Start
                 </button>
@@ -196,7 +210,7 @@ const JoinRoom = () => {
             )}
             {role == 0 && (
               <div className="jr-action ">
-                <div className="jr-text-player">
+                <div className="jr-text-player font-roboto">
                   WAITING FOR THE HOST TO SET UP AND TO START THE GAME
                 </div>
               </div>
