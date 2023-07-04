@@ -58,7 +58,7 @@ const ShowResult = () => {
     <div className="sr-screen">
       <div className="sr-content">
         <div className="sr-header">
-          <button className="sr-btn-back" onClick={handleButtonHome}>
+          <button className="sr-btn-back font-roboto" onClick={handleButtonHome}>
             <BsFillCaretLeftFill />
             HOME
           </button>
@@ -68,8 +68,8 @@ const ShowResult = () => {
           </button>
         </div>
         <div className="sr-sub-header">
-          <div className="sr-sub-left">PLAYERS</div>
-          <div className="sr-sub-right">
+          <div className="sr-sub-left font-roboto">PLAYERS</div>
+          <div className="sr-sub-right font-roboto">
             {location.state?.data[player].nickname}'S ALBUM
           </div>
         </div>
@@ -78,7 +78,7 @@ const ShowResult = () => {
             {users.map((user) => (
               <div className="sr-player">
                 <img className="sr-img-avatar" src={imgAvatar} alt="avatar" />
-                <span className="sr-name">{user.nickname}</span>
+                <span className="sr-name font-roboto">{user.nickname}</span>
               </div>
             ))}
           </div>
@@ -89,9 +89,9 @@ const ShowResult = () => {
                   <div>
                     <div className="sr-message sr-mess-right ">
                       <div className="sr-mess-content">
-                        <div className="sr-content-name">{result.namePlay}</div>
+                        <div className="sr-content-name font-roboto">{result.namePlay}</div>
 
-                        <div className="sr-content-text">{result.data}</div>
+                        <div className="sr-content-text font-roboto">{result.data}</div>
                       </div>
                       <img src={imgAvatar} alt="" className="sr-mess-avatar" />
                     </div>
@@ -99,7 +99,7 @@ const ShowResult = () => {
                 ) : (
                   <div className="sr-message sr-mess-left ">
                     <div className="sr-mess-content">
-                      <div className="sr-content-name">{result.namePlay}</div>
+                      <div className="sr-content-name font-roboto">{result.namePlay}</div>
                       <div className="sr-content-img">
                         <ConvertUrl data={result.data} />
                       </div>
@@ -115,19 +115,19 @@ const ShowResult = () => {
             ) : (
               <div>
                 {player == 0 ? (
-                  <button disabled className="sr-next-button">
+                  <button disabled className="sr-next-button font-roboto">
                     Back
                   </button>
                 ) : (
-                  <button onClick={previousPlayer} className="sr-next-button">
+                  <button onClick={previousPlayer} className="sr-next-button font-roboto">
                     Back
                   </button>
                 )}
 
                 {player == location.state?.data.length - 1 ? (
-                  <button className="sr-next-button">Play Again</button>
+                  <button className="sr-next-button font-roboto">Play Again</button>
                 ) : (
-                  <button onClick={nextPlayer} className="sr-next-button">
+                  <button onClick={nextPlayer} className="sr-next-button font-roboto">
                     Next
                   </button>
                 )}

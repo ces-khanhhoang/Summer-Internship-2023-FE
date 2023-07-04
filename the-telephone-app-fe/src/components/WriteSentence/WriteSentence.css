@@ -11,7 +11,7 @@
 }
 .ws-title {
     font-weight: bold;
-    font-color: #DFD4CB;
+    /* color: #DFD4CB; */
     margin: 8px;
     display: flex;
     transform: translateX(10%);

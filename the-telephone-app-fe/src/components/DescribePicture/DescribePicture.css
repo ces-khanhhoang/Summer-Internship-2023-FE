@@ -93,6 +93,7 @@ body {
     width: 70%;
     height: 70%;
     margin: 0 12px;
+    border-radius: 1rem;
 }
 
 .dp-btn-done {
@@ -107,6 +108,14 @@ body {
     font-weight: bold;
     border-radius: 7px;
     background-color: #C6A88F;
+}
+
+.dp-btn-done:hover {
+    background-color: #bf926e;
+}
+
+.dp-btn-done:active {
+    border: white inset;
 }
 
 .dp-sub-right {
