@@ -36,6 +36,7 @@ const WriteSentence = () => {
     setContent(event.target.value);
   };
   const handleDone = async () => {
+    // console.log();
     const response = await axios.post(
       ip + `user/done/${id_room}/${currentName}/${content}/${turn}`
     );

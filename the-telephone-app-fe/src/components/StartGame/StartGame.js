@@ -38,6 +38,10 @@ const StartGame = () => {
         if (startGame === "IN_PROGRESS") {
           navigate("/start", { state: { id_room, name, turn } });
         }
+        if (startGame === "AGAIN") {
+          turn = 1;
+          navigate("/lobby", { state: { data, id_room, role, name } });
+        }
       } else {
         navigate("/");
       }
