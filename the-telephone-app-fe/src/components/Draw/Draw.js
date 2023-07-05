@@ -18,11 +18,7 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
   const dataReceive = location.state?.dataReceive;
   const [timer, setTimer] = useState(30);
   const buttonDoneRef = useRef(null);
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> f59b432 (feat: select number of player)
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -161,7 +157,7 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
                       HEY, IT'S TIME TO DRAW!
                     </p>
                     <p className="text-center w-100 fw-bold">
-                      {/* {dataReceive.value} */}
+                      {dataReceive.value}
                     </p>
                   </div>
                   <div
@@ -182,7 +178,6 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
                   </div>
                 </div>
                 <div className="col-1 mt-3 fw-bold">{timer}</div>
-
                 <div className="row mt-3 mb-3">
                   <div className="col-12">
                     {isClicked ? (
