@@ -19,33 +19,31 @@ import { Link } from "react-router-dom";
 
 const JoinRoom = () => {
   let ip = "http://192.168.101.180:9090/";
+
   const location = useLocation();
   const role = location.state?.role;
   const [users, setUsers] = useState(location.state?.data);
-
   useEffect(() => {
     setUsers(location.state?.data);
+    console.log(location.state?.data);
   }, [location.state?.data]);
-
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const navigate = useNavigate();
   const [roomLink, setRoomLink] = useState("");
-
   const handleInviteClick = () => {
     const link = `http://localhost:3000/${id_room}`;
     setRoomLink(link);
     navigator.clipboard.writeText(link);
   };
-
   const handleKick = async (nickname) => {
     const response = await axios.post(
       ip + `user/delete/${id_room}/${nickname}`
     );
     setUsers(response.data);
   };
-
   const checkNicknameExistence = (nickname) => {
+    console.log(users);
     if (users.length > 1) {
       return users.some((user) => user.nickname === nickname);
     }
@@ -53,7 +51,6 @@ const JoinRoom = () => {
       return true;
     }
   };
-
   const handleNavigateKick = () => {
     let mess, title;
     if (role === 1) {
@@ -74,11 +71,9 @@ const JoinRoom = () => {
       ],
     });
   };
-
   const handlePlay = async () => {
     const response = await axios.post(ip + `user/start/${id_room}`);
   };
-
   const handleButtonBack = () => {
     if (role === 1) {
       for (let i = 0; i < users.length; i++) {
@@ -87,11 +82,6 @@ const JoinRoom = () => {
     } else {
       handleKick(currentName);
     }
-  };
-
-  const handleSelectChange = (event) => {
-    let value = event.target.value;
-    const response = axios.post(ip + `user/play/${value}/${id_room}`);
   };
 
   return checkNicknameExistence(currentName) ? (
@@ -114,28 +104,22 @@ const JoinRoom = () => {
             <h4 className="jr-left-player">PLAYERS</h4>
             <div className="jr-user">
               <span className="jr-choice-number">
-                {role == 1 ? (
-                  <select onChange={handleSelectChange} name="" id="">
-                    <option value="4">4 PLAYERS</option>
-                    <option value="5">5 PLAYERS</option>
-                    <option value="6">6 PLAYERS</option>
-                    <option value="7">7 PLAYERS</option>
-                    <option value="8">8 PLAYERS</option>
-                    <option value="9">9 PLAYERS</option>
-                    <option value="10">10 PLAYERS</option>
-                    <option value="12">12 PLAYERS</option>
-                    <option value="14">14 PLAYERS</option>
-                    <option value="16">16 PLAYERS</option>
-                    <option value="18">18 PLAYERS</option>
-                    <option value="20">20 PLAYERS</option>
-                    <option value="30">30 PLAYERS</option>
-                    <option value="50">50 PLAYERS</option>
-                  </select>
-                ) : (
-                  <div>
-                    {users[0].maxPlayer !== 0 ? users[0].maxPlayer : 4} PLAYERS
-                  </div>
-                )}
+                <select name="" id="">
+                  <option value="4">4 PLAYERS</option>
+                  <option value="5">5 PLAYERS</option>
+                  <option value="6">6 PLAYERS</option>
+                  <option value="7">7 PLAYERS</option>
+                  <option value="8">8 PLAYERS</option>
+                  <option value="9">9 PLAYERS</option>
+                  <option value="10">10 PLAYERS</option>
+                  <option value="12">12 PLAYERS</option>
+                  <option value="14">14 PLAYERS</option>
+                  <option value="16">16 PLAYERS</option>
+                  <option value="18">18 PLAYERS</option>
+                  <option value="20">4 PLAYERS</option>
+                  <option value="30">30 PLAYERS</option>
+                  <option value="50">50 PLAYERS</option>
+                </select>
               </span>
               <div className="jr-player">
                 {users && users.length >= 1 ? (
@@ -196,26 +180,27 @@ const JoinRoom = () => {
                 </div>
               </div>
             </div>
-              {role == 1 && (
-                <div className="jr-action">
-                  <button className="jr-btn-action" onClick={handleInviteClick}>
-                    <BsFillSendXFill className="jr-btn-icon" />
-                    Invite
-                  </button>
 
-                  <button className="jr-btn-action" onClick={handlePlay}>
-                    <BsFillArrowRightSquareFill className="jr-btn-icon" />
-                    Start
-                  </button>
+            {role == 1 && (
+              <div className="jr-action">
+                <button className="jr-btn-action" onClick={handleInviteClick}>
+                  <BsFillSendXFill className="jr-btn-icon" />
+                  Invite
+                </button>
+
+                <button className="jr-btn-action" onClick={handlePlay}>
+                  <BsFillArrowRightSquareFill className="jr-btn-icon" />
+                  Start
+                </button>
+              </div>
+            )}
+            {role == 0 && (
+              <div className="jr-action ">
+                <div className="jr-text-player">
+                  WAITING FOR THE HOST TO SET UP AND TO START THE GAME
                 </div>
-              )}
-              {role == 0 && (
-                <div className="jr-action ">
-                  <div className="jr-text-player">
-                    WAITING FOR THE HOST TO SET UP AND TO START THE GAME
-                  </div>
-                </div>
-              )}
+              </div>
+            )}
           </div>
         </div>
       </div>

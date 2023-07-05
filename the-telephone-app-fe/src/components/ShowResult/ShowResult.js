@@ -53,10 +53,10 @@ const ShowResult = () => {
     setUsers(location.state?.data);
     setResult(resultSet);
   }, [location.state?.data]);
-
   const handlePlayAgain = async() => {
     let id_room = users[0].id_room;
     const response = await axios.post(ip + `user/again/${id_room}`);
+
   };
   return (
     <div className="sr-screen">

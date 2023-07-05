@@ -15,7 +15,6 @@ const DescribePicture = () => {
   let image = dataReceive.value;
   const [timer, setTimer] = useState(30);
   const buttonDoneRef = useRef(null);
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -30,19 +29,15 @@ const DescribePicture = () => {
       clearInterval(intervalId);
     };
   }, [timer]);
-
   const [content, setContent] = useState("");
-
   const handleChangeContent = (event) => {
     setContent(event.target.value);
   };
-
   const handleDone = async () => {
     const response = await axios.post(
       ip + `user/done/${id_room}/${dataReceive.receiver}/${content}/${turn}`
     );
   };
-  
   image = image.replace(
     "(1)",
     "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%"
