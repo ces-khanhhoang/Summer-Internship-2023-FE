@@ -18,7 +18,11 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
   const dataReceive = location.state?.dataReceive;
   const [timer, setTimer] = useState(30);
   const buttonDoneRef = useRef(null);
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> f59b432 (feat: select number of player)
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
