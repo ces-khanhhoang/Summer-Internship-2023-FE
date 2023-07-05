@@ -7,12 +7,11 @@ import { BsFillCaretRightFill } from "react-icons/bs";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
-import "../style.css";
 const StartGame = () => {
   let ip = "http://192.168.101.180:9090/";
 
   const [name, setName] = useState(
-    "    name0" + Math.round(Math.random() * 100000)
+    "name0" + Math.round(Math.random() * 100000)
   );
   let [turn, setTurn] = useState(1);
   let startGame;
@@ -97,15 +96,15 @@ const StartGame = () => {
         </div>
         <div className="sg-center">
           <div className="sg-left">
-            <div className="sg-title font-roboto">ANONYMOUS</div>
+            <div className="sg-title">ANONYMOUS</div>
             <div className="sg-left-main">
               <img src={imgLogo} alt="" className="sg-img-avatar" />
               <div className="sg-fill">
-                <div className="sg-text font-roboto">CHOOSE A CHARACTER AND A NICKNAME</div>
+                <div className="sg-text">CHOOSE A CHARACTER AND A NICKNAME</div>
                 <input
                   type="text"
                   placeholder={name}
-                  className="sg-input font-roboto"
+                  className="sg-input"
                   onChange={handleNameChange}
                 />
               </div>
@@ -113,14 +112,14 @@ const StartGame = () => {
             <div className="sg-left-action">
               {id_room ? (
                 <button className="sg-btn-start" onClick={handleJoinClick}>
-                  <div className="font-roboto">
+                  <div className="">
                     <BsFillCaretRightFill className="sg-icon" />
                     JOIN
                   </div>
                 </button>
               ) : (
                 <button className="sg-btn-start" onClick={handleStartClick}>
-                  <div className="font-roboto">
+                  <div className="">
                     <BsFillCaretRightFill className="sg-icon" />
                     START
                   </div>
@@ -129,7 +128,7 @@ const StartGame = () => {
             </div>
           </div>
           <div className="sg-right">
-            <div className="sg-title font-roboto">HOW TO PLAY</div>
+            <div className="sg-title">HOW TO PLAY</div>
           </div>
         </div>
       </div>

@@ -2,10 +2,11 @@ import "../DescribePicture/DescribePicture.css";
 import "./WriteSentence.css";
 import imgLogo from "../../assets/gartic.svg";
 import imgWrite from "../../assets/write.png";
+import { BsClockFill } from "react-icons/bs";
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../style.css";
 
 const WriteSentence = () => {
   let ip = "http://192.168.101.180:9090/";
@@ -36,7 +37,6 @@ const WriteSentence = () => {
     setContent(event.target.value);
   };
   const handleDone = async () => {
-    // console.log();
     const response = await axios.post(
       ip + `user/done/${id_room}/${currentName}/${content}/${turn}`
     );
@@ -54,7 +54,7 @@ const WriteSentence = () => {
           </div>
           <div className="ws-main-content">
             <img src={imgWrite} alt="img-content" className="ws-img-content" />
-            <div className="ws-title font-roboto">WRITE A SENTENCE</div>
+            <div className="ws-title">WRITE A SENTENCE</div>
           </div>
           <div className="dp-action">
             <input
@@ -65,7 +65,7 @@ const WriteSentence = () => {
             />
             <button
               ref={buttonDoneRef}
-              className="dp-btn-done font-roboto"
+              className="dp-btn-done"
               onClick={handleDone}
             >
               DONE!
