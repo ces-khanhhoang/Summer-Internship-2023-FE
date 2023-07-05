@@ -7,6 +7,7 @@ import { BsFillCaretRightFill } from "react-icons/bs";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
+import "../style.css"
 const StartGame = () => {
   let ip = "http://192.168.101.180:9090/";
 
