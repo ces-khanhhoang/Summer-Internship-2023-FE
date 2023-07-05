@@ -8,7 +8,7 @@ import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
-import "../style.css"
+import "../style.css";
 const StartGame = () => {
   let ip = "http://192.168.101.180:9090/";
 
@@ -16,7 +16,7 @@ const StartGame = () => {
     "name0" + Math.round(Math.random() * 100000)
   );
 
-  let [turn, setTurn] = useState(1);
+  let turn = 1;
   let startGame;
 
   const handleNameChange = (e) => {
@@ -75,6 +75,7 @@ const StartGame = () => {
         navigate("/book", {
           state: { data, id_room, role, name, dataReceive, turn },
         });
+        turn = 0;
       }
     });
     navigate("/lobby", { state: { data, id_room, role, name } });
@@ -95,11 +96,10 @@ const StartGame = () => {
       var Sock = new SockJS(ip + "gameplay");
       client = over(Sock);
       client.connect({}, () => onConnected(id_room, users, 0), onError);
-    }
-    else {
+    } else {
       confirmAlert({
-        title: 'FULL ROOM',
-        message: 'This room has reached its capacity',
+        title: "FULL ROOM",
+        message: "This room has reached its capacity",
         buttons: [
           {
             label: "OK",
@@ -109,6 +109,7 @@ const StartGame = () => {
       });
     }
   };
+
   return (
     <div className="sg-screen">
       <div className="sg-content">

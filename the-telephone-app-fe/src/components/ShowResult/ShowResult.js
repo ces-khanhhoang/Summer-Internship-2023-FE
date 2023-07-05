@@ -53,11 +53,12 @@ const ShowResult = () => {
     setUsers(location.state?.data);
     setResult(resultSet);
   }, [location.state?.data]);
-
-  const handlePlayAgain = async() => {
+  
+  const handlePlayAgain = async () => {
     let id_room = users[0].id_room;
     const response = await axios.post(ip + `user/again/${id_room}`);
   };
+
   return (
     <div className="sr-screen">
       <div className="sr-content">
@@ -129,7 +130,9 @@ const ShowResult = () => {
                 )}
 
                 {player == location.state?.data.length - 1 ? (
-                  <button className="sr-next-button" onClick={handlePlayAgain}>Play Again</button>
+                  <button className="sr-next-button" onClick={handlePlayAgain}>
+                    Play Again
+                  </button>
                 ) : (
                   <button onClick={nextPlayer} className="sr-next-button">
                     Next
