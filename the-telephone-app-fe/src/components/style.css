@@ -1,4 +1,11 @@
-.font-roboto {
+body {
     font-family: 'roboto';
-    /* text-shadow: 1px 1px white; */
+}
+
+button {
+    font-family: 'roboto';
+}
+
+input {
+    font-family: 'roboto';
 }
