@@ -17,6 +17,7 @@ const Draw = ({ width = "670%", height = "300%" }) => {
   const dataReceive = location.state?.dataReceive;
   const [timer, setTimer] = useState(30);
   const buttonDoneRef = useRef(null);
+  
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -31,6 +32,7 @@ const Draw = ({ width = "670%", height = "300%" }) => {
       clearInterval(intervalId);
     };
   }, [timer]);
+  
   const convertToImage = () => {
     setIsClicked(true);
     const canvas = document.getElementById("myCanvas");
