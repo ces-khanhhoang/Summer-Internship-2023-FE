@@ -6,13 +6,6 @@ import DescribePicture from "./components/DescribePicture/DescribePicture";
 import Draw from "./components/Draw/Draw";
 import WriteSentence from './components/WriteSentence/WriteSentence';
 function App() {
-  useEffect(() => {
-    WebFont.load({
-      google: {
-        families: ["Droid Sans", "Roboto", "Chilanka"],
-      },
-    });
-  }, []);
   return (
       <>
         <Routes>

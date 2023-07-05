@@ -1,9 +1,9 @@
 import "./DescribePicture.css";
 import imgLogo from "../../assets/gartic.svg";
+import imgGalaxy from "../../assets/galaxy.jpg";
 import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import "../style.css";
 
 const DescribePicture = () => {
   let ip = "http://192.168.101.180:9090/";
@@ -46,13 +46,13 @@ const DescribePicture = () => {
   return (
     <div className="dp-screen">
       <div className="dp-content">
-        <div className="dp-sub-left font-roboto">?/?</div>
+        <div className="dp-sub-left">?/?</div>
         <div className="dp-main">
           <div className="dp-header">
             <div className="dp-logo">
               <img src={imgLogo} alt="" className="dp-img-logo-gartic" />
             </div>
-            <div className="dp-title font-roboto">
+            <div className="dp-title">
               NOW IT'S YOUR TURN TO DESCRIBE THIS SCENE
             </div>
           </div>
@@ -63,19 +63,19 @@ const DescribePicture = () => {
             <input
               type="text"
               onChange={handleChangeContent}
-              className="dp-input font-roboto"
+              className="dp-input"
               placeholder="Type your description for this scene here ..."
             />
             <button
               ref={buttonDoneRef}
-              className="dp-btn-done font-roboto"
+              className="dp-btn-done"
               onClick={handleDone}
             >
               DONE!
             </button>
           </div>
         </div>
-        <div className="dp-sub-right font-roboto">{timer}</div>
+        <div className="dp-sub-right">{timer}</div>
       </div>
     </div>
   );
