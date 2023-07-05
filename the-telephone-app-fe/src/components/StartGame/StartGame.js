@@ -7,6 +7,7 @@ import { BsFillCaretRightFill } from "react-icons/bs";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
 import "../style.css"
 const StartGame = () => {
   let ip = "http://192.168.101.180:9090/";
@@ -14,8 +15,10 @@ const StartGame = () => {
   const [name, setName] = useState(
     "name0" + Math.round(Math.random() * 100000)
   );
+
   let [turn, setTurn] = useState(1);
   let startGame;
+
   const handleNameChange = (e) => {
     if (e.target.value) {
       setName(e.target.value);
@@ -23,12 +26,16 @@ const StartGame = () => {
       setName("Nickname" + Math.round(Math.random() * 1000));
     }
   };
+
   const navigate = useNavigate();
+
   const onError = (err) => {
     console.log(err);
   };
+
   const { id_room } = useParams();
   var client = null;
+
   const onConnected = (id_room, data, role) => {
     client.subscribe("/topic/" + id_room, function (response) {
       data = JSON.parse(response.body);
@@ -42,6 +49,9 @@ const StartGame = () => {
           turn = 1;
           navigate("/lobby", { state: { data, id_room, role, name } });
         }
+        if (startGame === "MAX") {
+          navigate("/lobby", { state: { data, id_room, role, name } });
+        }
       } else {
         navigate("/");
       }
@@ -50,9 +60,6 @@ const StartGame = () => {
     client.subscribe("/topic/" + name, function (response) {
       const dataReceive = JSON.parse(response.body);
       startGame = dataReceive.status;
-      console.log(dataReceive);
-      console.log(startGame);
-
       if (startGame === "WRITE") {
         turn = turn + 1;
         navigate("/draw", { state: { dataReceive, id_room, name, turn } });
@@ -62,7 +69,6 @@ const StartGame = () => {
         navigate("/write", { state: { dataReceive, id_room, name, turn } });
       }
       if (turn > dataReceive.number) {
-        console.log(dataReceive);
         axios.post(ip + `user/result/${data[0].nickname}/${id_room}`);
       }
       if (Array.isArray(dataReceive)) {
@@ -85,9 +91,23 @@ const StartGame = () => {
   const handleJoinClick = async () => {
     const response = await axios.post(ip + `user/join/${id_room}/${name}`);
     const users = response.data;
-    var Sock = new SockJS(ip + "gameplay");
-    client = over(Sock);
-    client.connect({}, () => onConnected(id_room, users, 0), onError);
+    if (Array.isArray(users)) {
+      var Sock = new SockJS(ip + "gameplay");
+      client = over(Sock);
+      client.connect({}, () => onConnected(id_room, users, 0), onError);
+    }
+    else {
+      confirmAlert({
+        title: 'FULL ROOM',
+        message: 'This room has reached its capacity',
+        buttons: [
+          {
+            label: "OK",
+            onClick: () => navigate("/"),
+          },
+        ],
+      });
+    }
   };
   return (
     <div className="sg-screen">
