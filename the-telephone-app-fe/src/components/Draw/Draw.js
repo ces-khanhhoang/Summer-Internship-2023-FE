@@ -8,7 +8,8 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../firebase";
 import axios from "axios";
-const Draw = ({ width = "670%", height = "300%" }) => {
+import "../style.css";
+const Draw = ({ width = "800rem", height = "350rem" }) => {
   let ip = "http://192.168.101.180:9090/";
   const location = useLocation();
   const turn = location.state?.turn;
@@ -17,7 +18,7 @@ const Draw = ({ width = "670%", height = "300%" }) => {
   const dataReceive = location.state?.dataReceive;
   const [timer, setTimer] = useState(30);
   const buttonDoneRef = useRef(null);
-  
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -32,7 +33,7 @@ const Draw = ({ width = "670%", height = "300%" }) => {
       clearInterval(intervalId);
     };
   }, [timer]);
-  
+
   const convertToImage = () => {
     setIsClicked(true);
     const canvas = document.getElementById("myCanvas");
@@ -75,7 +76,7 @@ const Draw = ({ width = "670%", height = "300%" }) => {
   const { onMouseDown, setCanvasRef } = useOnDraw(onDraw);
 
   function onDraw(ctx, point, prevPoint) {
-    drawLine(prevPoint, point, ctx, "#000000", 5);
+    drawLine(prevPoint, point, ctx, color, 5);
   }
 
   function drawLine(start, end, ctx, color, width) {
@@ -92,49 +93,114 @@ const Draw = ({ width = "670%", height = "300%" }) => {
     ctx.fill();
   }
 
+  const colors = [
+    "red",
+    "white",
+    "blue",
+    "black",
+    "green",
+    "gray",
+    "pink",
+    "yellow",
+    "brown",
+    "burlywood",
+    "cadetblue",
+    "chartreuse",
+    "navy",
+    "orange",
+    "purple",
+    "violet",
+  ];
+
+  const [color, setColor] = useState("black");
+
+  const changeColor = (color) => {
+    setColor(color);
+  };
+
   const [isClicked, setIsClicked] = useState(false);
 
   return (
-    <div className="dp-screen">
-      <div className="dp-content">
-        <div className="dp-sub-left">?/?</div>
-        <div className="dp-main">
-          <div className="dp-header">
-            <div className="dp-logo">
-              <img src={imgLogo} alt="" className="dp-img-logo-gartic" />
+    <div className="container-fluid app-bg vh-100">
+      <div className="row">
+        <div className="col-2 ">
+          <div className="row mt-5">
+            <div className="col-12 mt-5">
+              <div className="draw-card mw-100 border-4 mt-5">
+                <div className="card-body">
+                  <div className="row">
+                    {colors.map((color) => (
+                      <div className="col-3">
+                        <div
+                          key={color}
+                          style={{ backgroundColor: color }}
+                          className="square mt-2"
+                          onClick={() => changeColor(color)}
+                        ></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="d-title">HEY, IT'S TIME TO DRAW!</div>
-            <div className="d-text">{dataReceive.value}</div>
-          </div>
-          <div className="dp-main-content">
-            <canvas
-              id="myCanvas"
-              width={width}
-              height={height}
-              onMouseDown={onMouseDown}
-              ref={setCanvasRef}
-            />
-          </div>
-          <div className="dp-action">
-            {isClicked ? (
-              <button disabled className="d-btn-done">
-                DONE!
-              </button>
-            ) : (
-              <button
-                ref={buttonDoneRef}
-                onClick={convertToImage}
-                className="d-btn-done"
-              >
-                DONE!
-              </button>
-            )}
           </div>
         </div>
-        <div className="dp-sub-right">
-          {/* <BsClockFill size="30px" /> */}
-          {timer}
+        <div className="col-8">
+          <div className="row mt-5">
+            <div className="draw-card border-4">
+              <div className="row">
+                <div className="col-1 mt-3 fw-bold">?/?</div>
+                <div className="col-10 mt-2 ">
+                  <div className="draw-card draw-header mt-3">
+                    <img className="header-image" src={imgLogo}></img>
+                    <p className="text-center w-100 fw-bold">
+                      HEY, IT'S TIME TO DRAW!
+                    </p>
+                    <p className="text-center w-100 fw-bold">
+                      {/* {dataReceive.value} */}
+                    </p>
+                  </div>
+                  <div
+                    style={{
+                      border: "4px solid #C6A88F",
+                      borderRadius: "4px",
+                    }}
+                    className="draw-card"
+                  >
+                    <canvas
+                      id="myCanvas"
+                      width={width}
+                      height={height}
+                      onMouseDown={onMouseDown}
+                      style={{ backgroundColor: "white" }}
+                      ref={setCanvasRef}
+                    />
+                  </div>
+                </div>
+                <div className="col-1 mt-3 fw-bold">{timer}</div>
+
+                <div className="row mt-3 mb-3">
+                  <div className="col-12">
+                    {isClicked ? (
+                      <button disabled className="d-btn-done">
+                        DONE!
+                      </button>
+                    ) : (
+                      <button
+                        ref={buttonDoneRef}
+                        onClick={convertToImage}
+                        className="d-btn-done"
+                      >
+                        DONE!
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        <div className="col-2"></div>
       </div>
     </div>
   );
