@@ -7,6 +7,8 @@ import { BsFillCaretRightFill } from "react-icons/bs";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
+
 import "../style.css"
 const StartGame = () => {
   let ip = "http://192.168.101.180:9090/";
@@ -85,9 +87,24 @@ const StartGame = () => {
   const handleJoinClick = async () => {
     const response = await axios.post(ip + `user/join/${id_room}/${name}`);
     const users = response.data;
-    var Sock = new SockJS(ip + "gameplay");
-    client = over(Sock);
-    client.connect({}, () => onConnected(id_room, users, 0), onError);
+    console.log(users);
+    if (Array.isArray(users)) {
+      var Sock = new SockJS(ip + "gameplay");
+      client = over(Sock);
+      client.connect({}, () => onConnected(id_room, users, 0), onError);
+    }else{
+      confirmAlert({
+        title: 'FULL ROOM',
+        message: 'This room has reached its capacity',
+        buttons: [
+          {
+            label: "OK",
+            onClick: () => navigate("/"),
+          },
+        ],
+      });
+    }
+    
   };
   return (
     <div className="sg-screen">
