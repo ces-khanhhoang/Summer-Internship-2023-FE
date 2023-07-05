@@ -8,11 +8,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 const ShowResult = () => {
-  const location = useLocation();
-  const currentName = location.state?.name;
-  let ip = "http://192.168.101.180:9090/";
-
   const navigate = useNavigate();
+
   const handleButtonHome = () => {
     navigate("/");
   };
@@ -25,6 +22,8 @@ const ShowResult = () => {
     setPlayer((player -= 1));
     getResult();
   };
+
+  let ip = "http://192.168.101.180:9090/";
 
   const getResult = async () => {
     const response = await axios.post(
@@ -43,6 +42,7 @@ const ShowResult = () => {
     return <img className="sr-content-img" src={data}></img>; //2
   }
 
+  const location = useLocation();
   const [users, setUsers] = useState(location.state?.data);
   const role = location.state?.role;
   const [results, setResult] = useState([]);
@@ -53,15 +53,16 @@ const ShowResult = () => {
     setUsers(location.state?.data);
     setResult(resultSet);
   }, [location.state?.data]);
-  const handleButtonPlayAgain = async () => {
+  const handlePlayAgain = async() => {
     let id_room = users[0].id_room;
     const response = await axios.post(ip + `user/again/${id_room}`);
+
   };
   return (
     <div className="sr-screen">
       <div className="sr-content">
         <div className="sr-header">
-          <button className="sr-btn-back font-roboto" onClick={handleButtonHome}>
+          <button className="sr-btn-back" onClick={handleButtonHome}>
             <BsFillCaretLeftFill />
             HOME
           </button>
@@ -71,8 +72,8 @@ const ShowResult = () => {
           </button>
         </div>
         <div className="sr-sub-header">
-          <div className="sr-sub-left font-roboto">PLAYERS</div>
-          <div className="sr-sub-right font-roboto">
+          <div className="sr-sub-left">PLAYERS</div>
+          <div className="sr-sub-right">
             {location.state?.data[player].nickname}'S ALBUM
           </div>
         </div>
@@ -81,7 +82,7 @@ const ShowResult = () => {
             {users.map((user) => (
               <div className="sr-player">
                 <img className="sr-img-avatar" src={imgAvatar} alt="avatar" />
-                <span className="sr-name font-roboto">{user.nickname}</span>
+                <span className="sr-name">{user.nickname}</span>
               </div>
             ))}
           </div>
@@ -92,9 +93,9 @@ const ShowResult = () => {
                   <div>
                     <div className="sr-message sr-mess-right ">
                       <div className="sr-mess-content">
-                        <div className="sr-content-name font-roboto">{result.namePlay}</div>
+                        <div className="sr-content-name">{result.namePlay}</div>
 
-                        <div className="sr-content-text font-roboto">{result.data}</div>
+                        <div className="sr-content-text">{result.data}</div>
                       </div>
                       <img src={imgAvatar} alt="" className="sr-mess-avatar" />
                     </div>
@@ -102,7 +103,7 @@ const ShowResult = () => {
                 ) : (
                   <div className="sr-message sr-mess-left ">
                     <div className="sr-mess-content">
-                      <div className="sr-content-name font-roboto">{result.namePlay}</div>
+                      <div className="sr-content-name">{result.namePlay}</div>
                       <div className="sr-content-img">
                         <ConvertUrl data={result.data} />
                       </div>
@@ -118,25 +119,19 @@ const ShowResult = () => {
             ) : (
               <div>
                 {player == 0 ? (
-                  <button disabled className="sr-next-button font-roboto">
+                  <button disabled className="sr-next-button">
                     Back
                   </button>
                 ) : (
-                  <button onClick={previousPlayer} className="sr-next-button font-roboto">
+                  <button onClick={previousPlayer} className="sr-next-button">
                     Back
                   </button>
                 )}
 
                 {player == location.state?.data.length - 1 ? (
-
-                  <button
-                    className="sr-next-button font-roboto"
-                    onClick={handleButtonPlayAgain}
-                  >
-                    Play Again
-                  </button>
+                  <button className="sr-next-button" onClick={handlePlayAgain}>Play Again</button>
                 ) : (
-                  <button onClick={nextPlayer} className="sr-next-button font-roboto">
+                  <button onClick={nextPlayer} className="sr-next-button">
                     Next
                   </button>
                 )}
