@@ -10,14 +10,13 @@ import axios from "axios";
 
 const WriteSentence = () => {
   let ip = "http://192.168.101.180:9090/";
-
   const location = useLocation();
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const turn = location.state?.turn;
-
   const [timer, setTimer] = useState(30);
   const buttonDoneRef = useRef(null);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -32,10 +31,13 @@ const WriteSentence = () => {
       clearInterval(intervalId);
     };
   }, [timer]);
+
   const [content, setContent] = useState("");
+
   const handleChangeContent = (event) => {
     setContent(event.target.value);
   };
+
   const handleDone = async () => {
     const response = await axios.post(
       ip + `user/done/${id_room}/${currentName}/${content}/${turn}`
