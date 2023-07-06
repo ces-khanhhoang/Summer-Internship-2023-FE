@@ -157,7 +157,7 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
                       HEY, IT'S TIME TO DRAW!
                     </p>
                     <p className="text-center w-100 fw-bold">
-                      {dataReceive.value}
+                      {/* {dataReceive.value} */}
                     </p>
                   </div>
                   <div
