@@ -9,8 +9,10 @@ import { useLocation } from "react-router-dom";
 import "../firebase";
 import axios from "axios";
 import "../style.css";
+import { RxPencil1 } from "react-icons/rx";
+import { BsFillEraserFill } from "react-icons/bs";
 
-const Draw = ({ width = "800rem", height = "350rem" }) => {
+const Draw = ({ width = "815rem", height = "350rem" }) => {
   let ip = "http://192.168.101.180:9090/";
   const location = useLocation();
   const turn = location.state?.turn;
@@ -34,6 +36,8 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
       clearInterval(intervalId);
     };
   }, [timer]);
+
+  // ===== Convert Canvas to png file and upload to Firebase
 
   const convertToImage = () => {
     setIsClicked(true);
@@ -74,25 +78,7 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
     );
   };
 
-  const { onMouseDown, setCanvasRef } = useOnDraw(onDraw);
-
-  function onDraw(ctx, point, prevPoint) {
-    drawLine(prevPoint, point, ctx, color, 5);
-  }
-
-  function drawLine(start, end, ctx, color, width) {
-    start = start ?? end;
-    ctx.beginPath();
-    ctx.lineWidth = width;
-    ctx.strokeStyle = color;
-    ctx.moveTo(start.x, start.y);
-    ctx.lineTo(end.x, end.y);
-    ctx.stroke();
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(start.x, start.y, 2, 0, 2 * Math.PI);
-    ctx.fill();
-  }
+  // ===== Choose Color
 
   const colors = [
     "red",
@@ -113,13 +99,64 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
     "violet",
   ];
 
-  const [color, setColor] = useState("black");
+  const [drawColor, setDrawColor] = useState("black");
 
   const changeColor = (color) => {
-    setColor(color);
+    setDrawColor(color);
   };
 
   const [isClicked, setIsClicked] = useState(false);
+
+  // ===== To draw using Canvas
+
+  const { onMouseDown, setCanvasRef } = useOnDraw(onDraw);
+
+  const [eraserMode, setEraserMode] = useState(false);
+
+  function onDraw(ctx, point, prevPoint) {
+    drawLine(prevPoint, point, ctx, drawColor, 5);
+  }
+
+  function drawLine(start, end, ctx, color, width) {
+    start = start ?? end;
+    ctx.beginPath();
+    ctx.moveTo(start.x, start.y);
+    ctx.lineTo(end.x, end.y);
+    if (eraserMode === false) {
+      ctx.lineWidth = width;
+      ctx.strokeStyle = color;
+      ctx.stroke();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(start.x, start.y, 2, 0, 2 * Math.PI);
+      ctx.fill();
+    } else if (eraserMode === true) {
+      ctx.clearRect(start.x, start.y, 24, 24);
+    }
+  }
+
+  // ===== Change drawMode to Eraser...
+
+  const drawModes = [
+    { id: 1, modeIcon: <RxPencil1 size={"1.8rem"} key={"draw"} /> },
+    { id: 2, modeIcon: <BsFillEraserFill size={"1.8rem"} key={"eraser"} /> },
+  ];
+
+  const [drawModeId, setDrawModeId] = useState(1);
+  const drawModeClass = "draw-cursor";
+  const eraseModeClass = "eraser-cursor";
+  const [cursorMode, setCursorMode] = useState(drawModeClass);
+  const changeMode = (mode) => {
+    if (mode.modeIcon.key === "eraser") {
+      setCursorMode(eraseModeClass);
+      setEraserMode(true);
+    }
+    if (mode.modeIcon.key === "draw") {
+      setCursorMode(drawModeClass);
+      setEraserMode(false);
+    }
+    setDrawModeId(mode.id);
+  };
 
   return (
     <div className="container-fluid app-bg vh-100">
@@ -133,8 +170,17 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
                     {colors.map((color) => (
                       <div key={color} className="col-3">
                         <div
-                          style={{ backgroundColor: color }}
-                          className="square mt-2"
+                          style={
+                            color === drawColor
+                              ? {
+                                  backgroundColor: color,
+                                  border: "inset white 3.5px",
+                                }
+                              : {
+                                  backgroundColor: color,
+                                }
+                          }
+                          className="color-square mt-2"
                           onClick={() => changeColor(color)}
                         ></div>
                       </div>
@@ -162,11 +208,11 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
                   </div>
                   <div className="card draw-paper">
                     <canvas
+                      className={cursorMode}
                       id="myCanvas"
                       width={width}
                       height={height}
                       onMouseDown={onMouseDown}
-                      style={{ backgroundColor: "white" }}
                       ref={setCanvasRef}
                     />
                   </div>
@@ -174,7 +220,8 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
                 <div className="col-1 mt-3 fw-bold">{timer}</div>
 
                 <div className="row mt-3 mb-3">
-                  <div className="col-12">
+                  <div className="col-8"></div>
+                  <div className="col-3">
                     {isClicked ? (
                       <button disabled className="d-btn-done">
                         DONE!
@@ -194,7 +241,39 @@ const Draw = ({ width = "800rem", height = "350rem" }) => {
             </div>
           </div>
         </div>
-        <div className="col-2"></div>
+        <div className="col-2">
+          <div className="row mt-5">
+            <div className="col-12 mt-5">
+              <div className="card app-bg mw-100 border-4 mt-5">
+                <div className="card-body">
+                  <div className="row">
+                    {drawModes.map((mode, index) => (
+                      <div key={index} className="col-6">
+                        <div
+                          style={
+                            mode.id === drawModeId
+                              ? { border: "solid 2px" }
+                              : {}
+                          }
+                          className="draw-mode-square ms-3"
+                        >
+                          <div className="draw-mode-inside-square">
+                            <div
+                              onClick={() => changeMode(mode)}
+                              className="ps-2 pt-2"
+                            >
+                              {mode.modeIcon}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
