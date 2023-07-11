@@ -1,13 +1,13 @@
 import "../DescribePicture/DescribePicture.css";
 import "./WriteSentence.css";
-import imgLogo from "../../assets/gartic.svg";
-import imgWrite from "../../assets/write.png";
+import imgLogo from "../../assets/logo.png";
+import imgWrite from "../../assets/w.png";
 import { BsClockFill } from "react-icons/bs";
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { BsFillCheckCircleFill } from "react-icons/bs";
 const WriteSentence = () => {
   let ip = "http://192.168.101.180:9090/";
   const location = useLocation();
@@ -45,38 +45,44 @@ const WriteSentence = () => {
   };
 
   return (
-    <div className="dp-screen">
-      <div className="dp-content">
-        <div className="dp-sub-left">?/?</div>
-        <div className="dp-main">
-          <div className="dp-header">
-            <div className="dp-logo">
-              <img src={imgLogo} alt="" className="dp-img-logo-gartic" />
+    <div className="all">
+      <div className="main">
+        <div className="row h-20">
+          <div className="col-2 left y">?/?</div>
+          <div className="col-8 center y">
+            <img src={imgLogo} alt="" className="img-logo" />
+          </div>
+          <div className="col-2 center y">{timer}</div>
+        </div>
+        <div className="row h-80 section me-5">
+          <div className="row h-80 ">
+            <div className="col-3"></div>
+            <div className="col-6 center">
+              <img className="img-write y" src={imgWrite} alt="" />
+            </div>
+            <div className="col-3"></div>
+          </div>
+          <div className="row h-20 y">
+            <div className="col-2"></div>
+            <div className="col-6 right">
+              <input
+                type="text"
+                className="w-100"
+                placeholder=" ... "
+                onChange={handleChangeContent}
+              />
+            </div>
+            <div className="col-3 left">
+              <button
+                ref={buttonDoneRef}
+                className="button"
+                onClick={handleDone}
+              >
+                <BsFillCheckCircleFill className="icon" />
+                DONE!
+              </button>
             </div>
           </div>
-          <div className="ws-main-content">
-            <img src={imgWrite} alt="img-content" className="ws-img-content" />
-            <div className="ws-title">WRITE A SENTENCE</div>
-          </div>
-          <div className="dp-action">
-            <input
-              type="text"
-              className="dp-input"
-              placeholder=" ... "
-              onChange={handleChangeContent}
-            />
-            <button
-              ref={buttonDoneRef}
-              className="dp-btn-done"
-              onClick={handleDone}
-            >
-              DONE!
-            </button>
-          </div>
-        </div>
-        <div className="dp-sub-right">
-          {/* <BsClockFill size= '30px'/> */}
-          {timer}
         </div>
       </div>
     </div>
