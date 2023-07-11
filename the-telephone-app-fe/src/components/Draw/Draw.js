@@ -8,7 +8,11 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../firebase";
 import axios from "axios";
-const Draw = ({ width = "670%", height = "300%" }) => {
+import "../style.css";
+import { RxPencil1 } from "react-icons/rx";
+import { BsFillEraserFill } from "react-icons/bs";
+
+const Draw = ({ width = "815rem", height = "350rem" }) => {
   let ip = "http://192.168.101.180:9090/";
   const location = useLocation();
   const turn = location.state?.turn;
@@ -17,7 +21,7 @@ const Draw = ({ width = "670%", height = "300%" }) => {
   const dataReceive = location.state?.dataReceive;
   const [timer, setTimer] = useState(30);
   const buttonDoneRef = useRef(null);
-  
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -32,7 +36,9 @@ const Draw = ({ width = "670%", height = "300%" }) => {
       clearInterval(intervalId);
     };
   }, [timer]);
-  
+
+  // ===== Convert Canvas to png file and upload to Firebase
+
   const convertToImage = () => {
     setIsClicked(true);
     const canvas = document.getElementById("myCanvas");
@@ -72,68 +78,249 @@ const Draw = ({ width = "670%", height = "300%" }) => {
     );
   };
 
+  // ===== Choose Color
+
+  const colors = [
+    "red",
+    "whitesmoke",
+    "blue",
+    "black",
+    "green",
+    "gray",
+    "pink",
+    "yellow",
+    "brown",
+    "burlywood",
+    "cadetblue",
+    "chartreuse",
+    "navy",
+    "orange",
+    "purple",
+    "violet",
+  ];
+
+  const [drawColor, setDrawColor] = useState("black");
+
+  const changeColor = (color) => {
+    setDrawColor(color);
+  };
+
+  const [isClicked, setIsClicked] = useState(false);
+
+  // ===== Change line width
+
+  const [lineWidth, setlineWidth] = useState(3);
+
+  const widths = [3, 5, 7, 10, 13.5, 17];
+
+  const changeLineWidth = (width) => {
+    setlineWidth(width);
+  };
+
+  // ===== Draw using Canvas
+
   const { onMouseDown, setCanvasRef } = useOnDraw(onDraw);
 
+  const [eraserMode, setEraserMode] = useState(false);
+
   function onDraw(ctx, point, prevPoint) {
-    drawLine(prevPoint, point, ctx, "#000000", 5);
+    drawLine(prevPoint, point, ctx, drawColor, lineWidth);
   }
 
   function drawLine(start, end, ctx, color, width) {
     start = start ?? end;
     ctx.beginPath();
-    ctx.lineWidth = width;
-    ctx.strokeStyle = color;
     ctx.moveTo(start.x, start.y);
     ctx.lineTo(end.x, end.y);
-    ctx.stroke();
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(start.x, start.y, 2, 0, 2 * Math.PI);
-    ctx.fill();
+    if (eraserMode === false) {
+      ctx.lineWidth = width;
+      ctx.strokeStyle = color;
+      ctx.stroke();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(start.x, start.y, lineWidth / 2, 0, 2 * Math.PI);
+      ctx.fill();
+    } else if (eraserMode === true) {
+      ctx.clearRect(start.x, start.y, 24, 24);
+    }
   }
 
-  const [isClicked, setIsClicked] = useState(false);
+  // ===== Change drawMode to Eraser...
+
+  const drawModes = [
+    { id: 1, modeIcon: <RxPencil1 size={"1.8rem"} key={"draw"} /> },
+    { id: 2, modeIcon: <BsFillEraserFill size={"1.8rem"} key={"eraser"} /> },
+  ];
+
+  const [drawModeId, setDrawModeId] = useState(1);
+  const drawModeClass = "draw-cursor";
+  const eraseModeClass = "eraser-cursor";
+  const [cursorMode, setCursorMode] = useState(drawModeClass);
+  const changeMode = (mode) => {
+    if (mode.modeIcon.key === "eraser") {
+      setCursorMode(eraseModeClass);
+      setEraserMode(true);
+    }
+    if (mode.modeIcon.key === "draw") {
+      setCursorMode(drawModeClass);
+      setEraserMode(false);
+    }
+    setDrawModeId(mode.id);
+  };
 
   return (
-    <div className="dp-screen">
-      <div className="dp-content">
-        <div className="dp-sub-left">?/?</div>
-        <div className="dp-main">
-          <div className="dp-header">
-            <div className="dp-logo">
-              <img src={imgLogo} alt="" className="dp-img-logo-gartic" />
+    <div className="container-fluid app-bg vh-100">
+      <div className="row">
+        <div className="col-2">
+          <div className="row mt-5">
+            <div className="col-12 mt-5">
+              <div className="card app-bg mw-100 border-4 mt-5">
+                <div className="card-body">
+                  <div className="row">
+                    {colors.map((color) => (
+                      <div key={color} className="col-3">
+                        <div
+                          style={
+                            color === drawColor
+                              ? {
+                                  backgroundColor: color,
+                                  border: "inset white 5px",
+                                }
+                              : {
+                                  backgroundColor: color,
+                                }
+                          }
+                          className="color-square mt-2"
+                          onClick={() => changeColor(color)}
+                        ></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="d-title">HEY, IT'S TIME TO DRAW!</div>
-            <div className="d-text">{dataReceive.value}</div>
-          </div>
-          <div className="dp-main-content">
-            <canvas
-              id="myCanvas"
-              width={width}
-              height={height}
-              onMouseDown={onMouseDown}
-              ref={setCanvasRef}
-            />
-          </div>
-          <div className="dp-action">
-            {isClicked ? (
-              <button disabled className="d-btn-done">
-                DONE!
-              </button>
-            ) : (
-              <button
-                ref={buttonDoneRef}
-                onClick={convertToImage}
-                className="d-btn-done"
-              >
-                DONE!
-              </button>
-            )}
           </div>
         </div>
-        <div className="dp-sub-right">
-          {/* <BsClockFill size="30px" /> */}
-          {timer}
+        <div className="col-8">
+          <div className="row mt-5">
+            <div className="card border-4 app-bg">
+              <div className="row">
+                <div className="col-1 mt-3 fw-bold">?/?</div>
+                <div className="col-10 mt-2">
+                  <div className="card draw-header mt-3">
+                    <img className="header-image" src={imgLogo}></img>
+                    <p className="text-center w-100 fw-bold">
+                      HEY, IT'S TIME TO DRAW!
+                    </p>
+                    <p className="text-center w-100 fw-bold">
+                      {dataReceive.value}
+                    </p>
+                  </div>
+                  <div className="card draw-paper">
+                    <canvas
+                      className={cursorMode}
+                      id="myCanvas"
+                      width={width}
+                      height={height}
+                      onMouseDown={onMouseDown}
+                      ref={setCanvasRef}
+                    />
+                  </div>
+                </div>
+                <div className="col-1 mt-3 fw-bold">{timer}</div>
+
+                <div className="row mt-3 mb-3">
+                  <div className="col-5 width-change-area card">
+                    <div className="row">
+                      {widths.map((width) =>
+                        width === lineWidth ? (
+                          <div key={width} className="col-2">
+                            <div
+                              style={{ borderColor: drawColor }}
+                              onClick={() => changeLineWidth(width)}
+                              className="chosen-width-button m-3 ms-2 position-relative"
+                            >
+                              <div
+                                style={{
+                                  width: width + 2,
+                                  height: width + 2,
+                                  backgroundColor: drawColor,
+                                }}
+                                className="width-button-size position-absolute top-50 start-50 translate-middle"
+                              ></div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div key={width} className="col-2">
+                            <div
+                              onClick={() => changeLineWidth(width)}
+                              className="width-button m-3 ms-2 position-relative"
+                            >
+                              <div
+                                style={{
+                                  width: width + 2,
+                                  height: width + 2,
+                                }}
+                                className="width-button-size position-absolute top-50 start-50 translate-middle"
+                              ></div>
+                            </div>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-3">
+                    {isClicked ? (
+                      <button disabled className="d-btn-done">
+                        DONE!
+                      </button>
+                    ) : (
+                      <button
+                        ref={buttonDoneRef}
+                        onClick={convertToImage}
+                        className="d-btn-done"
+                      >
+                        DONE!
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-2">
+          <div className="row mt-5">
+            <div className="col-12 mt-5">
+              <div className="card app-bg mw-100 border-4 mt-5">
+                <div className="card-body">
+                  <div className="row">
+                    {drawModes.map((mode, index) => (
+                      <div key={index} className="col-6">
+                        <div
+                          style={
+                            mode.id === drawModeId
+                              ? { border: "solid 2px" }
+                              : {}
+                          }
+                          className="draw-mode-square ms-3"
+                        >
+                          <div className="draw-mode-inside-square">
+                            <div
+                              onClick={() => changeMode(mode)}
+                              className="ps-2 pt-2"
+                            >
+                              {mode.modeIcon}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
