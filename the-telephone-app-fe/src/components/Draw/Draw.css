@@ -38,6 +38,18 @@
     border-radius: 7px;
 }
 
+.color-square:active {
+    border: inset white 4px;
+}
+
+.chosen-color-square {
+    width: 2.1rem;
+    height: 2.1rem;
+    border: solid var(--secondary-color) 2px;
+    border-radius: 7px;
+    box-shadow: 2px 2px 0px 0px #888888;
+}
+
 .color-square:hover {
     cursor: pointer;
 }
@@ -114,7 +126,7 @@
 }
 
 .invisible-border {
-    border-color: var(--bg-color)
+    border-color: var(--bg-color);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
