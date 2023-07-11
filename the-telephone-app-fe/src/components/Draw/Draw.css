@@ -1,37 +1,41 @@
 .app-bg {
-    background-color: #FCF5ED;
+    background-color: var(--bg-color);
 }
 
 .draw-header {
-    background-color: #C6A88F;
+    background-color: var(--main-color);
 }
 
 .header-image {
-    width: 8rem;
+    width: 14rem;
     align-self: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
 }
 
 .d-btn-done {
-    width: 11rem;
-    height: 3rem;
-    margin-left: 3rem;
-
-    cursor: pointer;
-    padding: 0px 8px;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    font-weight: bold;
-    border-radius: 7px;
-    background-color: #C6A88F;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: var(--secondary-color);
+    color: #3E4677;
+    border-color: #C5CCE8;
+    width: 170px;
+    height: 48px;
+    font-family: Fredoka;
+    margin-left: 2rem;
 }
 
 .color-square {
     width: 2.1rem;
     height: 2.1rem;
-    border: solid 2px;
+    border: solid var(--secondary-color) 2px;
     border-radius: 7px;
 
+}
+
+.chosen-color-square {
+    width: 2.1rem;
+    height: 2.1rem;
+    border: inset white 5px;
+    border-radius: 7px;
 }
 
 .color-square:hover {
@@ -39,7 +43,7 @@
 }
 
 .draw-paper {
-    border: 4px solid #C6A88F;
+    border: 4px solid var(--main-color);
     border-radius: 4px;
 }
 
@@ -48,10 +52,19 @@
 }
 
 .eraser-cursor {
-    cursor: url(../../assets/square-bold-24.png), auto;
+    cursor: url(../../assets/square-16.png), auto;
 }
 
 .draw-mode-square {
+    border: solid #FFF9EB 2px;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.chosen-draw-mode-square {
+    border: solid #C3C9E8 2px;
     width: 3rem;
     height: 3rem;
     border-radius: 4px;
@@ -62,13 +75,20 @@
     width: 2.7rem;
     height: 2.7rem;
     border-radius: 4px;
-    background-color: #C6A88F;
+    background-color: var(--main-color);
     margin-top: 0.07rem;
     margin-left: 0.076rem;
 }
 
 .width-button {
     border: solid white 0.5px;
+    border-radius: 50%;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.chosen-width-button {
+    border: solid 2px;
     border-radius: 50%;
     height: 1.5rem;
     width: 1.5rem;
@@ -84,14 +104,27 @@
     background-color: white;
 }
 
-.chosen-width-button {
-    border: solid 2px;
-    border-radius: 50%;
-    height: 1.5rem;
-    width: 1.5rem;
-}
-
 .width-change-area {
     margin-left: 15rem;
-    background-color: #C6A88F;
+    background-color: var(--main-color);
+}
+
+.custom-border-color {
+    border-color: var(--main-color);
+}
+
+.invisible-border {
+    border-color: var(--bg-color)
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
+.custom-font {
+    font-family: Fredoka;
+    color: var(--secondary-color);
+    font-size: 28px;
+    font-weight: bold;
+    -webkit-text-stroke: 0.5px #102667;
+    text-shadow: 1px 2px 2px #3E4677, -1px -1px 10px #3E4677;
+    text-align: center;
 }
