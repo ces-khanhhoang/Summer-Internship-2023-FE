@@ -66,3 +66,32 @@
     margin-top: 0.07rem;
     margin-left: 0.076rem;
 }
+
+.width-button {
+    border: solid white 0.5px;
+    border-radius: 50%;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.width-button:hover {
+    cursor: pointer;
+}
+
+.width-button-size {
+    border: solid 0.5px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.chosen-width-button {
+    border: solid 2px;
+    border-radius: 50%;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.width-change-area {
+    margin-left: 15rem;
+    background-color: #C6A88F;
+}
