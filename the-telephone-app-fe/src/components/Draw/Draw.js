@@ -82,7 +82,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
 
   const colors = [
     "red",
-    "white",
+    "whitesmoke",
     "blue",
     "black",
     "green",
@@ -107,14 +107,24 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
 
   const [isClicked, setIsClicked] = useState(false);
 
-  // ===== To draw using Canvas
+  // ===== Change line width
+
+  const [lineWidth, setlineWidth] = useState(3);
+
+  const widths = [3, 5, 7, 10, 13.5, 17];
+
+  const changeLineWidth = (width) => {
+    setlineWidth(width);
+  };
+
+  // ===== Draw using Canvas
 
   const { onMouseDown, setCanvasRef } = useOnDraw(onDraw);
 
   const [eraserMode, setEraserMode] = useState(false);
 
   function onDraw(ctx, point, prevPoint) {
-    drawLine(prevPoint, point, ctx, drawColor, 5);
+    drawLine(prevPoint, point, ctx, drawColor, lineWidth);
   }
 
   function drawLine(start, end, ctx, color, width) {
@@ -128,7 +138,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
       ctx.stroke();
       ctx.fillStyle = color;
       ctx.beginPath();
-      ctx.arc(start.x, start.y, 2, 0, 2 * Math.PI);
+      ctx.arc(start.x, start.y, lineWidth / 2, 0, 2 * Math.PI);
       ctx.fill();
     } else if (eraserMode === true) {
       ctx.clearRect(start.x, start.y, 24, 24);
@@ -174,7 +184,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
                             color === drawColor
                               ? {
                                   backgroundColor: color,
-                                  border: "inset white 3.5px",
+                                  border: "inset white 5px",
                                 }
                               : {
                                   backgroundColor: color,
@@ -220,7 +230,45 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
                 <div className="col-1 mt-3 fw-bold">{timer}</div>
 
                 <div className="row mt-3 mb-3">
-                  <div className="col-8"></div>
+                  <div className="col-5 width-change-area card">
+                    <div className="row">
+                      {widths.map((width) =>
+                        width === lineWidth ? (
+                          <div key={width} className="col-2">
+                            <div
+                              style={{ borderColor: drawColor }}
+                              onClick={() => changeLineWidth(width)}
+                              className="chosen-width-button m-3 ms-2 position-relative"
+                            >
+                              <div
+                                style={{
+                                  width: width + 2,
+                                  height: width + 2,
+                                  backgroundColor: drawColor,
+                                }}
+                                className="width-button-size position-absolute top-50 start-50 translate-middle"
+                              ></div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div key={width} className="col-2">
+                            <div
+                              onClick={() => changeLineWidth(width)}
+                              className="width-button m-3 ms-2 position-relative"
+                            >
+                              <div
+                                style={{
+                                  width: width + 2,
+                                  height: width + 2,
+                                }}
+                                className="width-button-size position-absolute top-50 start-50 translate-middle"
+                              ></div>
+                            </div>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
                   <div className="col-3">
                     {isClicked ? (
                       <button disabled className="d-btn-done">
