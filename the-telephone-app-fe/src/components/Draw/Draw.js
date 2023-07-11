@@ -1,6 +1,6 @@
 import "../DescribePicture/DescribePicture.css";
 import "./Draw.css";
-import imgLogo from "../../assets/gartic.svg";
+import imgLogo from "../../assets/header.png";
 import { ref, uploadBytes, getStorage, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { useOnDraw } from "../Hooks";
@@ -8,9 +8,9 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../firebase";
 import axios from "axios";
-import "../style.css";
 import { RxPencil1 } from "react-icons/rx";
 import { BsFillEraserFill } from "react-icons/bs";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 const Draw = ({ width = "815rem", height = "350rem" }) => {
   let ip = "http://192.168.101.180:9090/";
@@ -19,7 +19,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(60);
   const buttonDoneRef = useRef(null);
 
   useEffect(() => {
@@ -132,7 +132,9 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
     ctx.beginPath();
     ctx.moveTo(start.x, start.y);
     ctx.lineTo(end.x, end.y);
-    if (eraserMode === false) {
+    if (eraserMode) {
+      ctx.clearRect(start.x, start.y, 16, 16);
+    } else {
       ctx.lineWidth = width;
       ctx.strokeStyle = color;
       ctx.stroke();
@@ -140,8 +142,6 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
       ctx.beginPath();
       ctx.arc(start.x, start.y, lineWidth / 2, 0, 2 * Math.PI);
       ctx.fill();
-    } else if (eraserMode === true) {
-      ctx.clearRect(start.x, start.y, 24, 24);
     }
   }
 
@@ -153,16 +153,11 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
   ];
 
   const [drawModeId, setDrawModeId] = useState(1);
-  const drawModeClass = "draw-cursor";
-  const eraseModeClass = "eraser-cursor";
-  const [cursorMode, setCursorMode] = useState(drawModeClass);
   const changeMode = (mode) => {
     if (mode.modeIcon.key === "eraser") {
-      setCursorMode(eraseModeClass);
       setEraserMode(true);
     }
     if (mode.modeIcon.key === "draw") {
-      setCursorMode(drawModeClass);
       setEraserMode(false);
     }
     setDrawModeId(mode.id);
@@ -174,23 +169,20 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
         <div className="col-2">
           <div className="row mt-5">
             <div className="col-12 mt-5">
-              <div className="card app-bg mw-100 border-4 mt-5">
+              <div className="card app-bg custom-border-color mw-100 border-4 mt-5">
                 <div className="card-body">
                   <div className="row">
                     {colors.map((color) => (
                       <div key={color} className="col-3">
                         <div
-                          style={
-                            color === drawColor
-                              ? {
-                                  backgroundColor: color,
-                                  border: "inset white 5px",
-                                }
-                              : {
-                                  backgroundColor: color,
-                                }
-                          }
-                          className="color-square mt-2"
+                          style={{ backgroundColor: color }}
+                          className={`mt-2
+                            ${
+                              color === drawColor
+                                ? "chosen-color-square"
+                                : "color-square"
+                            }
+                          `}
                           onClick={() => changeColor(color)}
                         ></div>
                       </div>
@@ -203,22 +195,22 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
         </div>
         <div className="col-8">
           <div className="row mt-5">
-            <div className="card border-4 app-bg">
+            <div className="card invisible-border border-4 app-bg">
               <div className="row">
-                <div className="col-1 mt-3 fw-bold">?/?</div>
+                <div className="col-1 mt-3 fw-bold">
+                  <div className="float-end">?/?</div>
+                </div>
                 <div className="col-10 mt-2">
                   <div className="card draw-header mt-3">
                     <img className="header-image" src={imgLogo}></img>
-                    <p className="text-center w-100 fw-bold">
-                      HEY, IT'S TIME TO DRAW!
-                    </p>
+                    <p className="custom-font">HEY, IT'S TIME TO DRAW!</p>
                     <p className="text-center w-100 fw-bold">
                       {dataReceive.value}
                     </p>
                   </div>
                   <div className="card draw-paper">
                     <canvas
-                      className={cursorMode}
+                      className={eraserMode ? "eraser-cursor" : "draw-cursor"}
                       id="myCanvas"
                       width={width}
                       height={height}
@@ -232,47 +224,43 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
                 <div className="row mt-3 mb-3">
                   <div className="col-5 width-change-area card">
                     <div className="row">
-                      {widths.map((width) =>
-                        width === lineWidth ? (
-                          <div key={width} className="col-2">
+                      {widths.map((width) => (
+                        <div key={width} className="col-2">
+                          <div
+                            style={
+                              width === lineWidth
+                                ? { borderColor: drawColor }
+                                : {}
+                            }
+                            onClick={() => changeLineWidth(width)}
+                            className={`m-3 ms-2 position-relative
+                              ${
+                                width === lineWidth
+                                  ? "chosen-width-button"
+                                  : "width-button"
+                              }`}
+                          >
                             <div
-                              style={{ borderColor: drawColor }}
-                              onClick={() => changeLineWidth(width)}
-                              className="chosen-width-button m-3 ms-2 position-relative"
-                            >
-                              <div
-                                style={{
-                                  width: width + 2,
-                                  height: width + 2,
-                                  backgroundColor: drawColor,
-                                }}
-                                className="width-button-size position-absolute top-50 start-50 translate-middle"
-                              ></div>
-                            </div>
+                              style={
+                                width === lineWidth
+                                  ? {
+                                      width: width + 2,
+                                      height: width + 2,
+                                      backgroundColor: drawColor,
+                                    }
+                                  : { width: width + 2, height: width + 2 }
+                              }
+                              className="width-button-size position-absolute top-50 start-50 translate-middle"
+                            ></div>
                           </div>
-                        ) : (
-                          <div key={width} className="col-2">
-                            <div
-                              onClick={() => changeLineWidth(width)}
-                              className="width-button m-3 ms-2 position-relative"
-                            >
-                              <div
-                                style={{
-                                  width: width + 2,
-                                  height: width + 2,
-                                }}
-                                className="width-button-size position-absolute top-50 start-50 translate-middle"
-                              ></div>
-                            </div>
-                          </div>
-                        )
-                      )}
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <div className="col-3">
                     {isClicked ? (
                       <button disabled className="d-btn-done">
-                        DONE!
+                        <BsFillCheckCircleFill /> DONE!
                       </button>
                     ) : (
                       <button
@@ -280,7 +268,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
                         onClick={convertToImage}
                         className="d-btn-done"
                       >
-                        DONE!
+                        <BsFillCheckCircleFill /> DONE!
                       </button>
                     )}
                   </div>
@@ -292,20 +280,20 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
         <div className="col-2">
           <div className="row mt-5">
             <div className="col-12 mt-5">
-              <div className="card app-bg mw-100 border-4 mt-5">
+              <div className="card custom-border-color app-bg mw-100 border-4 mt-5">
                 <div className="card-body">
                   <div className="row">
                     {drawModes.map((mode, index) => (
                       <div key={index} className="col-6">
                         <div
-                          style={
+                          className={`ms-3 ${
                             mode.id === drawModeId
-                              ? { border: "solid 2px" }
-                              : {}
+                              ? "chosen-draw-mode-square"
+                              : "draw-mode-square"
                           }
-                          className="draw-mode-square ms-3"
+                          `}
                         >
-                          <div className="draw-mode-inside-square">
+                          <div className={"draw-mode-inside-square"}>
                             <div
                               onClick={() => changeMode(mode)}
                               className="ps-2 pt-2"

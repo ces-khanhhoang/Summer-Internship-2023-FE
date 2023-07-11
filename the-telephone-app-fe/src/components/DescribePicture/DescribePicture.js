@@ -1,6 +1,5 @@
 import "./DescribePicture.css";
 import imgLogo from "../../assets/gartic.svg";
-import imgGalaxy from "../../assets/galaxy.jpg";
 import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
@@ -42,7 +41,7 @@ const DescribePicture = () => {
       ip + `user/done/${id_room}/${dataReceive.receiver}/${content}/${turn}`
     );
   };
-  
+
   image = image.replace(
     "(1)",
     "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%"
