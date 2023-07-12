@@ -10,12 +10,13 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import imgAvatar from "../../assets/avatar-1.svg";
-import imgLogo from "../../assets/gartic-phone.svg";
+import imgLogo from "../../assets/logo.png";
 import imgNormal from "../../assets/normal.svg";
 import axios from "axios";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
+import ava1 from "../../assets/ava1.png";
 
 const JoinRoom = () => {
   let ip = "http://192.168.101.180:9090/";
@@ -95,127 +96,114 @@ const JoinRoom = () => {
   };
 
   return checkNicknameExistence(currentName) ? (
-    <div className="jr-screen">
-      <div className="jr-content">
-        <div className="jr-header">
-          <Link to={"/"}>
-            <button className="jr-btn-back" onClick={handleButtonBack}>
-              <BsFillCaretLeftFill />
-              Back
+    <div className="all">
+      <div className="main">
+        <div className="row h-20">
+          <div className="col-2 center align">
+            <button className="button" onClick={handleButtonBack}>
+              <BsFillCaretLeftFill className="icon" />
+              BACK
             </button>
-          </Link>
-          <img src={imgLogo} alt="logo" className="jr-img-logo" />
-          <button className="jr-btn-sound">
-            <BsFillVolumeUpFill size={"24px"} />
-          </button>
+          </div>
+          <div className="col-8 center align">
+            <img src={imgLogo} alt="" className="img-logo" />
+          </div>
         </div>
-        <div className="jr-center">
-          <div className="jr-left">
-            <h4 className="jr-left-player">PLAYERS</h4>
-            <div className="jr-user">
-              <span className="jr-choice-number">
-                {role == 1 ? (
-                  <select onChange={handleSelectChange} name="" id="">
-                    <option value="4">4 PLAYERS</option>
-                    <option value="5">5 PLAYERS</option>
-                    <option value="6">6 PLAYERS</option>
-                    <option value="7">7 PLAYERS</option>
-                    <option value="8">8 PLAYERS</option>
-                    <option value="9">9 PLAYERS</option>
-                    <option value="10">10 PLAYERS</option>
-                    <option value="12">12 PLAYERS</option>
-                    <option value="14">14 PLAYERS</option>
-                    <option value="16">16 PLAYERS</option>
-                    <option value="18">18 PLAYERS</option>
-                    <option value="20">20 PLAYERS</option>
-                    <option value="30">30 PLAYERS</option>
-                    <option value="50">50 PLAYERS</option>
-                  </select>
-                ) : (
-                  <div>
-                    {users[0].maxPlayer !== 0 ? users[0].maxPlayer : 4} PLAYERS
-                  </div>
-                )}
-              </span>
-              <div className="jr-player">
+        <div className="row h-80">
+          <div className="col-4 flex-column section">
+            <div className="row h-13 align center text-title">PLAYERS ?/?</div>
+            <div className="row h-10 align px-4">
+              {role == 1 ? (
+                <select
+                  className=""
+                  onChange={handleSelectChange}
+                  name=""
+                  id=""
+                >
+                  <option value="4">4 PLAYERS</option>
+                  <option value="5">5 PLAYERS</option>
+                  <option value="6">6 PLAYERS</option>
+                  <option value="7">7 PLAYERS</option>
+                  <option value="8">8 PLAYERS</option>
+                  <option value="9">9 PLAYERS</option>
+                  <option value="10">10 PLAYERS</option>
+                  <option value="12">12 PLAYERS</option>
+                  <option value="14">14 PLAYERS</option>
+                  <option value="16">16 PLAYERS</option>
+                  <option value="18">18 PLAYERS</option>
+                  <option value="20">20 PLAYERS</option>
+                  <option value="30">30 PLAYERS</option>
+                  <option value="50">50 PLAYERS</option>
+                </select>
+              ) : (
+                <div className="text">
+                  {users[0].maxPlayer !== 0 ? users[0].maxPlayer : 4} PLAYERS
+                </div>
+              )}
+            </div>
+            <div className="row h-2"></div>
+            <div className="row h-70 px-2">
+              <div className="scrollable-100">
                 {users && users.length >= 1 ? (
                   users.map((user, index) => (
-                    <div className="jr-detail-player">
-                      <img
-                        src={imgAvatar}
-                        alt="avatar"
-                        className="jr-img-avatar"
-                      />
-                      <span className="jr-text">{user.nickname}</span>
-                      <i className="jr-icon">
-                        {user.role[0].name == "ROLE_HOST" ? (
-                          // role ==1 ?(
-                          <BiCrown />
-                        ) : (
-                          role == 1 && (
-                            <BiXCircle
-                              onClick={() => handleKick(user.nickname)}
-                            />
-                          )
-                        )}
-                      </i>
+                    <div key={user.nickname} className="row h-20 tag-name">
+                      <div className="flex-row align">
+                        <img src={imgAvatar} alt="avatar" className="img-ava" />
+                        <div className="text-ava">{user.nickname}</div>
+                        <i className="icon-ava">
+                          {user.role[0].name == "ROLE_HOST" ? (
+                            <BiCrown />
+                          ) : (
+                            role == 1 && (
+                              <BiXCircle
+                                onClick={() => handleKick(user.nickname)}
+                              />
+                            )
+                          )}
+                        </i>
+                      </div>
                     </div>
                   ))
                 ) : (
-                  <div className="jr-detail-player">
-                    <img
-                      src={imgAvatar}
-                      alt="avatar"
-                      className="jr-img-avatar"
-                    />
-                    <span className="jr-text">{users.nickname}</span>
-                    <i className="jr-icon">
-                      <BiCrown />
-                    </i>
+                  <div className="row h-20 tag-name">
+                    <div className="flex-row align">
+                      <img src={ava1} alt="avatar" className="img-ava" />
+                      <div className="text-ava">{users.nickname}</div>
+                      <div className="icon-ava">
+                        <BiCrown />
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
           </div>
-          <div className="jr-right">
-            <div className="jr-setting">
-              <div className="jr-tab">
-                <h4 className="jr-column">PRESET</h4>
-                <h4 className="jr-column">CUSTOM SETTINGS</h4>
-              </div>
-              <div className="jr-data">
-                <div className="jr-detail">
-                  <div className="jr-detail-setting">
-                    <img
-                      src={imgNormal}
-                      alt="img-setting"
-                      className="jr-img-setting"
-                    />
-                    <span className="jr-box"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-              {role == 1 && (
-                <div className="jr-action">
-                  <button className="jr-btn-action" onClick={handleInviteClick}>
-                    <BsFillSendXFill className="jr-btn-icon" />
-                    Invite
-                  </button>
-
-                  <button className="jr-btn-action" onClick={handlePlay}>
-                    <BsFillArrowRightSquareFill className="jr-btn-icon" />
-                    Start
+          <div className="col-1 section-sub"></div>
+          <div className="col-7 section">
+            <div className="row h-80"></div>
+            {role == 1 && (
+              <div className="row h-25 align">
+                <div className="col-6 right">
+                  <button className="button" onClick={handleInviteClick}>
+                    <BsFillSendXFill className="icon" />
+                    INVITE
                   </button>
                 </div>
-              )}
-              {role == 0 && (
-                <div className="jr-action ">
-                  <div className="jr-text-player">
-                    WAITING FOR THE HOST TO SET UP AND TO START THE GAME
-                  </div>
+                <div className="col-6 left">
+                  <button className="button" onClick={handlePlay}>
+                    <BsFillArrowRightSquareFill className="icon" />
+                    START
+                  </button>
                 </div>
-              )}
+              </div>
+            )}
+            {role == 0 && (
+              <div className="row h-20 align">
+                <div className="center text">
+                  WAITING FOR THE HOST TO SET UP AND TO START THE GAME
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
