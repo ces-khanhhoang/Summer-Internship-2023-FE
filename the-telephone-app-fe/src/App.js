@@ -7,6 +7,8 @@ import Draw from "./components/Draw/Draw";
 import WriteSentence from "./components/WriteSentence/WriteSentence";
 import WebFont from "webfontloader";
 import { useEffect } from "react";
+import 'bootstrap/dist/css/bootstrap.css';
+
 function App() {
   useEffect(() => {
     WebFont.load({
