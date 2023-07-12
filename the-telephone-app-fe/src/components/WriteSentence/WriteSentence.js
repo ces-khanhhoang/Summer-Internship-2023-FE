@@ -1,20 +1,21 @@
 import "../DescribePicture/DescribePicture.css";
 import "./WriteSentence.css";
+import "../Draw/Draw.css";
 import imgLogo from "../../assets/logo.png";
 import imgWrite from "../../assets/w.png";
-import { BsClockFill } from "react-icons/bs";
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+
 const WriteSentence = () => {
   let ip = "http://192.168.101.180:9090/";
   const location = useLocation();
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const turn = location.state?.turn;
-  const [timer, setTimer] = useState(30);
+  const totalTurn = location.state?.data.length;
+  const [timer, setTimer] = useState(60);
   const buttonDoneRef = useRef(null);
 
   useEffect(() => {
@@ -48,11 +49,13 @@ const WriteSentence = () => {
     <div className="all">
       <div className="main">
         <div className="row h-20">
-          <div className="col-2 left align">?/?</div>
+          <div className="col-2 left align custom-font">
+            {turn}/{totalTurn}
+          </div>
           <div className="col-8 center align">
             <img src={imgLogo} alt="" className="img-logo" />
           </div>
-          <div className="col-2 center align">{timer}</div>
+          <div className="col-2 ws-time-padding align custom-font">{timer}</div>
         </div>
         <div className="row h-80 section me-5">
           <div className="row h-80">

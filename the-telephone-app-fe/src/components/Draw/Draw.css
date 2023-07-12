@@ -20,7 +20,7 @@
     border-color: #C5CCE8;
     width: 170px;
     height: 48px;
-    font-family: Fredoka;
+    font-family: var(--main-font-family);
     margin-left: 2rem;
     box-shadow: var(--block-box-shadow);
 }
@@ -71,7 +71,7 @@
 }
 
 .draw-mode-square {
-    border: solid #FFF9EB 2px;
+    border: solid var(--bg-color) 2px;
     width: 3rem;
     height: 3rem;
     border-radius: 4px;
@@ -79,7 +79,7 @@
 }
 
 .chosen-draw-mode-square {
-    border: solid #C3C9E8 2px;
+    border: solid var(--secondary-color) 2px;
     width: 3rem;
     height: 3rem;
     border-radius: 4px;
@@ -91,8 +91,6 @@
     height: 2.7rem;
     border-radius: 4px;
     background-color: var(--main-color);
-    margin-top: 0.07rem;
-    margin-left: 0.076rem;
 }
 
 .width-button {
@@ -133,14 +131,34 @@
     border-color: var(--bg-color);
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
-
 .custom-font {
-    font-family: Fredoka;
+    font-family: var(--main-font-family);
     color: var(--secondary-color);
-    font-size: 28px;
+    font-size: 25px;
     font-weight: bold;
     -webkit-text-stroke: 0.5px #102667;
     text-shadow: 1px 2px 2px #3E4677;
     text-align: center;
+}
+
+.draw-header-font {
+    font-family: var(--main-font-family);
+    color: var(--secondary-color);
+    font-size: 16px;
+    font-weight: bold;
+    -webkit-text-stroke: 0.5px #102667;
+    text-shadow: 1px 2px 2px #3E4677;
+    text-align: center;
+}
+
+.written-sentence {
+    font-family: var(--main-font-family);
+    text-shadow: 0px 0px 2px #000000, 0px 0px 2px #000000,
+        0px 0px 3px #000000, 0px 0px 3px #000000,
+        2px 2px 2px #000000, 2px 2px 2px #000000,
+        0px 0px 4px #000000, 0px 0px 4px #000000;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
 }
