@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./StartGame.css";
-import imgLogo from "../../assets/gartic-phone.svg";
+import imgLogo from "../../assets/logo.png";
+import ava1 from "../../assets/ava1.png";
+
 import { BsFillCaretRightFill } from "react-icons/bs";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
+import "../style.css";
+import "../../assets/index.css";
+
 const StartGame = () => {
   let ip = "http://192.168.101.180:9090/";
 
@@ -110,46 +115,53 @@ const StartGame = () => {
   };
 
   return (
-    <div className="sg-screen">
-      <div className="sg-content">
-        <div className="sg-header">
-          <img src={imgLogo} alt="" className="sg-img-logo" />
+    <div className="all">
+      <div className="main">
+        <div className="row h-20">
+          <div className="col-4"></div>
+          <div className="col-4 center align">
+            <img src={imgLogo} alt="" className="img-logo" />
+          </div>
+          <div className="col-4"></div>
         </div>
-        <div className="sg-center">
-          <div className="sg-left">
-            <div className="sg-title">ANONYMOUS</div>
-            <div className="sg-left-main">
-              <img src={imgLogo} alt="" className="sg-img-avatar" />
-              <div className="sg-fill">
-                <div className="sg-text">CHOOSE A CHARACTER AND A NICKNAME</div>
-                <input
-                  type="text"
-                  placeholder={name}
-                  className="sg-input"
-                  onChange={handleNameChange}
-                />
+        <div className="row h-80">
+          <div className="col-7 section">
+            <div className="row h-80">
+              <div className="col-5 center align">
+                <img src={ava1} className="img-big" alt="" />
+              </div>
+              <div className="col-1"></div>
+              <div className="col-5 center align flex-column">
+                <div className="text">CHOOSE A CHARACTER AND A NICKNAME</div>
+                <div className="pt-4">
+                  <input
+                    type="text"
+                    placeholder={name}
+                    className=""
+                    onChange={handleNameChange}
+                  />
+                </div>
               </div>
             </div>
-            <div className="sg-left-action">
-              {id_room ? (
-                <button className="sg-btn-start" onClick={handleJoinClick}>
-                  <div className="">
-                    <BsFillCaretRightFill className="sg-icon" />
+            <div className="row h-20">
+              <div className="center">
+                {id_room ? (
+                  <button className="button" onClick={handleJoinClick}>
+                    <BsFillCaretRightFill className="icon" />
                     JOIN
-                  </div>
-                </button>
-              ) : (
-                <button className="sg-btn-start" onClick={handleStartClick}>
-                  <div className="">
-                    <BsFillCaretRightFill className="sg-icon" />
+                  </button>
+                ) : (
+                  <button className="button" onClick={handleStartClick}>
+                    <BsFillCaretRightFill className="icon" />
                     START
-                  </div>
-                </button>
-              )}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
-          <div className="sg-right">
-            <div className="sg-title">HOW TO PLAY</div>
+          <div className="col-1 section-sub"></div>
+          <div className="col-4 section">
+            <div className="row h-15 center align text-title">HOW TO PLAY</div>
           </div>
         </div>
       </div>
