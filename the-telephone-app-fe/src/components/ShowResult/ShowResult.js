@@ -1,12 +1,15 @@
 import "./ShowResult.css";
 import { BsFillCaretLeftFill } from "react-icons/bs";
 import { BsFillVolumeUpFill } from "react-icons/bs";
-import imgLogo from "../../assets/gartic-phone.svg";
+import imgLogo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import imgAvatar from "../../assets/avatar-1.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { BsFillSendXFill } from "react-icons/bs";
+import { BiXCircle } from "react-icons/bi";
+import { BiCrown } from "react-icons/bi";
 const ShowResult = () => {
   const navigate = useNavigate();
 
@@ -60,84 +63,108 @@ const ShowResult = () => {
   };
 
   return (
-    <div className="sr-screen">
-      <div className="sr-content">
-        <div className="sr-header">
-          <button className="sr-btn-back" onClick={handleButtonHome}>
-            <BsFillCaretLeftFill />
-            HOME
-          </button>
-          <img src={imgLogo} alt="logo" className="sr-img-logo" />
-          <button className="sr-btn-sound">
-            <BsFillVolumeUpFill size={"24px"} />
-          </button>
-        </div>
-        <div className="sr-sub-header">
-          <div className="sr-sub-left">PLAYERS</div>
-          <div className="sr-sub-right">
-            {location.state?.data[player].nickname}'S ALBUM
+    <div className="all">
+      <div className="main">
+        <div className="row h-20">
+          <div className="col-2 center y">
+            <button className="button">
+              <BsFillCaretLeftFill className="icon" />
+              BACK
+            </button>
           </div>
+          <div className="col-8 center y">
+            <img src={imgLogo} alt="" className="img-logo" />
+          </div>
+          <div className="col-2"></div>
         </div>
-        <div className="sr-center">
-          <div className="sr-left">
-            {users.map((user) => (
-              <div className="sr-player">
-                <img className="sr-img-avatar" src={imgAvatar} alt="avatar" />
-                <span className="sr-name">{user.nickname}</span>
+        <div className="row h-80">
+          <div className="col-4 flex-column section">
+            <div className="row h-13 y center text-title">PLAYERS ?/?</div>
+            <div className="row h-2"></div>
+            <div className="row h-80 px-2 ">
+              <div className=" scrollable">
+                {users.map((user) => (
+                  <div className="row h-20 tag-name">
+                    <div className="flex-row y">
+                      <img className="img-ava" src={imgAvatar} alt="avatar" />
+                      <div className="text-ava">{user.nickname}</div>
+                      <i className="icon-ava">
+                        {user.role[0].name == "ROLE_HOST" && <BiCrown />}
+                      </i>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-          <div className="sr-right">
-            {results.map((result, index) => (
-              <div>
-                {index % 2 == 0 ? (
+          <div className="col-1 section-sub"></div>
+          <div className="col-7 section">
+            <div className="row h-13 y center text-title">
+              {location.state?.data[player].nickname}'S ALBUM
+            </div>
+            <div className="row h-67 ">
+              <div className="scrollable-1">
+                {results.map((result, index) => (
                   <div>
-                    <div className="sr-message sr-mess-right ">
-                      <div className="sr-mess-content">
-                        <div className="sr-content-name">{result.namePlay}</div>
-
-                        <div className="sr-content-text">{result.data}</div>
+                    {index % 2 == 0 ? (
+                      <div className="">
+                        <div className="message mess-right ">
+                          <div className="mess-content">
+                            <div className="content-name">
+                              {result.namePlay}
+                            </div>
+                            <div className="content-text">{result.data}</div>
+                          </div>
+                          <img src={imgAvatar} alt="" className="mess-avatar" />
+                        </div>
                       </div>
-                      <img src={imgAvatar} alt="" className="sr-mess-avatar" />
-                    </div>
-                  </div>
-                ) : (
-                  <div className="sr-message sr-mess-left ">
-                    <div className="sr-mess-content">
-                      <div className="sr-content-name">{result.namePlay}</div>
-                      <div className="sr-content-img">
-                        <ConvertUrl data={result.data} />
+                    ) : (
+                      <div className="message mess-left ">
+                        <div className="mess-content">
+                          <div className="content-name">{result.namePlay}</div>
+                          <div className="content-img">
+                            <ConvertUrl data={result.data} />
+                          </div>
+                        </div>
+                        <img src={imgAvatar} alt="" className="mess-avatar" />
                       </div>
-                    </div>
-                    <img src={imgAvatar} alt="" className="sr-mess-avatar" />
+                    )}
                   </div>
-                )}
+                ))}
               </div>
-            ))}
 
-            {role == 0 ? (
-              ""
-            ) : (
-              <div>
-                {player == 0 ? (
-                  <button disabled className="sr-next-button">
-                    Back
-                  </button>
-                ) : (
-                  <button onClick={previousPlayer} className="sr-next-button">
-                    Back
-                  </button>
-                )}
-
-                {player == location.state?.data.length - 1 ? (
-                  <button className="sr-next-button" onClick={handlePlayAgain}>
-                    Play Again
-                  </button>
-                ) : (
-                  <button onClick={nextPlayer} className="sr-next-button">
-                    Next
-                  </button>
-                )}
+            </div>
+            {role == 1 && (
+              <div className="row h-20 y">
+                <div className="col-6 right">
+                  {player == 0 ? (
+                    <button disabled className="button ">
+                      Back
+                    </button>
+                  ) : (
+                    <button onClick={previousPlayer} className="button ">
+                      Back
+                    </button>
+                  )}
+                </div>
+                <div className="col-6 left">
+                  {player == location.state?.data.length - 1 ? (
+                    <button className="button " onClick={handlePlayAgain}>
+                      Play Again
+                    </button>
+                  ) : (
+                    <button onClick={nextPlayer} className="button ">
+                      Next
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+            {role == 0 && (
+              <div className="row h-20 y">
+                <div className="center text">
+                  WAITING FOR THE HOST TO SET UP AND TO START THE GAME
+                </div>
               </div>
             )}
           </div>
