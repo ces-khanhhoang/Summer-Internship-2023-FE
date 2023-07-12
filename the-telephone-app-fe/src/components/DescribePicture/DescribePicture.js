@@ -9,7 +9,8 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 const DescribePicture = () => {
   let ip = "http://192.168.101.180:9090/";
   const location = useLocation();
-  let turn = location.state?.turn;
+  const turn = location.state?.turn;
+  const totalTurn = location.state?.data.length;
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
@@ -57,8 +58,8 @@ const DescribePicture = () => {
           <div className="row mt-5">
             <div className="card invisible-border border-4 app-bg">
               <div className="row">
-                <div className="col-1 mt-3 fw-bold">
-                  <div className="float-end">?/?</div>
+                <div className="col-1 mt-3 custom-font pt-2">
+                  {turn}/{totalTurn}
                 </div>
                 <div className="col-10 mt-2">
                   <div className="card draw-header mt-3">
@@ -74,7 +75,7 @@ const DescribePicture = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-1 mt-3 fw-bold">{timer}</div>
+                <div className="col-1 mt-3 custom-font pt-2">{timer}</div>
               </div>
             </div>
             <div className="row mt-3 mb-3">

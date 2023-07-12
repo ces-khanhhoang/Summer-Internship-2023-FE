@@ -1,17 +1,17 @@
 .ws-main-content {
     display: flex;
     flex-direction: column;
-    /* margin-right: 50%; */
     transform: translateX(30%);
 }
+
 .ws-img-content {
     max-width: 40%;
     height: 36%;
     margin: 8px;
 }
+
 .ws-title {
     font-weight: bold;
-    /* color: #DFD4CB; */
     margin: 8px;
     display: flex;
     transform: translateX(10%);

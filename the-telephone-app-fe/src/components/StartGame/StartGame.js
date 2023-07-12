@@ -46,7 +46,7 @@ const StartGame = () => {
       if (data.length > 0) {
         startGame = data[0].status;
         if (startGame === "IN_PROGRESS") {
-          navigate("/start", { state: { id_room, name, turn } });
+          navigate("/start", { state: { id_room, name, turn, data } });
         }
         if (startGame === "AGAIN") {
           turn = 1;
@@ -65,11 +65,15 @@ const StartGame = () => {
       startGame = dataReceive.status;
       if (startGame === "WRITE") {
         turn = turn + 1;
-        navigate("/draw", { state: { dataReceive, id_room, name, turn } });
+        navigate("/draw", {
+          state: { dataReceive, id_room, name, turn, data },
+        });
       }
       if (startGame === "DRAW") {
         turn = turn + 1;
-        navigate("/write", { state: { dataReceive, id_room, name, turn } });
+        navigate("/write", {
+          state: { dataReceive, id_room, name, turn, data },
+        });
       }
       if (turn > dataReceive.number) {
         axios.post(ip + `user/result/${data[0].nickname}/${id_room}`);

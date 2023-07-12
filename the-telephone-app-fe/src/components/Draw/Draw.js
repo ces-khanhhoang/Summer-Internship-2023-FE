@@ -11,11 +11,13 @@ import axios from "axios";
 import { RxPencil1 } from "react-icons/rx";
 import { BsFillEraserFill } from "react-icons/bs";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import "../../assets/index.css";
 
 const Draw = ({ width = "815rem", height = "350rem" }) => {
   let ip = "http://192.168.101.180:9090/";
   const location = useLocation();
   const turn = location.state?.turn;
+  const totalTurn = location.state?.data.length;
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
@@ -168,8 +170,8 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
       <div className="row">
         <div className="col-2">
           <div className="row mt-5">
-            <div className="col-12 mt-5">
-              <div className="card app-bg custom-border-color mw-100 border-4 mt-5">
+            <div className="col-11 mt-5">
+              <div className="card app-bg custom-border-color border-4 mt-5">
                 <div className="card-body">
                   <div className="row">
                     {colors.map((color) => (
@@ -197,16 +199,14 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
           <div className="row mt-5">
             <div className="card invisible-border border-4 app-bg">
               <div className="row">
-                <div className="col-1 mt-3 fw-bold">
-                  <div className="float-end">?/?</div>
+                <div className="col-1 mt-3 pt-2 custom-font">
+                  {turn}/{totalTurn}
                 </div>
                 <div className="col-10 mt-2">
                   <div className="card draw-header mt-3">
                     <img className="header-image" src={imgLogo}></img>
-                    <p className="custom-font">HEY, IT'S TIME TO DRAW!</p>
-                    <p className="text-center w-100 fw-bold">
-                      {dataReceive.value}
-                    </p>
+                    <p className="draw-header-font">HEY, IT'S TIME TO DRAW!</p>
+                    <p className="written-sentence">{dataReceive.value}</p>
                   </div>
                   <div className="card draw-paper">
                     <canvas
@@ -219,7 +219,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
                     />
                   </div>
                 </div>
-                <div className="col-1 mt-3 fw-bold">{timer}</div>
+                <div className="col-1 mt-3 ps-2 pt-2 custom-font">{timer}</div>
 
                 <div className="row mt-3 mb-3">
                   <div className="col-5 width-change-area card">
@@ -233,7 +233,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
                                 : {}
                             }
                             onClick={() => changeLineWidth(width)}
-                            className={`m-3 ms-2 position-relative
+                            className={`m-3 position-relative
                               ${
                                 width === lineWidth
                                   ? "chosen-width-button"
@@ -279,21 +279,25 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
         </div>
         <div className="col-2">
           <div className="row mt-5">
-            <div className="col-12 mt-5">
+            <div className="col-11 ms-4 mt-5">
               <div className="card custom-border-color app-bg mw-100 border-4 mt-5">
                 <div className="card-body">
                   <div className="row">
                     {drawModes.map((mode, index) => (
                       <div key={index} className="col-6">
                         <div
-                          className={`ms-3 ${
+                          className={`ms-4 position-relative ${
                             mode.id === drawModeId
                               ? "chosen-draw-mode-square"
                               : "draw-mode-square"
                           }
                           `}
                         >
-                          <div className={"draw-mode-inside-square"}>
+                          <div
+                            className={
+                              "draw-mode-inside-square position-absolute top-50 start-50 translate-middle"
+                            }
+                          >
                             <div
                               onClick={() => changeMode(mode)}
                               className="ps-2 pt-2"

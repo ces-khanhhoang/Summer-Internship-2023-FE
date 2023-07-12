@@ -1,14 +1,11 @@
 import "./ShowResult.css";
 import { BsFillCaretLeftFill } from "react-icons/bs";
-import { BsFillVolumeUpFill } from "react-icons/bs";
 import imgLogo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import imgAvatar from "../../assets/avatar-1.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { BsFillSendXFill } from "react-icons/bs";
-import { BiXCircle } from "react-icons/bi";
 import { BiCrown } from "react-icons/bi";
 const ShowResult = () => {
   const navigate = useNavigate();
@@ -34,6 +31,7 @@ const ShowResult = () => {
         `user/result/${location.state?.data[player].nickname}/${location.state?.id_room}`
     );
     const responseResult = response.data;
+    setPlayerName(responseResult[0].namePlay);
     setResult(responseResult);
   };
   function ConvertUrl({ data }) {
@@ -51,12 +49,13 @@ const ShowResult = () => {
   const [results, setResult] = useState([]);
   let [player, setPlayer] = useState(0);
   const resultSet = location.state?.dataReceive;
-
+  const [playerName, setPlayerName] = useState();
   useEffect(() => {
     setUsers(location.state?.data);
     setResult(resultSet);
+    setPlayerName(resultSet[0].namePlay);
   }, [location.state?.data]);
-  
+
   const handlePlayAgain = async () => {
     let id_room = users[0].id_room;
     const response = await axios.post(ip + `user/again/${id_room}`);
@@ -67,9 +66,9 @@ const ShowResult = () => {
       <div className="main">
         <div className="row h-20">
           <div className="col-2 center align">
-            <button className="button">
+            <button onClick={handleButtonHome} className="button">
               <BsFillCaretLeftFill className="icon" />
-              BACK
+              HOME
             </button>
           </div>
           <div className="col-8 center align">
@@ -79,7 +78,7 @@ const ShowResult = () => {
         </div>
         <div className="row h-80">
           <div className="col-4 flex-column section">
-            <div className="row h-13 align center text-title">PLAYERS ?/?</div>
+            <div className="row h-13 align center text-title">PLAYERS</div>
             <div className="row h-2"></div>
             <div className="row h-80 px-2 ">
               <div className=" scrollable-100">
@@ -100,9 +99,9 @@ const ShowResult = () => {
           <div className="col-1 section-sub"></div>
           <div className="col-7 section">
             <div className="row h-13 align center text-title">
-              {location.state?.data[player].nickname}'S ALBUM
+              {playerName}'S ALBUM
             </div>
-            <div className="row h-67 ">
+            <div className="row h-67">
               <div className="scrollable">
                 {results.map((result, index) => (
                   <div>
@@ -132,7 +131,6 @@ const ShowResult = () => {
                   </div>
                 ))}
               </div>
-
             </div>
             {role == 1 && (
               <div className="row h-20 align">
