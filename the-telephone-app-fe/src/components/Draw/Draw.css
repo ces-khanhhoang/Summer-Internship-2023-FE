@@ -4,6 +4,7 @@
 
 .draw-header {
     background-color: var(--main-color);
+    box-shadow: var(--block-box-shadow);
 }
 
 .header-image {
@@ -21,6 +22,7 @@
     height: 48px;
     font-family: Fredoka;
     margin-left: 2rem;
+    box-shadow: var(--block-box-shadow);
 }
 
 .color-square {
@@ -45,6 +47,7 @@
 .draw-paper {
     border: 4px solid var(--main-color);
     border-radius: 4px;
+    box-shadow: var(--block-box-shadow);
 }
 
 .draw-cursor {
@@ -107,6 +110,7 @@
 .width-change-area {
     margin-left: 15rem;
     background-color: var(--main-color);
+    box-shadow: var(--block-box-shadow);
 }
 
 .custom-border-color {
@@ -125,6 +129,6 @@
     font-size: 28px;
     font-weight: bold;
     -webkit-text-stroke: 0.5px #102667;
-    text-shadow: 1px 2px 2px #3E4677, -1px -1px 10px #3E4677;
+    text-shadow: 1px 2px 2px #3E4677;
     text-align: center;
 }

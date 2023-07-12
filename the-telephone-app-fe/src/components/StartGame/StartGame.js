@@ -10,7 +10,6 @@ import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
-import "../style.css";
 import "../../assets/index.css";
 
 const StartGame = () => {

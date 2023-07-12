@@ -1,8 +1,10 @@
+import "../Draw/Draw.css";
 import "./DescribePicture.css";
-import imgLogo from "../../assets/gartic.svg";
+import imgLogo from "../../assets/header.png";
 import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 const DescribePicture = () => {
   let ip = "http://192.168.101.180:9090/";
@@ -12,7 +14,7 @@ const DescribePicture = () => {
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
   let image = dataReceive.value;
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(60);
   const buttonDoneRef = useRef(null);
 
   useEffect(() => {
@@ -47,39 +49,55 @@ const DescribePicture = () => {
     "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%"
   ); //1
   image = image.replace("(2)", "?alt=media&token="); //2
+
   return (
-    <div className="dp-screen">
-      <div className="dp-content">
-        <div className="dp-sub-left">?/?</div>
-        <div className="dp-main">
-          <div className="dp-header">
-            <div className="dp-logo">
-              <img src={imgLogo} alt="" className="dp-img-logo-gartic" />
+    <div className="container-fluid app-bg vh-100">
+      <div className="row">
+        <div className="col-8 center-block">
+          <div className="row mt-5">
+            <div className="card invisible-border border-4 app-bg">
+              <div className="row">
+                <div className="col-1 mt-3 fw-bold">
+                  <div className="float-end">?/?</div>
+                </div>
+                <div className="col-10 mt-2">
+                  <div className="card draw-header mt-3">
+                    <img className="header-image" src={imgLogo}></img>
+                    <p className="custom-font">
+                      NOW IT'S YOUR TURN TO DESCRIBE THIS SCENE
+                    </p>
+                    <p className="text-center w-100 fw-bold"></p>
+                  </div>
+                  <div className="card draw-paper position-relative">
+                    <div className="align-self-center ">
+                      <img className="drawn-picture" src={image}></img>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-1 mt-3 fw-bold">{timer}</div>
+              </div>
             </div>
-            <div className="dp-title">
-              NOW IT'S YOUR TURN TO DESCRIBE THIS SCENE
+            <div className="row mt-3 mb-3">
+              <div className="col-6 ms-10rem">
+                <input
+                  type="text"
+                  onChange={handleChangeContent}
+                  className="ws-input"
+                  placeholder="Type your description for this scene here ..."
+                ></input>
+              </div>
+              <div className="col-2">
+                <button
+                  ref={buttonDoneRef}
+                  className="d-btn-done"
+                  onClick={handleDone}
+                >
+                  <BsFillCheckCircleFill /> DONE!
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="dp-main-content">
-            <img src={image} alt="img-content" className="dp-img-content" />
-          </div>
-          <div className="dp-action">
-            <input
-              type="text"
-              onChange={handleChangeContent}
-              className="dp-input"
-              placeholder="Type your description for this scene here ..."
-            />
-            <button
-              ref={buttonDoneRef}
-              className="dp-btn-done"
-              onClick={handleDone}
-            >
-              DONE!
-            </button>
           </div>
         </div>
-        <div className="dp-sub-right">{timer}</div>
       </div>
     </div>
   );
