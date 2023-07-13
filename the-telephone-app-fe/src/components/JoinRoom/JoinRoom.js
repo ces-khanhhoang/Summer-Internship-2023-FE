@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import ava1 from "../../assets/ava1.png";
 
 const JoinRoom = () => {
-  let ip = "http://192.168.101.180:9090/";
+  let ip = "https://garticphone-ces-intern.onrender.com/";
   const location = useLocation();
   const role = location.state?.role;
   const [users, setUsers] = useState(location.state?.data);
@@ -34,7 +34,7 @@ const JoinRoom = () => {
   const [roomLink, setRoomLink] = useState("");
 
   const handleInviteClick = () => {
-    const link = `http://localhost:3000/${id_room}`;
+    const link = `https://garticphonesummerinternship.netlify.app/${id_room}`;
     setRoomLink(link);
     navigator.clipboard.writeText(link);
   };

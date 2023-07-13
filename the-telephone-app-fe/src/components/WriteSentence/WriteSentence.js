@@ -9,7 +9,7 @@ import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 
 const WriteSentence = () => {
-  let ip = "http://192.168.101.180:9090/";
+  let ip = "https://garticphone-ces-intern.onrender.com/";
   const location = useLocation();
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;

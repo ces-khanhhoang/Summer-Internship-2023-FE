@@ -13,7 +13,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "../../assets/index.css";
 
 const StartGame = () => {
-  let ip = "http://192.168.101.180:9090/";
+  let ip = "https://garticphone-ces-intern.onrender.com/";
 
   const [name, setName] = useState(
     "name0" + Math.round(Math.random() * 100000)

@@ -14,7 +14,7 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import "../../assets/index.css";
 
 const Draw = ({ width = "815rem", height = "350rem" }) => {
-  let ip = "http://192.168.101.180:9090/";
+  let ip = "https://garticphone-ces-intern.onrender.com/";
   const location = useLocation();
   const turn = location.state?.turn;
   const totalTurn = location.state?.data.length;

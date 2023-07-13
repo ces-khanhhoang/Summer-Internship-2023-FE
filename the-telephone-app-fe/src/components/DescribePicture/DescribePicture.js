@@ -7,7 +7,7 @@ import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 
 const DescribePicture = () => {
-  let ip = "http://192.168.101.180:9090/";
+  let ip = "https://garticphone-ces-intern.onrender.com/";
   const location = useLocation();
   const turn = location.state?.turn;
   const totalTurn = location.state?.data.length;

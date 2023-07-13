@@ -23,7 +23,7 @@ const ShowResult = () => {
     getResult();
   };
 
-  let ip = "http://192.168.101.180:9090/";
+  let ip = "https://garticphone-ces-intern.onrender.com/";
 
   const getResult = async () => {
     const response = await axios.post(
