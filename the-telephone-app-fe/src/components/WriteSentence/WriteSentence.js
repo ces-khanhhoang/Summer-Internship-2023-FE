@@ -50,7 +50,7 @@ const WriteSentence = () => {
       <div className="main">
         <div className="row h-20">
           <div className="col-2 left align custom-font">
-            {turn}/{totalTurn}
+            {turn} / {totalTurn}
           </div>
           <div className="col-8 center align">
             <img src={imgLogo} alt="" className="img-logo" />
