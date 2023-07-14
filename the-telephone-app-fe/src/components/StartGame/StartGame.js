@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import imgLogo from "../../assets/logo.png";
+import htp1 from "../../assets/friends.png";
+import htp2 from "../../assets/htp-write.png";
+import htp3 from "../../assets/htp-draw.png";
+import htp4 from "../../assets/htp-g.png";
+import htp5 from "../../assets/htp-re.png";
 import { BsFillCaretRightFill } from "react-icons/bs";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
@@ -125,6 +130,26 @@ const StartGame = () => {
       });
     }
   };
+  const imgs = [htp1, htp2, htp3, htp4, htp5];
+  const titles = [
+    "JOIN GAME",
+    "TIME TO WRITE",
+    "TIME TO DRAW",
+    "WHAT IS IT?",
+    "SEE WHAT HAPPENED",
+  ];
+  const contents = [
+    "Invite your friends",
+    "Each player must write a quirky sentence",
+    "You are gonna receive a bizzare sentence to draw",
+    "Try to describe one of the crazy drawings",
+    "Watch the hilarious results of the telephone game",
+  ];
+  const [currentGuide, setCurrentGuide] = useState(0);
+
+  const handleHowToPlay = (index) => {
+    setCurrentGuide(index);
+  };
 
   return (
     <div className="all">
@@ -175,8 +200,27 @@ const StartGame = () => {
             </div>
           </div>
           <div className="col-1 section-sub"></div>
-          <div className="col-4 section">
-            <div className="row h-15 center align text-title">HOW TO PLAY</div>
+          <div className="col-4 section h-100">
+            <div className="row h-20 center align text-title">HOW TO PLAY</div>
+            <div className="row h-70 center align">
+              <img src={imgs[currentGuide]} alt="" className="htp-img" />
+              <div className="htp-title text-title">{titles[currentGuide]}</div>
+              <div className="htp-content">{contents[currentGuide]}</div>
+            </div>
+            <div className="row h-10 center align">
+              {imgs.map((img, index) => (
+                <div className="col-2 center" key={index}>
+                  <div>
+                    <button
+                      className={`htp-button button ${
+                        index === currentGuide ? "active" : ""
+                      }`}
+                      onClick={() => handleHowToPlay(index)}
+                    ></button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
