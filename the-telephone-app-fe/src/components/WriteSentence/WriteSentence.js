@@ -7,9 +7,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { IP } from "../../config/config";
 
 const WriteSentence = () => {
-  let ip = "https://garticphone-ces-intern.onrender.com/";
   const location = useLocation();
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
@@ -41,7 +41,7 @@ const WriteSentence = () => {
 
   const handleDone = async () => {
     const response = await axios.post(
-      ip + `user/done/${id_room}/${currentName}/${content}/${turn}`
+      IP + `user/done/${id_room}/${currentName}/${content}/${turn}`
     );
   };
 

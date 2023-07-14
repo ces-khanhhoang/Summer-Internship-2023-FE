@@ -12,9 +12,9 @@ import { RxPencil1 } from "react-icons/rx";
 import { BsFillEraserFill } from "react-icons/bs";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import "../../assets/index.css";
+import { IP } from "../../config/config";
 
 const Draw = ({ width = "815rem", height = "350rem" }) => {
-  let ip = "https://garticphone-ces-intern.onrender.com/";
   const location = useLocation();
   const turn = location.state?.turn;
   const totalTurn = location.state?.data.length;
@@ -76,7 +76,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
 
     console.log(image);
     const response = await axios.post(
-      ip + `user/done/${id_room}/${dataReceive.receiver}/${image}/${turn}`
+      IP + `user/done/${id_room}/${dataReceive.receiver}/${image}/${turn}`
     );
   };
 

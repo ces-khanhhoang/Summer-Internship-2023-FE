@@ -5,9 +5,8 @@ import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
-
+import { IP } from "../../config/config";
 const DescribePicture = () => {
-  let ip = "https://garticphone-ces-intern.onrender.com/";
   const location = useLocation();
   const turn = location.state?.turn;
   const totalTurn = location.state?.data.length;
@@ -41,7 +40,7 @@ const DescribePicture = () => {
 
   const handleDone = async () => {
     const response = await axios.post(
-      ip + `user/done/${id_room}/${dataReceive.receiver}/${content}/${turn}`
+      IP + `user/done/${id_room}/${dataReceive.receiver}/${content}/${turn}`
     );
   };
 

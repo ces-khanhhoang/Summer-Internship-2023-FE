@@ -7,6 +7,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { BiCrown } from "react-icons/bi";
+import { IP } from "../../config/config";
+
 const ShowResult = () => {
   const navigate = useNavigate();
 
@@ -23,11 +25,10 @@ const ShowResult = () => {
     getResult();
   };
 
-  let ip = "https://garticphone-ces-intern.onrender.com/";
 
   const getResult = async () => {
     const response = await axios.post(
-      ip +
+      IP +
         `user/result/${location.state?.data[player].nickname}/${location.state?.id_room}`
     );
     const responseResult = response.data;
@@ -58,7 +59,7 @@ const ShowResult = () => {
 
   const handlePlayAgain = async () => {
     let id_room = users[0].id_room;
-    const response = await axios.post(ip + `user/again/${id_room}`);
+    const response = await axios.post(IP + `user/again/${id_room}`);
   };
 
   return (
