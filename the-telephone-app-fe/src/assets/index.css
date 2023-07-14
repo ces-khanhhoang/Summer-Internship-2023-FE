@@ -300,3 +300,31 @@ select {
     width: 17rem;
     height: 17rem;
 }
+
+.htp-img {
+    width: 60%;
+}
+
+.htp-title {
+    color: #A16B9F;
+    font-size: 20px;
+}
+
+.htp-content {
+    color: #A16B9F;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: var(--main-font-family);
+    text-align: center;
+}
+
+.htp-button {
+    width: 20px;
+    height: 20px;
+    padding: 0px;
+    border-radius: 50%;
+}
+
+.htp-button.active {
+    background-color: #713274;
+}
