@@ -2,12 +2,12 @@ import "./ShowResult.css";
 import { BsFillCaretLeftFill } from "react-icons/bs";
 import imgLogo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import imgAvatar from "../../assets/avatar-1.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { BiCrown } from "react-icons/bi";
 import { IP } from "../../config/config";
+import Avatar from "../Avatar";
 
 const ShowResult = () => {
   const navigate = useNavigate();
@@ -18,15 +18,15 @@ const ShowResult = () => {
 
   const nextPlayer = () => {
     setPlayer((player += 1));
-    getResult();
+    getResult(player);
   };
   const previousPlayer = () => {
     setPlayer((player -= 1));
-    getResult();
+    getResult(player);
   };
 
 
-  const getResult = async () => {
+  const getResult = async (player) => {
     const response = await axios.post(
       IP +
         `user/result/${location.state?.data[player].nickname}/${location.state?.id_room}`
@@ -84,9 +84,19 @@ const ShowResult = () => {
             <div className="row h-80 px-2 ">
               <div className=" scrollable-100">
                 {users.map((user) => (
-                  <div key={user.nickname} className="row h-20 tag-name">
+                  <div
+                    key={user.nickname}
+                    className={`row h-20 ${
+                      user.nickname === playerName
+                        ? "selected-tag-name"
+                        : "tag-name"
+                    }`}
+                  >
                     <div className="flex-row align">
-                      <img className="img-ava" src={imgAvatar} alt="avatar" />
+                      <Avatar
+                        displayAvatar={true}
+                        showAvatarId={user.id_image}
+                      />
                       <div className="text-ava">{user.nickname}</div>
                       <i className="icon-ava">
                         {user.role[0].name == "ROLE_HOST" && <BiCrown />}
@@ -105,7 +115,7 @@ const ShowResult = () => {
             <div className="row h-67">
               <div className="scrollable">
                 {results.map((result, index) => (
-                  <div>
+                  <div key={index}>
                     {index % 2 == 0 ? (
                       <div>
                         <div className="message mess-right">
@@ -115,7 +125,11 @@ const ShowResult = () => {
                             </div>
                             <div className="content-text">{result.data}</div>
                           </div>
-                          <img src={imgAvatar} alt="" className="mess-avatar" />
+                          <Avatar
+                            displayAvatar={true}
+                            showAvatarId={result.id_image}
+                            resultAvatar={true}
+                          />
                         </div>
                       </div>
                     ) : (
@@ -126,7 +140,11 @@ const ShowResult = () => {
                             <ConvertUrl data={result.data} />
                           </div>
                         </div>
-                        <img src={imgAvatar} alt="" className="mess-avatar" />
+                        <Avatar
+                          displayAvatar={true}
+                          showAvatarId={result.id_image}
+                          resultAvatar={true}
+                        />
                       </div>
                     )}
                   </div>

@@ -172,10 +172,14 @@
 }
 
 .sr-content-img {
-    width: 300px;
-    height: 200px;
+    width: 290px;
+    height: 190px;
     background-color: #f0f0f0;
+}
 
+.content-img {
+    border: #f0f0f0 dashed;
+    border-radius: 7px;
 }
 
 .sr-content-text {

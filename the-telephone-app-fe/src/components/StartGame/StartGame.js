@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./StartGame.css";
 import imgLogo from "../../assets/logo.png";
-import ava1 from "../../assets/ava1.png";
-
 import { BsFillCaretRightFill } from "react-icons/bs";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
@@ -12,12 +9,18 @@ import { useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import "../../assets/index.css";
 import { IP } from "../../config/config";
+import Avatar from "../Avatar";
 
 const StartGame = () => {
-
   const [name, setName] = useState(
     "name0" + Math.round(Math.random() * 100000)
   );
+
+  const [avatarId, setAvatarId] = useState(0);
+
+  const handleAvatarChange = (newId) => {
+    setAvatarId(newId);
+  };
 
   let turn = 1;
   let startGame;
@@ -50,10 +53,14 @@ const StartGame = () => {
         }
         if (startGame === "AGAIN") {
           turn = 1;
-          navigate("/lobby", { state: { data, id_room, role, name } });
+          navigate("/lobby", {
+            state: { data, id_room, role, name },
+          });
         }
         if (startGame === "MAX") {
-          navigate("/lobby", { state: { data, id_room, role, name } });
+          navigate("/lobby", {
+            state: { data, id_room, role, name },
+          });
         }
       } else {
         navigate("/");
@@ -89,7 +96,7 @@ const StartGame = () => {
   };
 
   const handleStartClick = async () => {
-    const response = await axios.post(IP + `user/create/${name}`);
+    const response = await axios.post(IP + `user/create/${name}/${avatarId}`);
     const host = response.data;
     var Sock = new SockJS(IP + "gameplay");
     client = over(Sock);
@@ -97,7 +104,9 @@ const StartGame = () => {
   };
 
   const handleJoinClick = async () => {
-    const response = await axios.post(IP + `user/join/${id_room}/${name}`);
+    const response = await axios.post(
+      IP + `user/join/${id_room}/${name}/${avatarId}`
+    );
     const users = response.data;
     if (Array.isArray(users)) {
       var Sock = new SockJS(IP + "gameplay");
@@ -131,7 +140,10 @@ const StartGame = () => {
           <div className="col-7 section">
             <div className="row h-80">
               <div className="col-5 center align">
-                <img src={ava1} className="img-big" alt="" />
+                <Avatar
+                  onAvatarChange={handleAvatarChange}
+                  displayAvatar={false}
+                />
               </div>
               <div className="col-1"></div>
               <div className="col-5 center align flex-column">

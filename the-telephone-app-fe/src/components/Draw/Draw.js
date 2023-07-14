@@ -200,7 +200,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
             <div className="card invisible-border border-4 app-bg">
               <div className="row">
                 <div className="col-1 mt-3 pt-2 custom-font">
-                  {turn}/{totalTurn}
+                  {turn} / {totalTurn}
                 </div>
                 <div className="col-10 mt-2">
                   <div className="card draw-header mt-3">

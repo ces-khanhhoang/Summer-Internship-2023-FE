@@ -1,7 +1,6 @@
 import "./JoinRoom.css";
 import React, { useState, useEffect } from "react";
 import { BsFillCaretLeftFill } from "react-icons/bs";
-import { BsFillVolumeUpFill } from "react-icons/bs";
 import { BsFillSendXFill } from "react-icons/bs";
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import { BiXCircle } from "react-icons/bi";
@@ -9,25 +8,36 @@ import { BiCrown } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import imgAvatar from "../../assets/avatar-1.svg";
 import imgLogo from "../../assets/logo.png";
-import imgNormal from "../../assets/normal.svg";
 import axios from "axios";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
-import ava1 from "../../assets/ava1.png";
 import { IP } from "../../config/config";
 import { INVITE } from "../../config/config";
+import Avatar from "../Avatar";
 
 const JoinRoom = () => {
   const location = useLocation();
   const role = location.state?.role;
   const [users, setUsers] = useState(location.state?.data);
+  const [avatarId, setAvatarId] = useState(location.state?.data.id_image);
 
   useEffect(() => {
     setUsers(location.state?.data);
+    if (Array.isArray(location.state.data)) {
+      setAvatarId(location.state?.data[0].id_image);
+    }
   }, [location.state?.data]);
+
+  useEffect(() => {
+    const options = document.querySelectorAll("option");
+    options.forEach((option) => {
+      const optionValue = parseInt(option.value);
+      const personNumber = users.length === undefined ? 1 : users.length;
+      option.style.display = optionValue >= personNumber ? "block" : "none";
+    });
+  }, [users]);
 
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
@@ -101,10 +111,12 @@ const JoinRoom = () => {
       <div className="main">
         <div className="row h-20">
           <div className="col-2 center align">
-            <button className="button" onClick={handleButtonBack}>
-              <BsFillCaretLeftFill className="icon" />
-              BACK
-            </button>
+            <Link to={"/"}>
+              <button className="button" onClick={handleButtonBack}>
+                <BsFillCaretLeftFill className="icon" />
+                BACK
+              </button>
+            </Link>
           </div>
           <div className="col-8 center align">
             <img src={imgLogo} alt="" className="img-logo" />
@@ -149,7 +161,10 @@ const JoinRoom = () => {
                   users.map((user, index) => (
                     <div key={user.nickname} className="row h-20 tag-name">
                       <div className="flex-row align">
-                        <img src={imgAvatar} alt="avatar" className="img-ava" />
+                        <Avatar
+                          displayAvatar={true}
+                          showAvatarId={user.id_image}
+                        />
                         <div className="text-ava">{user.nickname}</div>
                         <i className="icon-ava">
                           {user.role[0].name == "ROLE_HOST" ? (
@@ -168,7 +183,7 @@ const JoinRoom = () => {
                 ) : (
                   <div className="row h-20 tag-name">
                     <div className="flex-row align">
-                      <img src={ava1} alt="avatar" className="img-ava" />
+                      <Avatar displayAvatar={true} showAvatarId={avatarId} />
                       <div className="text-ava">{users.nickname}</div>
                       <div className="icon-ava">
                         <BiCrown />

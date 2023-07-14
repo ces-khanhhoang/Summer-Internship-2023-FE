@@ -58,7 +58,7 @@ const DescribePicture = () => {
             <div className="card invisible-border border-4 app-bg">
               <div className="row">
                 <div className="col-1 mt-3 custom-font pt-2">
-                  {turn}/{totalTurn}
+                  {turn} / {totalTurn}
                 </div>
                 <div className="col-10 mt-2">
                   <div className="card draw-header mt-3">
