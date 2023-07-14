@@ -17,9 +17,10 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 import ava1 from "../../assets/ava1.png";
+import { IP } from "../../config/config";
+import { INVITE } from "../../config/config";
 
 const JoinRoom = () => {
-  let ip = "https://garticphone-ces-intern.onrender.com/";
   const location = useLocation();
   const role = location.state?.role;
   const [users, setUsers] = useState(location.state?.data);
@@ -34,14 +35,14 @@ const JoinRoom = () => {
   const [roomLink, setRoomLink] = useState("");
 
   const handleInviteClick = () => {
-    const link = `https://garticphonesummerinternship.netlify.app/${id_room}`;
+    const link = `${INVITE}/${id_room}`;
     setRoomLink(link);
     navigator.clipboard.writeText(link);
   };
 
   const handleKick = async (nickname) => {
     const response = await axios.post(
-      ip + `user/delete/${id_room}/${nickname}`
+      IP + `user/delete/${id_room}/${nickname}`
     );
     setUsers(response.data);
   };
@@ -77,7 +78,7 @@ const JoinRoom = () => {
   };
 
   const handlePlay = async () => {
-    const response = await axios.post(ip + `user/start/${id_room}`);
+    const response = await axios.post(IP + `user/start/${id_room}`);
   };
 
   const handleButtonBack = () => {
@@ -92,7 +93,7 @@ const JoinRoom = () => {
 
   const handleSelectChange = (event) => {
     let value = event.target.value;
-    const response = axios.post(ip + `user/play/${value}/${id_room}`);
+    const response = axios.post(IP + `user/play/${value}/${id_room}`);
   };
 
   return checkNicknameExistence(currentName) ? (

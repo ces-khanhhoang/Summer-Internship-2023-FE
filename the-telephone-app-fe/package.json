@@ -36,7 +36,7 @@
     "webfontloader": "^1.6.28"
   },
   "scripts": {
-    "start": "HTTPS=true SSL_CRT_FILE=garticphonesummerinternship.pem SSL_KEY_FILE=garticphonesummerinternship-key.pem react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "deploy": "npm run build && netlify deploy",

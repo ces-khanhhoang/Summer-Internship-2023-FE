@@ -11,9 +11,9 @@ import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import "../../assets/index.css";
+import { IP } from "../../config/config";
 
 const StartGame = () => {
-  let ip = "https://garticphone-ces-intern.onrender.com/";
 
   const [name, setName] = useState(
     "name0" + Math.round(Math.random() * 100000)
@@ -76,7 +76,7 @@ const StartGame = () => {
         });
       }
       if (turn > dataReceive.number) {
-        axios.post(ip + `user/result/${data[0].nickname}/${id_room}`);
+        axios.post(IP + `user/result/${data[0].nickname}/${id_room}`);
       }
       if (Array.isArray(dataReceive)) {
         navigate("/book", {
@@ -89,18 +89,18 @@ const StartGame = () => {
   };
 
   const handleStartClick = async () => {
-    const response = await axios.post(ip + `user/create/${name}`);
+    const response = await axios.post(IP + `user/create/${name}`);
     const host = response.data;
-    var Sock = new SockJS(ip + "gameplay");
+    var Sock = new SockJS(IP + "gameplay");
     client = over(Sock);
     client.connect({}, () => onConnected(host.id_room, host, 1), onError);
   };
 
   const handleJoinClick = async () => {
-    const response = await axios.post(ip + `user/join/${id_room}/${name}`);
+    const response = await axios.post(IP + `user/join/${id_room}/${name}`);
     const users = response.data;
     if (Array.isArray(users)) {
-      var Sock = new SockJS(ip + "gameplay");
+      var Sock = new SockJS(IP + "gameplay");
       client = over(Sock);
       client.connect({}, () => onConnected(id_room, users, 0), onError);
     } else {
