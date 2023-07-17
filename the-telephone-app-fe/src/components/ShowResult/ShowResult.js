@@ -16,18 +16,23 @@ const ShowResult = () => {
     navigate("/");
   };
 
-  const [currentTurn, setCurrentTurn] = useState(0);
+  const location = useLocation();
+  const [users, setUsers] = useState(location.state?.data);
+  const role = location.state?.role;
+  const resultSet = location.state?.dataReceive;
+  const [playerName, setPlayerName] = useState();
+  const [player, setPlayer] = useState(0);
+  const [results, setResult] = useState([]);
+  const [timer, setTimer] = useState(0);
+  const scrollPoint = useRef(null);
+  const scrollPoint2 = useRef(null);
 
   const nextPlayer = () => {
-    setPlayer((player += 1));
-    if (player > currentTurn) {
-      setTimer(0);
-      setCurrentTurn(player);
-    }
+    setPlayer(player + 1);
     getResult(player);
   };
   const previousPlayer = () => {
-    setPlayer((player -= 1));
+    setPlayer(player - 1);
     getResult(player);
   };
 
@@ -40,6 +45,11 @@ const ShowResult = () => {
     setPlayerName(responseResult[0].namePlay);
     setResult(responseResult);
   };
+
+  useEffect(() => {
+    setTimer(0);
+  }, [results]);
+
   function ConvertUrl({ data }) {
     data = data.replace(
       "(1)",
@@ -49,13 +59,6 @@ const ShowResult = () => {
     return <img className="sr-content-img" alt="result" src={data}></img>; //2
   }
 
-  const location = useLocation();
-  const [users, setUsers] = useState(location.state?.data);
-  const role = location.state?.role;
-  const [results, setResult] = useState([]);
-  let [player, setPlayer] = useState(0);
-  const resultSet = location.state?.dataReceive;
-  const [playerName, setPlayerName] = useState();
   useEffect(() => {
     setUsers(location.state?.data);
     setResult(resultSet);
@@ -66,10 +69,6 @@ const ShowResult = () => {
     let id_room = users[0].id_room;
     const response = await axios.post(IP + `user/again/${id_room}`);
   };
-
-  const [timer, setTimer] = useState(0);
-  const scrollPoint = useRef(null);
-  const scrollPoint2 = useRef(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => {

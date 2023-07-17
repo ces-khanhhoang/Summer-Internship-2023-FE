@@ -98,8 +98,8 @@
 }
 
 .img-logo {
-  height: 116px;
-  padding-bottom: 1rem;
+    height: 100px;
+    padding-bottom: 1rem;
 }
 
 .button {
@@ -122,8 +122,7 @@
   border-radius: 50%;
 }
 
-.flex-column {
-  display: flex;
+.flex-column {  display: flex;
   flex-direction: column;
 }
 
