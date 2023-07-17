@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { BsFillCaretLeftFill } from "react-icons/bs";
 import { BsFillSendXFill } from "react-icons/bs";
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
-import { BiXCircle } from "react-icons/bi";
+import { BiLogIn, BiXCircle } from "react-icons/bi";
 import { BiCrown } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -67,38 +67,19 @@ const JoinRoom = () => {
     }
   };
 
-  const handleNavigateKick = () => {
-    let mess, title;
-    if (role === 1) {
-      mess = "You canceled the room";
-      title = "CANCEL PLAYROOM";
-    } else {
-      mess = "You have been kicked out from the room by the host";
-      title = "KICKED OUT";
-    }
-    confirmAlert({
-      title: title,
-      message: mess,
-      buttons: [
-        {
-          label: "OK",
-          onClick: () => navigate("/"),
-        },
-      ],
-    });
-  };
 
   const handlePlay = async () => {
     const response = await axios.post(IP + `user/start/${id_room}`);
   };
 
-  const handleButtonBack = () => {
+  const handleButtonBack = async () => {
     if (role === 1) {
       for (let i = 0; i < users.length; i++) {
-        handleKick(users[i].nickname);
+        await handleKick(users[i].nickname);
       }
-    } else {
-      handleKick(currentName);
+    }
+    if (role === 0) {
+      await handleKick(currentName);
     }
   };
 
@@ -111,17 +92,15 @@ const JoinRoom = () => {
   const [maxPlayersNumber, setMaxPlayersNumber] = useState(4);
   const [currentPlayersNumber, setCurrentPlayersNumber] = useState(1);
 
-  return checkNicknameExistence(currentName) ? (
+  return (
     <div className="all">
       <div className="main">
         <div className="row h-20">
           <div className="col-2 center align">
-            <Link to={"/"}>
-              <button className="button" onClick={handleButtonBack}>
-                <BsFillCaretLeftFill className="icon" />
-                BACK
-              </button>
-            </Link>
+            <button className="button" onClick={handleButtonBack}>
+              <BsFillCaretLeftFill className="icon" />
+              BACK
+            </button>
           </div>
           <div className="col-8 center align">
             <img src={imgLogo} alt="" className="img-logo" />
@@ -231,8 +210,6 @@ const JoinRoom = () => {
         </div>
       </div>
     </div>
-  ) : (
-    handleNavigateKick()
   );
 };
 
