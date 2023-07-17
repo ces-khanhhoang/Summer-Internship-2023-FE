@@ -24,10 +24,11 @@ const JoinRoom = () => {
   const [avatarId, setAvatarId] = useState(location.state?.data.id_image);
 
   useEffect(() => {
-    setUsers(location.state?.data);
     if (Array.isArray(location.state.data)) {
       setAvatarId(location.state?.data[0].id_image);
+      setCurrentPlayersNumber(location.state?.data.length);
     }
+    setUsers(location.state?.data);
   }, [location.state?.data]);
 
   useEffect(() => {
@@ -103,8 +104,12 @@ const JoinRoom = () => {
 
   const handleSelectChange = (event) => {
     let value = event.target.value;
+    setMaxPlayersNumber(value);
     const response = axios.post(IP + `user/play/${value}/${id_room}`);
   };
+
+  const [maxPlayersNumber, setMaxPlayersNumber] = useState(4);
+  const [currentPlayersNumber, setCurrentPlayersNumber] = useState(1);
 
   return checkNicknameExistence(currentName) ? (
     <div className="all">
@@ -124,7 +129,9 @@ const JoinRoom = () => {
         </div>
         <div className="row h-80">
           <div className="col-4 flex-column section">
-            <div className="row h-13 align center text-title">PLAYERS ?/?</div>
+            <div className="row h-13 align center text-title">
+              PLAYERS {currentPlayersNumber} / {maxPlayersNumber}
+            </div>
             <div className="row h-10 align px-4">
               {role == 1 ? (
                 <select
