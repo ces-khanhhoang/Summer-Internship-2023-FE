@@ -3,7 +3,7 @@ import { BsFillCaretLeftFill } from "react-icons/bs";
 import imgLogo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { BiCrown } from "react-icons/bi";
 import { IP } from "../../config/config";
@@ -16,15 +16,20 @@ const ShowResult = () => {
     navigate("/");
   };
 
+  const [currentTurn, setCurrentTurn] = useState(0);
+
   const nextPlayer = () => {
     setPlayer((player += 1));
+    if (player > currentTurn) {
+      setTimer(0);
+      setCurrentTurn(player);
+    }
     getResult(player);
   };
   const previousPlayer = () => {
     setPlayer((player -= 1));
     getResult(player);
   };
-
 
   const getResult = async (player) => {
     const response = await axios.post(
@@ -41,7 +46,7 @@ const ShowResult = () => {
       "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%"
     ); //1
     data = data.replace("(2)", "?alt=media&token=");
-    return <img className="sr-content-img" src={data}></img>; //2
+    return <img className="sr-content-img" alt="result" src={data}></img>; //2
   }
 
   const location = useLocation();
@@ -61,6 +66,28 @@ const ShowResult = () => {
     let id_room = users[0].id_room;
     const response = await axios.post(IP + `user/again/${id_room}`);
   };
+
+  const [timer, setTimer] = useState(0);
+  const scrollPoint = useRef(null);
+  const scrollPoint2 = useRef(null);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimer((prevTimer) => prevTimer + 1);
+      if (timer % 2 === 0) {
+        scrollPoint.current?.scrollIntoView({ behavior: "smooth" });
+      } else if (timer % 2.5 === 0) {
+        scrollPoint2.current?.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 1000);
+
+    if (timer === resultSet.length * 5) {
+      clearInterval(intervalId);
+    }
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [timer]);
 
   return (
     <div className="all">
@@ -99,7 +126,7 @@ const ShowResult = () => {
                       />
                       <div className="text-ava">{user.nickname}</div>
                       <i className="icon-ava">
-                        {user.role[0].name == "ROLE_HOST" && <BiCrown />}
+                        {user.role[0].name === "ROLE_HOST" && <BiCrown />}
                       </i>
                     </div>
                   </div>
@@ -116,73 +143,117 @@ const ShowResult = () => {
               <div className="scrollable">
                 {results.map((result, index) => (
                   <div key={index}>
-                    {index % 2 == 0 ? (
+                    {index % 2 === 0 ? (
                       <div>
-                        <div className="message mess-right">
-                          <div className="mess-content">
-                            <div className="content-name">
-                              {result.namePlay}
+                        {timer >= (index + 1) * 3 ? (
+                          <div className="message mess-right">
+                            <div className="mess-content">
+                              <div className="content-name">
+                                {result.namePlay}
+                              </div>
+                              {timer >= (index + 2) * 3 ? (
+                                <>
+                                  <div className="content-text">
+                                    {result.data}
+                                  </div>
+                                  <div ref={scrollPoint}></div>
+                                </>
+                              ) : (
+                                <div className="chat-bubble bubble-right">
+                                  <div className="typing">
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                            <div className="content-text">{result.data}</div>
+                            <Avatar
+                              displayAvatar={true}
+                              showAvatarId={result.id_image}
+                              resultAvatar={true}
+                            />
                           </div>
-                          <Avatar
-                            displayAvatar={true}
-                            showAvatarId={result.id_image}
-                            resultAvatar={true}
-                          />
-                        </div>
+                        ) : (
+                          <div></div>
+                        )}
                       </div>
                     ) : (
-                      <div className="message mess-left">
-                        <div className="mess-content">
-                          <div className="content-name">{result.namePlay}</div>
-                          <div className="content-img">
-                            <ConvertUrl data={result.data} />
+                      <div>
+                        {timer >= (index + 1) * 3 ? (
+                          <div className="message mess-left">
+                            <div className="mess-content">
+                              <div className="content-name">
+                                {result.namePlay}
+                              </div>
+                              {timer >= (index + 2) * 3 ? (
+                                <>
+                                  <div className="content-img">
+                                    <ConvertUrl data={result.data} />
+                                  </div>
+                                  <div ref={scrollPoint2}></div>
+                                </>
+                              ) : (
+                                <div className="chat-bubble bubble-left">
+                                  <div className="typing">
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                            <Avatar
+                              displayAvatar={true}
+                              showAvatarId={result.id_image}
+                              resultAvatar={true}
+                            />
                           </div>
-                        </div>
-                        <Avatar
-                          displayAvatar={true}
-                          showAvatarId={result.id_image}
-                          resultAvatar={true}
-                        />
+                        ) : (
+                          <div></div>
+                        )}
                       </div>
                     )}
                   </div>
                 ))}
               </div>
             </div>
-            {role == 1 && (
-              <div className="row h-20 align">
-                <div className="col-6 right">
-                  {player == 0 ? (
-                    <button disabled className="button">
-                      Back
-                    </button>
-                  ) : (
-                    <button onClick={previousPlayer} className="button">
-                      Back
-                    </button>
-                  )}
-                </div>
-                <div className="col-6 left">
-                  {player == location.state?.data.length - 1 ? (
-                    <button className="button" onClick={handlePlayAgain}>
-                      Play Again
-                    </button>
-                  ) : (
-                    <button onClick={nextPlayer} className="button">
-                      Next
-                    </button>
-                  )}
-                </div>
+            {timer - 1 >= resultSet.length * 4 ? (
+              <div className="mt-4">
+                {role === 1 && (
+                  <div className="row h-20 align">
+                    <div className="col-6 right">
+                      {player === 0 ? (
+                        <div></div>
+                      ) : (
+                        <button onClick={previousPlayer} className="button">
+                          Back
+                        </button>
+                      )}
+                    </div>
+                    <div className="col-6 left">
+                      {player === location.state?.data.length - 1 ? (
+                        <button className="button" onClick={handlePlayAgain}>
+                          Play Again
+                        </button>
+                      ) : (
+                        <button onClick={nextPlayer} className="button">
+                          Next
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {role === 0 && (
+                  <div className="row h-20 align">
+                    <div className="center text">
+                      WAITING FOR THE HOST TO SET UP AND TO START THE GAME
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-            {role == 0 && (
-              <div className="row h-20 align">
-                <div className="center text">
-                  WAITING FOR THE HOST TO SET UP AND TO START THE GAME
-                </div>
-              </div>
+            ) : (
+              <div></div>
             )}
           </div>
         </div>

@@ -70,7 +70,7 @@ const JoinRoom = () => {
     let mess, title;
     if (role === 1) {
       mess = "You canceled the room";
-      title = "CENCEL PLAYROOM";
+      title = "CANCEL PLAYROOM";
     } else {
       mess = "You have been kicked out from the room by the host";
       title = "KICKED OUT";
