@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IP } from "../../config/config";
+import { SENTENCES } from "../../config/config";
 const DescribePicture = () => {
   const location = useLocation();
   const turn = location.state?.turn;
@@ -39,10 +40,19 @@ const DescribePicture = () => {
   };
 
   const handleDone = async () => {
+    let dataSend = content.replace(new RegExp(" ", "g"), "_");
     const response = await axios.post(
-      IP + `user/done/${id_room}/${dataReceive.receiver}/${content}/${turn}`
+      IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`
     );
   };
+
+  useEffect(() => {
+    if (content.trim() === "") {
+      const randomContent =
+        SENTENCES[Math.floor(Math.random() * SENTENCES.length)];
+      setContent(randomContent);
+    }
+  }, [content]);
 
   image = image.replace(
     "(1)",

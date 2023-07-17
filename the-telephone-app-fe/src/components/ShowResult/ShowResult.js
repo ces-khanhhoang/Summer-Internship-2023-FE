@@ -154,7 +154,10 @@ const ShowResult = () => {
                               {timer >= (index + 2) * 3 ? (
                                 <>
                                   <div className="content-text">
-                                    {result.data}
+                                    {result.data.replace(
+                                      new RegExp("_", "g"),
+                                      " "
+                                    )}
                                   </div>
                                   <div ref={scrollPoint}></div>
                                 </>
