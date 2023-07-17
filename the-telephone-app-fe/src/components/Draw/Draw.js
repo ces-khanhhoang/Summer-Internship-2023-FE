@@ -60,7 +60,6 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
     const storageRef = ref(storage, "images/" + randomName);
     uploadBytes(storageRef, file).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
-        console.log("Download link to your file: ", downloadURL);
         const image = downloadURL;
         handleUploadImage(id_room, currentName, image, turn);
       });
@@ -74,7 +73,6 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
     ); //1
     image = image.replace("?alt=media&token=", "(2)"); //2
 
-    console.log(image);
     const response = await axios.post(
       IP + `user/done/${id_room}/${dataReceive.receiver}/${image}/${turn}`
     );
@@ -206,7 +204,9 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
                   <div className="card draw-header mt-3">
                     <img className="header-image" src={imgLogo}></img>
                     <p className="draw-header-font">HEY, IT'S TIME TO DRAW!</p>
-                    <p className="written-sentence">{dataReceive.value}</p>
+                    <p className="written-sentence">
+                      {dataReceive.value.replace(new RegExp("_", "g"), " ")}
+                    </p>
                   </div>
                   <div className="card draw-paper">
                     <canvas

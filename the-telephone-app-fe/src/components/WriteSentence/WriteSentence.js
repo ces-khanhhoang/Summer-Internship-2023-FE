@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IP } from "../../config/config";
+import { SENTENCES } from "../../config/config";
 
 const WriteSentence = () => {
   const location = useLocation();
@@ -40,11 +41,19 @@ const WriteSentence = () => {
   };
 
   const handleDone = async () => {
+    let dataSend = content.replace(new RegExp(" ", "g"), "_");
     const response = await axios.post(
-      IP + `user/done/${id_room}/${currentName}/${content}/${turn}`
+      IP + `user/done/${id_room}/${currentName}/${dataSend}/${turn}`
     );
   };
 
+  useEffect(() => {
+    if (content.trim() === "") {
+      const randomContent =
+        SENTENCES[Math.floor(Math.random() * SENTENCES.length)];
+      setContent(randomContent);
+    }
+  }, [content]);
   return (
     <div className="all">
       <div className="main">
@@ -71,7 +80,7 @@ const WriteSentence = () => {
               <input
                 type="text"
                 className="w-100"
-                placeholder=" ... "
+                placeholder={content}
                 onChange={handleChangeContent}
               />
             </div>
