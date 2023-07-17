@@ -68,7 +68,12 @@ const StartGame = () => {
           });
         }
       } else {
-        navigate("/");
+        if (role === 1) {
+          navigate("/cancel");
+        }
+        if (role === 0) {
+          navigate("/exit");
+        }
       }
     });
 
@@ -109,25 +114,26 @@ const StartGame = () => {
   };
 
   const handleJoinClick = async () => {
-    const response = await axios.post(
-      IP + `user/join/${id_room}/${name}/${avatarId}`
-    );
-    const users = response.data;
-    if (Array.isArray(users)) {
-      var Sock = new SockJS(IP + "gameplay");
-      client = over(Sock);
-      client.connect({}, () => onConnected(id_room, users, 0), onError);
-    } else {
-      confirmAlert({
-        title: "FULL ROOM",
-        message: "This room has reached its capacity",
-        buttons: [
-          {
-            label: "OK",
-            onClick: () => navigate("/"),
-          },
-        ],
-      });
+    try {
+      const response = await axios.post(
+        IP + `user/join/${id_room}/${name}/${avatarId}`
+      );
+      const users = response.data;
+      if (Array.isArray(users)) {
+        var Sock = new SockJS(IP + "gameplay");
+        client = over(Sock);
+        client.connect({}, () => onConnected(id_room, users, 0), onError);
+      } else {
+        if (users === "room does not exist") {
+          navigate("/error");
+        }
+        if (users === "the room is full") {
+          navigate("/full");
+        }
+      }
+    }
+    catch {
+      navigate("/error");
     }
   };
   const imgs = [htp1, htp2, htp3, htp4, htp5];
