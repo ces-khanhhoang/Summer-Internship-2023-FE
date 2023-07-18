@@ -381,3 +381,7 @@ input {
 .sg-character-position {
   margin-bottom: 3rem;
 }
+
+input[type="radio"] {
+  display: none;
+}

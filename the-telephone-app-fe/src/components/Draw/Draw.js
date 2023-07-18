@@ -17,12 +17,19 @@ import { IP } from "../../config/config";
 const Draw = ({ width = "815rem", height = "350rem" }) => {
   const location = useLocation();
   const turn = location.state?.turn;
-  const totalTurn = location.state?.data.length;
-  const id_room = location.state?.id_room;
+  const mode = location.state?.mode;
+  let totalTurn;
+  const idRoom = location.state?.id_room;
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
   const [timer, setTimer] = useState(60);
   const buttonDoneRef = useRef(null);
+
+  if (mode !== "KNOCK_OFF") {
+    totalTurn = location.state?.totalTurn;
+  } else {
+    totalTurn = location.state?.data.length;
+  }
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -61,21 +68,27 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
     uploadBytes(storageRef, file).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((downloadURL) => {
         const image = downloadURL;
-        handleUploadImage(id_room, currentName, image, turn);
+        handleUploadImage(idRoom, currentName, image, turn);
       });
     });
   };
 
-  const handleUploadImage = async (id_room, nickname, image, turn) => {
+  const handleUploadImage = async (idRoom, nickname, image, turn) => {
     image = image.replace(
       "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
       "(1)"
     ); //1
     image = image.replace("?alt=media&token=", "(2)"); //2
 
-    const response = await axios.post(
-      IP + `user/done/${id_room}/${dataReceive.receiver}/${image}/${turn}`
-    );
+    if (mode === "KNOCK_OFF" && turn === 1) {
+      const response = await axios.post(
+        IP + `user/done/${idRoom}/${currentName}/${image}/${turn}`
+      );
+    } else {
+      const response = await axios.post(
+        IP + `user/done/${idRoom}/${dataReceive.receiver}/${image}/${turn}`
+      );
+    }
   };
 
   // ===== Choose Color
@@ -204,9 +217,13 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
                   <div className="card draw-header mt-3">
                     <img className="header-image" src={imgLogo}></img>
                     <p className="draw-header-font">HEY, IT'S TIME TO DRAW!</p>
-                    <p className="written-sentence">
-                      {dataReceive.value.replace(new RegExp("_", "g"), " ")}
-                    </p>
+                    {mode !== "KNOCK_OFF" && (
+                      <p className="written-sentence">
+                        {dataReceive.value
+                          .toString()
+                          .replace(new RegExp("_", "g"), " ")}
+                      </p>
+                    )}
                   </div>
                   <div className="card draw-paper">
                     <canvas

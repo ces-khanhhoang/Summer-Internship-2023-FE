@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import imgLogo from "../../assets/logo.png";
 import axios from "axios";
-import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 import { IP } from "../../config/config";
@@ -59,14 +58,26 @@ const JoinRoom = () => {
     setUsers(response.data);
   };
 
-  const handlePlay = async () => {
-    const response = await axios.post(IP + `user/start/${id_room}`);
+  const [selectedMode, setSelectedMode] = useState('IN_PROGRESS');
+
+  const handleModeChange = (event) => {
+    setSelectedMode(event.target.value);
+  };
+
+  const handlePlay = async (event) => {
+    const response = await axios.post(
+      IP + `user/start/${id_room}/${selectedMode}`
+    );
   };
 
   const handleButtonBack = async () => {
     if (role === 1) {
-      for (let i = 0; i < users.length; i++) {
-        await handleKick(users[i].nickname);
+      if (users.length > 1) {
+        for (let i = 0; i < users.length; i++) {
+          await handleKick(users[i].nickname);
+        }
+      } else {
+        await handleKick(currentName);
       }
     }
     if (role === 0) {
@@ -174,7 +185,24 @@ const JoinRoom = () => {
           </div>
           <div className="col-1 section-sub"></div>
           <div className="col-7 section">
-            <div className="row h-80"></div>
+            <div className="row h-80">
+              <div className="col-6">
+                <div>
+                  <label className="button">
+                    <input type="radio" name="mode" value="IN_PROGRESS" checked = {selectedMode === "IN_PROGRESS"} onChange={handleModeChange} />
+                    NORMAL
+                  </label>
+                </div>
+              </div>
+              <div className="col-6">
+                <div>
+                  <label className="button">
+                    <input type="radio" name="mode" value="KNOCK_OFF" checked = {selectedMode === "KNOCK_OFF"} onChange={handleModeChange} />
+                    KNOCK-OFF
+                  </label>
+                </div>
+              </div>
+            </div>
             {role == 1 && (
               <div className="row h-25 align">
                 <div className="col-6">

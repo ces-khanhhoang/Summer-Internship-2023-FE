@@ -19,6 +19,7 @@ const ShowResult = () => {
   const location = useLocation();
   const [users, setUsers] = useState(location.state?.data);
   const role = location.state?.role;
+  const mode = location.state?.mode;
   const resultSet = location.state?.dataReceive;
   const [playerName, setPlayerName] = useState();
   const [player, setPlayer] = useState(0);
@@ -152,13 +153,19 @@ const ShowResult = () => {
                               </div>
                               {timer >= (index + 2) * 3 ? (
                                 <>
-                                  <div className="content-text">
-                                    {result.data.replace(
-                                      new RegExp("_", "g"),
-                                      " "
-                                    )}
-                                  </div>
-                                  <div ref={scrollPoint}></div>
+                                  {mode === "KNOCK_OFF" ? (
+                                    <div className="content-img">
+                                      <ConvertUrl data={result.data} />
+                                      <div ref={scrollPoint}></div>
+                                    </div>
+                                  ) : (
+                                    <div className="content-text">
+                                      {result.data
+                                        .toString()
+                                        .replace(new RegExp("_", "g"), " ")}
+                                      <div ref={scrollPoint}></div>
+                                    </div>
+                                  )}
                                 </>
                               ) : (
                                 <div className="chat-bubble bubble-right">
