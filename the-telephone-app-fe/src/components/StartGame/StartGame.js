@@ -171,9 +171,9 @@ const StartGame = () => {
             <div className="row mt-5">
               <span className="text-title">WELCOME!</span>
             </div>
-            <div className="row mt-5">
+            <div className="row mt-5 h-80">
               <div className="center align">
-                <div className="col-5">
+                <div className="col-5 center align">
                   <Avatar
                     onAvatarChange={handleAvatarChange}
                     displayAvatar={false}
@@ -192,20 +192,20 @@ const StartGame = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="row h-20">
-              <div className="center">
-                {id_room ? (
-                  <button className="button" onClick={handleJoinClick}>
-                    <BsFillCaretRightFill className="icon" />
-                    JOIN
-                  </button>
-                ) : (
-                  <button className="button" onClick={handleStartClick}>
-                    <BsFillCaretRightFill className="icon" />
-                    START
-                  </button>
-                )}
+              <div className="row mt-3 h-10">
+                <div className="center">
+                  {id_room ? (
+                    <button className="button" onClick={handleJoinClick}>
+                      <BsFillCaretRightFill className="icon" />
+                      JOIN
+                    </button>
+                  ) : (
+                    <button className="button" onClick={handleStartClick}>
+                      <BsFillCaretRightFill className="icon" />
+                      START
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>

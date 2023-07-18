@@ -123,7 +123,7 @@
 }
 
 .img-big {
-  width: 16rem;
+  width: 95%;
   border-radius: 50%;
 }
 
@@ -284,8 +284,8 @@ input {
 }
 
 .change-avatar-button {
-  margin-top: 12.5rem;
-  margin-left: 12.5rem;
+  margin-top: 10.5rem;
+  margin-left: 10.5rem;
   border: 4px var(--main-color) solid;
   border-radius: 50%;
   background-color: var(--secondary-color);
@@ -304,8 +304,8 @@ input {
 .avatar-border {
   border: var(--secondary-color) 4px solid;
   border-radius: 50%;
-  width: 17rem;
-  height: 17rem;
+  width: 14rem;
+  height: 14rem;
 }
 
 .htp-img {

@@ -65,7 +65,7 @@ const Avatar = ({
         </>
       ) : (
         <>
-          <div className="avatar-border position-relative">
+          <div className="avatar-border center align position-relative">
             <img
               src={avatars[avatarId].src}
               className="img-big position-absolute top-50 start-50 translate-middle"
