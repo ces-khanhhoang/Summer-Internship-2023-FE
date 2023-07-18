@@ -11,7 +11,6 @@ import { BsFillCaretRightFill } from "react-icons/bs";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useParams } from "react-router-dom";
-import { confirmAlert } from "react-confirm-alert";
 import "../../assets/index.css";
 import { IP } from "../../config/config";
 import Avatar from "../Avatar";
@@ -46,7 +45,7 @@ const StartGame = () => {
 
   const { id_room } = useParams();
   var client = null;
-
+  let mode;
   const onConnected = (id_room, data, role) => {
     client.subscribe("/topic/" + id_room, function (response) {
       data = JSON.parse(response.body);
@@ -54,7 +53,8 @@ const StartGame = () => {
       if (data.length > 0) {
         startGame = data[0].status;
         if (startGame === "IN_PROGRESS") {
-          navigate("/start", { state: { id_room, name, turn, data } });
+          mode = "NORMAL";
+          navigate("/start", { state: { id_room, name, turn, data, mode } });
         }
         if (startGame === "AGAIN") {
           turn = 1;
@@ -65,6 +65,12 @@ const StartGame = () => {
         if (startGame === "MAX") {
           navigate("/lobby", {
             state: { data, id_room, role, name },
+          });
+        }
+        if (startGame === "KNOCK_OFF") {
+          mode = "KNOCK_OFF";
+          navigate("/draw", {
+            state: { id_room, name, turn, data, mode },
           });
         }
       } else {
@@ -86,20 +92,26 @@ const StartGame = () => {
           state: { dataReceive, id_room, name, turn, data },
         });
       }
+      if (startGame === "KNOCK_OFF") {
+        turn = turn + 1;
+        navigate("/write", {
+          state: { dataReceive, id_room, name, turn, data, mode },
+        });
+      }
       if (startGame === "DRAW") {
         turn = turn + 1;
         navigate("/write", {
           state: { dataReceive, id_room, name, turn, data },
         });
       }
-      if (turn > dataReceive.number) {
-        axios.post(IP + `user/result/${data[0].nickname}/${id_room}`);
-      }
       if (Array.isArray(dataReceive)) {
         navigate("/book", {
-          state: { data, id_room, role, name, dataReceive, turn },
+          state: { data, id_room, role, name, dataReceive, turn, mode },
         });
         turn = 0;
+      }
+      if (turn > dataReceive.number) {
+        axios.post(IP + `user/result/${data[0].nickname}/${id_room}`);
       }
     });
     navigate("/lobby", { state: { data, id_room, role, name } });

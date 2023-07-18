@@ -14,12 +14,12 @@ import { SENTENCES } from "../../config/config";
 const WriteSentence = () => {
   const location = useLocation();
   const id_room = location.state?.id_room;
+  const mode = location.state?.mode;
   const currentName = location.state?.name;
   const turn = location.state?.turn;
   const totalTurn = location.state?.data.length;
   const [timer, setTimer] = useState(60);
   const buttonDoneRef = useRef(null);
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -55,6 +55,7 @@ const WriteSentence = () => {
       setContent(randomContent);
     }
   }, [content]);
+
   return (
     <div className="container-fluid app-bg">
       <div className="row mt-5">
@@ -80,20 +81,22 @@ const WriteSentence = () => {
             </div>
             <div className="row mt-5">
               <div className="col-8 d-flex center-block">
-                <input
-                  type="text"
-                  className="ws-1-input center-block"
-                  placeholder=" ... "
-                  onChange={handleChangeContent}
-                />
-                <button
-                  ref={buttonDoneRef}
-                  className="button ms-5 center-block"
-                  onClick={handleDone}
-                >
-                  <BsFillCheckCircleFill className="icon" />
-                  DONE!
-                </button>
+                <div>
+                  <input
+                    type="text"
+                    className="ws-1-input center-block"
+                    placeholder=" ... "
+                    onChange={handleChangeContent}
+                  />
+                  <button
+                    ref={buttonDoneRef}
+                    className="button ms-5 center-block"
+                    onClick={handleDone}
+                  >
+                    <BsFillCheckCircleFill className="icon" />
+                    DONE!
+                  </button>
+                </div>
               </div>
             </div>
           </div>

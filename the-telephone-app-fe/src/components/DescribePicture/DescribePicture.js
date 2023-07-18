@@ -7,18 +7,21 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IP } from "../../config/config";
+import { useNavigate } from "react-router-dom";
 import { SENTENCES } from "../../config/config";
+
 const DescribePicture = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const turn = location.state?.turn;
   const totalTurn = location.state?.data.length;
   const id_room = location.state?.id_room;
+  const mode = location.state?.mode;
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
   let image = dataReceive.value;
   const [timer, setTimer] = useState(60);
   const buttonDoneRef = useRef(null);
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -45,6 +48,12 @@ const DescribePicture = () => {
     const response = await axios.post(
       IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`
     );
+  };
+
+  const handleDraw = async () => {
+    navigate("/draw", {
+      state: { dataReceive, id_room, turn, totalTurn, mode },
+    });
   };
 
   useEffect(() => {
@@ -90,21 +99,32 @@ const DescribePicture = () => {
             </div>
             <div className="row mt-3 mb-3">
               <div className="col-6 ms-10rem">
-                <input
-                  type="text"
-                  onChange={handleChangeContent}
-                  className="ws-input"
-                  placeholder="Type your description for this scene here ..."
-                ></input>
+                {mode !== "KNOCK_OFF" && (
+                  <input
+                    type="text"
+                    onChange={handleChangeContent}
+                    className="ws-input"
+                    placeholder="Type your description for this scene here ..."
+                  ></input>
+                )}
               </div>
               <div className="col-2">
-                <button
-                  ref={buttonDoneRef}
-                  className="d-btn-done"
-                  onClick={handleDone}
-                >
-                  <BsFillCheckCircleFill /> DONE!
-                </button>
+                {mode === "KNOCK_OFF" ? (
+                  <button
+                    className="d-btn-done"
+                    onClick={handleDraw}
+                  >
+                    <BsFillCheckCircleFill /> DRAW!
+                  </button>
+                ) : (
+                  <button
+                    ref={buttonDoneRef}
+                    className="d-btn-done"
+                    onClick={handleDone}
+                  >
+                    <BsFillCheckCircleFill /> DONE!
+                  </button>
+                )}
               </div>
             </div>
           </div>
