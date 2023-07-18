@@ -131,8 +131,7 @@ const StartGame = () => {
           navigate("/full");
         }
       }
-    }
-    catch {
+    } catch {
       navigate("/error");
     }
   };
@@ -169,23 +168,28 @@ const StartGame = () => {
         </div>
         <div className="row h-80">
           <div className="col-7 section">
-            <div className="row h-80">
-              <div className="col-5 center align">
-                <Avatar
-                  onAvatarChange={handleAvatarChange}
-                  displayAvatar={false}
-                />
-              </div>
-              <div className="col-1"></div>
-              <div className="col-5 center align flex-column">
-                <div className="text">CHOOSE A CHARACTER AND A NICKNAME</div>
-                <div className="pt-4">
-                  <input
-                    type="text"
-                    placeholder={name}
-                    className=""
-                    onChange={handleNameChange}
+            <div className="row mt-5">
+              <span className="text-title">WELCOME!</span>
+            </div>
+            <div className="row mt-5">
+              <div className="center align">
+                <div className="col-5">
+                  <Avatar
+                    onAvatarChange={handleAvatarChange}
+                    displayAvatar={false}
                   />
+                </div>
+                <div className="col-1"></div>
+                <div className="col-5 center align flex-column">
+                  <div className="text">CHOOSE A CHARACTER AND A NICKNAME</div>
+                  <div className="pt-4">
+                    <input
+                      type="text"
+                      placeholder={name}
+                      className=""
+                      onChange={handleNameChange}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

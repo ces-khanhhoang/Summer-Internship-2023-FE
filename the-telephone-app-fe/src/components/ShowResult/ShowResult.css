@@ -114,8 +114,6 @@
 .sr-img-avatar {
     height: 80%;
     width: auto;
-    /* top: 10%;
-    left: 10%; */
     transform: translate(30%, 10%);
 }
 
@@ -193,9 +191,6 @@
     width: 40px;
     height: 40px;
     margin: 4px;
-    /* top: 10%;
-    left: 10%; */
-    /* transform: translate(200%, 80%); */
 }
 
 .sr-next-button {

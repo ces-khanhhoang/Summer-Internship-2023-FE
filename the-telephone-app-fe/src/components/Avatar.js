@@ -71,13 +71,13 @@ const Avatar = ({
               className="img-big position-absolute top-50 start-50 translate-middle"
               alt=""
             />
+            <button
+              onClick={() => changeAvatar()}
+              className="position-absolute change-avatar-button"
+            >
+              <BiRotateRight size={"1.4rem"} />
+            </button>
           </div>
-          <button
-            onClick={() => changeAvatar()}
-            className="position-absolute change-avatar-button"
-          >
-            <BiRotateRight size={"1.4rem"} />
-          </button>
         </>
       )}
     </>

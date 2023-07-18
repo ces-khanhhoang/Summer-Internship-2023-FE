@@ -1,6 +1,7 @@
 import "../DescribePicture/DescribePicture.css";
 import "./WriteSentence.css";
 import "../Draw/Draw.css";
+import "../../assets/index.css";
 import imgLogo from "../../assets/logo.png";
 import imgWrite from "../../assets/w.png";
 import React, { useState, useEffect, useRef } from "react";
@@ -55,44 +56,45 @@ const WriteSentence = () => {
     }
   }, [content]);
   return (
-    <div className="all">
-      <div className="main">
-        <div className="row h-20">
-          <div className="col-2 left align custom-font">
-            {turn} / {totalTurn}
-          </div>
-          <div className="col-8 center align">
-            <img src={imgLogo} alt="" className="img-logo" />
-          </div>
-          <div className="col-2 ws-time-padding align custom-font">{timer}</div>
-        </div>
-        <div className="row h-80 section me-5">
-          <div className="row h-80">
-            <div className="col-3"></div>
-            <div className="col-6 center">
-              <img className="img-write align" src={imgWrite} alt="" />
+    <div className="container-fluid app-bg">
+      <div className="row mt-5">
+        <div className="col-10 center-block">
+          <div className="row">
+            <div className="col-2 left align custom-font">
+              {turn} / {totalTurn}
             </div>
-            <div className="col-3"></div>
-          </div>
-          <div className="row h-20 align">
-            <div className="col-2"></div>
-            <div className="col-6 right">
-              <input
-                type="text"
-                className="w-100"
-                placeholder={content}
-                onChange={handleChangeContent}
-              />
+            <div className="col-8 center align">
+              <img src={imgLogo} alt="" className="img-logo" />
             </div>
-            <div className="col-3 left">
-              <button
-                ref={buttonDoneRef}
-                className="button"
-                onClick={handleDone}
-              >
-                <BsFillCheckCircleFill className="icon" />
-                DONE!
-              </button>
+            <div className="col-2 ws-time-padding align custom-font">
+              {timer}
+            </div>
+            <div className="row section">
+              <div className="col-6 center-block">
+                <img
+                  className="img-write center-block mb-4"
+                  src={imgWrite}
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="row mt-5">
+              <div className="col-8 d-flex center-block">
+                <input
+                  type="text"
+                  className="ws-1-input center-block"
+                  placeholder=" ... "
+                  onChange={handleChangeContent}
+                />
+                <button
+                  ref={buttonDoneRef}
+                  className="button ms-5 center-block"
+                  onClick={handleDone}
+                >
+                  <BsFillCheckCircleFill className="icon" />
+                  DONE!
+                </button>
+              </div>
             </div>
           </div>
         </div>

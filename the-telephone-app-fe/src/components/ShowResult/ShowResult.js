@@ -224,22 +224,35 @@ const ShowResult = () => {
               <div className="mt-4">
                 {role === 1 && (
                   <div className="row h-20 align">
-                    <div className="col-6 right">
+                    <div className="col-6">
                       {player === 0 ? (
-                        <div></div>
+                        <div>
+                          <button disabled className="button float-end me-1">
+                            Back
+                          </button>
+                        </div>
                       ) : (
-                        <button onClick={previousPlayer} className="button">
+                        <button
+                          onClick={previousPlayer}
+                          className="button float-end me-1"
+                        >
                           Back
                         </button>
                       )}
                     </div>
-                    <div className="col-6 left">
+                    <div className="col-6">
                       {player === location.state?.data.length - 1 ? (
-                        <button className="button" onClick={handlePlayAgain}>
+                        <button
+                          className="button ms-1"
+                          onClick={handlePlayAgain}
+                        >
                           Play Again
                         </button>
                       ) : (
-                        <button onClick={nextPlayer} className="button">
+                        <button
+                          onClick={nextPlayer}
+                          className="button button ms-1"
+                        >
                           Next
                         </button>
                       )}
