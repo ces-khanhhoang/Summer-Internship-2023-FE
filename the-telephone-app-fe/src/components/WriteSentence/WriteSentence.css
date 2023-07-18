@@ -17,3 +17,14 @@
     transform: translateX(10%);
 
 }
+
+.ws-1-input {
+    height: 48px;
+    width: 700px;
+    border-radius: 4px;
+    box-shadow: var(--block-box-shadow);
+}
+
+.-ws-app-bg{
+    background-color: var(--bg-color);
+}

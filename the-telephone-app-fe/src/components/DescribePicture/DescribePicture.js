@@ -1,5 +1,6 @@
 import "../Draw/Draw.css";
 import "./DescribePicture.css";
+import "../../assets/index.css";
 import imgLogo from "../../assets/header.png";
 import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";

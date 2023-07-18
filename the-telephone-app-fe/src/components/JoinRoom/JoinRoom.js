@@ -1,4 +1,5 @@
 import "./JoinRoom.css";
+import "../../assets/index.css";
 import React, { useState, useEffect } from "react";
 import { BsFillCaretLeftFill } from "react-icons/bs";
 import { BsFillSendXFill } from "react-icons/bs";
@@ -58,16 +59,6 @@ const JoinRoom = () => {
     setUsers(response.data);
   };
 
-  const checkNicknameExistence = (nickname) => {
-    if (users.length > 1) {
-      return users.some((user) => user.nickname === nickname);
-    }
-    if (role == 1) {
-      return true;
-    }
-  };
-
-
   const handlePlay = async () => {
     const response = await axios.post(IP + `user/start/${id_room}`);
   };
@@ -80,6 +71,7 @@ const JoinRoom = () => {
     }
     if (role === 0) {
       await handleKick(currentName);
+      navigate("/exit");
     }
   };
 
@@ -114,7 +106,7 @@ const JoinRoom = () => {
             <div className="row h-10 align px-4">
               {role == 1 ? (
                 <select
-                  className=""
+                  className="form-select custom-select"
                   onChange={handleSelectChange}
                   name=""
                   id=""
@@ -185,14 +177,17 @@ const JoinRoom = () => {
             <div className="row h-80"></div>
             {role == 1 && (
               <div className="row h-25 align">
-                <div className="col-6 right">
-                  <button className="button" onClick={handleInviteClick}>
+                <div className="col-6">
+                  <button
+                    className="button float-end me-1"
+                    onClick={handleInviteClick}
+                  >
                     <BsFillSendXFill className="icon" />
                     INVITE
                   </button>
                 </div>
-                <div className="col-6 left">
-                  <button className="button" onClick={handlePlay}>
+                <div className="col-6">
+                  <button className="button ms-1" onClick={handlePlay}>
                     <BsFillArrowRightSquareFill className="icon" />
                     START
                   </button>
