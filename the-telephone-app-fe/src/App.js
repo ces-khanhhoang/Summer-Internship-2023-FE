@@ -12,6 +12,7 @@ import WriteSentence from "./components/WriteSentence/WriteSentence";
 import WebFont from "webfontloader";
 import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import LoadingEffect from "./components/LoadingEffect/LoadingEffect";
 
 function App() {
   useEffect(() => {
@@ -34,6 +35,7 @@ function App() {
         <Route path={"/full"} element={<FullRoom />}></Route>
         <Route path={"/cancel"} element={<CancelRoom />}></Route>
         <Route path={"/exit"} element={<ExitGame />}></Route>
+        <Route path={"/eff"} element={<LoadingEffect />}></Route>
       </Routes>
     </>
   );

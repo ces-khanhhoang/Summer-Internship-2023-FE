@@ -14,6 +14,8 @@ import { useParams } from "react-router-dom";
 import "../../assets/index.css";
 import { IP } from "../../config/config";
 import Avatar from "../Avatar";
+import LoadingEffect from "../LoadingEffect/LoadingEffect";
+import { clear } from "@testing-library/user-event/dist/clear";
 
 const StartGame = () => {
   const [name, setName] = useState(
@@ -114,35 +116,44 @@ const StartGame = () => {
         axios.post(IP + `user/result/${data[0].nickname}/${id_room}`);
       }
     });
+
     navigate("/lobby", { state: { data, id_room, role, name } });
   };
 
   const handleStartClick = async () => {
+    setIsLoading(true);
     const response = await axios.post(IP + `user/create/${name}/${avatarId}`);
-    const host = response.data;
-    var Sock = new SockJS(IP + "gameplay");
-    client = over(Sock);
-    client.connect({}, () => onConnected(host.id_room, host, 1), onError);
+    const timerId = setTimeout(() => {
+      const host = response.data;
+      var Sock = new SockJS(IP + "gameplay");
+      client = over(Sock);
+      client.connect({}, () => onConnected(host.id_room, host, 1), onError);
+      setIsLoading(false);
+    }, 900);
   };
 
   const handleJoinClick = async () => {
+    setIsLoading(true);
     try {
+      const timerId = setTimeout(() => {
+        const users = response.data;
+        if (Array.isArray(users)) {
+          var Sock = new SockJS(IP + "gameplay");
+          client = over(Sock);
+          client.connect({}, () => onConnected(id_room, users, 0), onError);
+        } else {
+          if (users === "room does not exist") {
+            navigate("/error");
+          }
+          if (users === "the room is full") {
+            navigate("/full");
+          }
+        }
+        setIsLoading(false);
+      }, 1000);
       const response = await axios.post(
         IP + `user/join/${id_room}/${name}/${avatarId}`
       );
-      const users = response.data;
-      if (Array.isArray(users)) {
-        var Sock = new SockJS(IP + "gameplay");
-        client = over(Sock);
-        client.connect({}, () => onConnected(id_room, users, 0), onError);
-      } else {
-        if (users === "room does not exist") {
-          navigate("/error");
-        }
-        if (users === "the room is full") {
-          navigate("/full");
-        }
-      }
     } catch {
       navigate("/error");
     }
@@ -168,8 +179,12 @@ const StartGame = () => {
     setCurrentGuide(index);
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingTime, setLoadingTime] = useState(2);
+
   return (
     <div className="all">
+      <LoadingEffect loading={isLoading} />
       <div className="main">
         <div className="row h-20">
           <div className="col-4"></div>
@@ -202,12 +217,20 @@ const StartGame = () => {
               <div className="row h-10 center align">
                 <div className="center mt-4">
                   {id_room ? (
-                    <button className="button" onClick={handleJoinClick}>
+                    <button
+                      disabled={isLoading ? true : false}
+                      className="button"
+                      onClick={handleJoinClick}
+                    >
                       <BsFillCaretRightFill className="icon" />
                       JOIN
                     </button>
                   ) : (
-                    <button className="button" onClick={handleStartClick}>
+                    <button
+                      disabled={isLoading ? true : false}
+                      className="button"
+                      onClick={handleStartClick}
+                    >
                       <BsFillCaretRightFill className="icon" />
                       START
                     </button>

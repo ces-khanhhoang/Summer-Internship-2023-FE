@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { IP } from "../../config/config";
 import { INVITE } from "../../config/config";
 import Avatar from "../Avatar";
+import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
 const JoinRoom = () => {
   const location = useLocation();
@@ -27,6 +28,7 @@ const JoinRoom = () => {
     if (Array.isArray(location.state.data)) {
       setAvatarId(location.state?.data[0].id_image);
       setCurrentPlayersNumber(location.state?.data.length);
+      setMaxPlayersNumber(location.state?.data[0].maxPlayer);
     }
     setUsers(location.state?.data);
   }, [location.state?.data]);
@@ -39,6 +41,14 @@ const JoinRoom = () => {
       option.style.display = optionValue >= personNumber ? "block" : "none";
     });
   }, [users]);
+
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timerId);
+  }, []);
 
   const id_room = location.state?.id_room;
   const currentName = location.state?.name;
@@ -88,7 +98,6 @@ const JoinRoom = () => {
 
   const handleSelectChange = (event) => {
     let value = event.target.value;
-    setMaxPlayersNumber(value);
     const response = axios.post(IP + `user/play/${value}/${id_room}`);
   };
 
@@ -97,6 +106,7 @@ const JoinRoom = () => {
 
   return (
     <div className="all">
+      <LoadingEffect loading={isLoading} />
       <div className="main">
         <div className="row h-20">
           <div className="col-2 center align">
