@@ -385,3 +385,26 @@ input {
 input[type="radio"] {
   display: none;
 }
+
+.section-mode {
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  margin: 12px;
+}
+
+.img-mode {
+  width: 40%;
+  height: 40%;
+  border-radius: 12px;
+}
+
+.active-mode {
+  border-radius: 8px;
+  box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.4);
+  background-color: #d3d6ff;
+}
+
+.mode-text {
+  color: #3E4677;
+  text-shadow: 0 0 0 var(--text-color);
+}
