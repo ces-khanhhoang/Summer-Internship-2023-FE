@@ -123,7 +123,7 @@
 }
 
 .img-big {
-  width: 95%;
+  width: 97%;
   border-radius: 50%;
 }
 
@@ -284,8 +284,8 @@ input {
 }
 
 .change-avatar-button {
-  margin-top: 10.5rem;
-  margin-left: 10.5rem;
+  margin-top: 10rem;
+  margin-left: 10rem;
   border: 4px var(--main-color) solid;
   border-radius: 50%;
   background-color: var(--secondary-color);

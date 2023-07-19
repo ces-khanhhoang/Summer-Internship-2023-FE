@@ -168,32 +168,27 @@ const StartGame = () => {
         </div>
         <div className="row h-80">
           <div className="col-7 section">
-            <div className="row mt-5">
-              <span className="text-title">WELCOME!</span>
-            </div>
-            <div className="row mt-5 h-80">
-              <div className="center align">
-                <div className="col-5 center align">
-                  <Avatar
-                    onAvatarChange={handleAvatarChange}
-                    displayAvatar={false}
+            <div className="row h-20 center align text-title">WELCOME!</div>
+            <div className="row h-70">
+              <div className="col-6 center align">
+                <Avatar
+                  onAvatarChange={handleAvatarChange}
+                  displayAvatar={false}
+                />
+              </div>
+              <div className="col-6 center align flex-column">
+                <div className="text">CHOOSE A CHARACTER AND A NICKNAME</div>
+                <div className="pt-4">
+                  <input
+                    type="text"
+                    placeholder={name}
+                    className=""
+                    onChange={handleNameChange}
                   />
                 </div>
-                <div className="col-1"></div>
-                <div className="col-5 center align flex-column">
-                  <div className="text">CHOOSE A CHARACTER AND A NICKNAME</div>
-                  <div className="pt-4">
-                    <input
-                      type="text"
-                      placeholder={name}
-                      className=""
-                      onChange={handleNameChange}
-                    />
-                  </div>
-                </div>
               </div>
-              <div className="row mt-3 h-10">
-                <div className="center">
+              <div className="row h-10 center align">
+                <div className="center mt-4">
                   {id_room ? (
                     <button className="button" onClick={handleJoinClick}>
                       <BsFillCaretRightFill className="icon" />
