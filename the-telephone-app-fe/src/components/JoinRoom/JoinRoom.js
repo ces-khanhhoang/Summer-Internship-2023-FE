@@ -10,9 +10,10 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import imgLogo from "../../assets/logo.png";
+import imgWriteMode from "../../assets/normal-mode.png";
+import imgPaintMode from "../../assets/knockoff-mode.png";
 import axios from "axios";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { Link } from "react-router-dom";
 import { IP } from "../../config/config";
 import { INVITE } from "../../config/config";
 import Avatar from "../Avatar";
@@ -58,7 +59,7 @@ const JoinRoom = () => {
     setUsers(response.data);
   };
 
-  const [selectedMode, setSelectedMode] = useState('IN_PROGRESS');
+  const [selectedMode, setSelectedMode] = useState("IN_PROGRESS");
 
   const handleModeChange = (event) => {
     setSelectedMode(event.target.value);
@@ -186,20 +187,41 @@ const JoinRoom = () => {
           <div className="col-1 section-sub"></div>
           <div className="col-7 section">
             <div className="row h-80">
-              <div className="col-6">
-                <div>
-                  <label className="button">
-                    <input type="radio" name="mode" value="IN_PROGRESS" checked = {selectedMode === "IN_PROGRESS"} onChange={handleModeChange} />
-                    NORMAL
-                  </label>
+              <div className="row h-13 align center text-title">SELECT MODE</div>
+              <div className="row h-87">
+                <div className="col-6">
+                  <div className="section-mode h-100 ms-3" >
+                    <label htmlFor="normalMode" className={`row h-100 center align ${selectedMode === "IN_PROGRESS" ? "active-mode" : ""}`}>
+                      <input
+                        id="normalMode"
+                        type="radio"
+                        name="mode"
+                        value="IN_PROGRESS"
+                        checked={selectedMode === "IN_PROGRESS"}
+                        onChange={handleModeChange}
+                      />
+                      <div className="center align htp-title text-title mode-text">NORMAL</div>
+                      <img className="img-mode" src={imgWriteMode} alt="" />
+                      <div className="htp-content mode-text">The basis of it all! Write and draw alternately until you reach the last turn</div>
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div className="col-6">
-                <div>
-                  <label className="button">
-                    <input type="radio" name="mode" value="KNOCK_OFF" checked = {selectedMode === "KNOCK_OFF"} onChange={handleModeChange} />
-                    KNOCK-OFF
-                  </label>
+                <div className="col-6">
+                  <div className="section-mode h-100 me-3" >
+                    <label className={`row h-100 center align ${selectedMode === "KNOCK_OFF" ? "active-mode" : ""}`} htmlFor="inProgressMode">
+                      <input
+                        id="inProgressMode"
+                        type="radio"
+                        name="mode"
+                        value="KNOCK_OFF"
+                        checked={selectedMode === "KNOCK_OFF"}
+                        onChange={handleModeChange}
+                      />
+                      <div className="center align htp-title text-title mode-text">KNOCK OFF</div>
+                      <img className="img-mode" src={imgPaintMode} alt="" />
+                      <div className="htp-content mode-text">Keep yourself focused! Try to replicate the drawings while the clock gets faster</div>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
