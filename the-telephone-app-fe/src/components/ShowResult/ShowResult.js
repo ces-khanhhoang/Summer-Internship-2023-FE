@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { BiCrown } from "react-icons/bi";
 import { IP } from "../../config/config";
 import Avatar from "../Avatar";
+import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
 const ShowResult = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const ShowResult = () => {
   const getResult = async (player) => {
     const response = await axios.post(
       IP +
-        `user/result/${location.state?.data[player].nickname}/${location.state?.id_room}`
+        `user/result/${location.state?.data[player].nickname}/${location.state?.id_room}`,
     );
     const responseResult = response.data;
     setPlayerName(responseResult[0].namePlay);
@@ -54,7 +55,7 @@ const ShowResult = () => {
   function ConvertUrl({ data }) {
     data = data.replace(
       "(1)",
-      "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%"
+      "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
     ); //1
     data = data.replace("(2)", "?alt=media&token=");
     return <img className="sr-content-img" alt="result" src={data}></img>; //2
@@ -89,8 +90,14 @@ const ShowResult = () => {
     };
   }, [timer]);
 
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
     <div className="all">
+      <LoadingEffect loading={isLoading} />
       <div className="main">
         <div className="row h-20">
           <div className="col-2 center align">

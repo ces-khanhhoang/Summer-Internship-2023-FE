@@ -17,7 +17,7 @@ import Avatar from "../Avatar";
 
 const StartGame = () => {
   const [name, setName] = useState(
-    "name0" + Math.round(Math.random() * 100000)
+    "name0" + Math.round(Math.random() * 100000),
   );
 
   const [avatarId, setAvatarId] = useState(0);
@@ -141,7 +141,7 @@ const StartGame = () => {
   const handleJoinClick = async () => {
     try {
       const response = await axios.post(
-        IP + `user/join/${id_room}/${name}/${avatarId}`
+        IP + `user/join/${id_room}/${name}/${avatarId}`,
       );
       const users = response.data;
       if (Array.isArray(users)) {
@@ -180,6 +180,8 @@ const StartGame = () => {
   const handleHowToPlay = (index) => {
     setCurrentGuide(index);
   };
+
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="all">

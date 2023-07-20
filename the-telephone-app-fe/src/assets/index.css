@@ -182,8 +182,8 @@
 }
 
 .img-write {
-  width: 25rem;
-  height: 25rem;
+  width: 22rem;
+  height: 22rem;
 }
 
 .section-sub {
@@ -313,12 +313,12 @@ input {
 }
 
 .htp-title {
-  color: #A16B9F;
+  color: #a16b9f;
   font-size: 20px;
 }
 
 .htp-content {
-  color: #A16B9F;
+  color: #a16b9f;
   font-size: 16px;
   font-weight: bold;
   font-family: var(--main-font-family);
@@ -405,6 +405,6 @@ input[type="radio"] {
 }
 
 .mode-text {
-  color: #3E4677;
+  color: #3e4677;
   text-shadow: 0 0 0 var(--text-color);
 }

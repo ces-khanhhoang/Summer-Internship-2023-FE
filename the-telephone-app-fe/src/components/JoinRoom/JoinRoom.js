@@ -17,6 +17,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { IP } from "../../config/config";
 import { INVITE } from "../../config/config";
 import Avatar from "../Avatar";
+import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
 const JoinRoom = () => {
   const location = useLocation();
@@ -54,7 +55,7 @@ const JoinRoom = () => {
 
   const handleKick = async (nickname) => {
     const response = await axios.post(
-      IP + `user/delete/${id_room}/${nickname}`
+      IP + `user/delete/${id_room}/${nickname}`,
     );
     setUsers(response.data);
   };
@@ -65,10 +66,8 @@ const JoinRoom = () => {
     setSelectedMode(event.target.value);
   };
 
-  const handlePlay = async (event) => {
-    const response = await axios.post(
-      IP + `user/start/${id_room}/${selectedMode}`
-    );
+  const handlePlay = (event) => {
+    const response = axios.post(IP + `user/start/${id_room}/${selectedMode}`);
   };
 
   const handleButtonBack = async () => {
@@ -96,8 +95,14 @@ const JoinRoom = () => {
   const [maxPlayersNumber, setMaxPlayersNumber] = useState(4);
   const [currentPlayersNumber, setCurrentPlayersNumber] = useState(1);
 
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
     <div className="all">
+      <LoadingEffect loading={isLoading} />
       <div className="main">
         <div className="row h-20">
           <div className="col-2 center align">
@@ -187,11 +192,18 @@ const JoinRoom = () => {
           <div className="col-1 section-sub"></div>
           <div className="col-7 section">
             <div className="row h-80">
-              <div className="row h-13 align center text-title">SELECT MODE</div>
+              <div className="row h-13 align center text-title">
+                SELECT MODE
+              </div>
               <div className="row h-87">
                 <div className="col-6">
-                  <div className="section-mode h-100 ms-3" >
-                    <label htmlFor="normalMode" className={`row h-100 center align ${selectedMode === "IN_PROGRESS" ? "active-mode" : ""}`}>
+                  <div className="section-mode h-100 ms-3">
+                    <label
+                      htmlFor="normalMode"
+                      className={`row h-100 center align ${
+                        selectedMode === "IN_PROGRESS" ? "active-mode" : ""
+                      }`}
+                    >
                       <input
                         id="normalMode"
                         type="radio"
@@ -200,15 +212,25 @@ const JoinRoom = () => {
                         checked={selectedMode === "IN_PROGRESS"}
                         onChange={handleModeChange}
                       />
-                      <div className="center align htp-title text-title mode-text">NORMAL</div>
+                      <div className="center align htp-title text-title mode-text">
+                        NORMAL
+                      </div>
                       <img className="img-mode" src={imgWriteMode} alt="" />
-                      <div className="htp-content mode-text">The basis of it all! Write and draw alternately until you reach the last turn</div>
+                      <div className="htp-content mode-text">
+                        The basis of it all! Write and draw alternately until
+                        you reach the last turn
+                      </div>
                     </label>
                   </div>
                 </div>
                 <div className="col-6">
-                  <div className="section-mode h-100 me-3" >
-                    <label className={`row h-100 center align ${selectedMode === "KNOCK_OFF" ? "active-mode" : ""}`} htmlFor="inProgressMode">
+                  <div className="section-mode h-100 me-3">
+                    <label
+                      className={`row h-100 center align ${
+                        selectedMode === "KNOCK_OFF" ? "active-mode" : ""
+                      }`}
+                      htmlFor="inProgressMode"
+                    >
                       <input
                         id="inProgressMode"
                         type="radio"
@@ -217,9 +239,14 @@ const JoinRoom = () => {
                         checked={selectedMode === "KNOCK_OFF"}
                         onChange={handleModeChange}
                       />
-                      <div className="center align htp-title text-title mode-text">KNOCK OFF</div>
+                      <div className="center align htp-title text-title mode-text">
+                        KNOCK OFF
+                      </div>
                       <img className="img-mode" src={imgPaintMode} alt="" />
-                      <div className="htp-content mode-text">Keep yourself focused! Try to replicate the drawings while the clock gets faster</div>
+                      <div className="htp-content mode-text">
+                        Keep yourself focused! Try to replicate the drawings
+                        while the clock gets faster
+                      </div>
                     </label>
                   </div>
                 </div>

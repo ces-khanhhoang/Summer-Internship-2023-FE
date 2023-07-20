@@ -13,8 +13,9 @@ const ExitGame = () => {
       <img src={imgExitGame} alt="" />
       <div>
         <button onClick={handleBack}>
-          <BsFillCaretLeftFill className="icon"/>
-          BACK TO HOME</button>
+          <BsFillCaretLeftFill className="icon" />
+          BACK TO HOME
+        </button>
       </div>
     </div>
   );

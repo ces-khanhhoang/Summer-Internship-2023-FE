@@ -6,12 +6,12 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCKb4HYoIwqbgh8RkUF9HXtHAiRLaKcPQM",
-    authDomain: "ces-telephone.firebaseapp.com",
-    projectId: "ces-telephone",
-    storageBucket: "ces-telephone.appspot.com",
-    messagingSenderId: "309657851130",
-    appId: "1:309657851130:web:fe727a580291ded4a9e543"
+  apiKey: "AIzaSyCKb4HYoIwqbgh8RkUF9HXtHAiRLaKcPQM",
+  authDomain: "ces-telephone.firebaseapp.com",
+  projectId: "ces-telephone",
+  storageBucket: "ces-telephone.appspot.com",
+  messagingSenderId: "309657851130",
+  appId: "1:309657851130:web:fe727a580291ded4a9e543",
 };
 
 // Initialize Firebase
