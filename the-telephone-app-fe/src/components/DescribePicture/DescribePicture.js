@@ -1,7 +1,7 @@
 import "../Draw/Draw.css";
 import "./DescribePicture.css";
 import "../../assets/index.css";
-import imgLogo from "../../assets/header.png";
+import imgLogo from "../../assets/image-no-bg.png";
 import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IP } from "../../config/config";
 import { useNavigate } from "react-router-dom";
 import { SENTENCES } from "../../config/config";
+import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
 const DescribePicture = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const DescribePicture = () => {
   let image = dataReceive.value;
   const [timer, setTimer] = useState(60);
   const buttonDoneRef = useRef(null);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
@@ -45,9 +47,13 @@ const DescribePicture = () => {
 
   const handleDone = async () => {
     let dataSend = content.replace(new RegExp(" ", "g"), "_");
-    const response = await axios.post(
-      IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`
-    );
+    if (timer !== 0) {
+      setIsWaiting(true);
+      setIsLoading(true);
+      const response = await axios.post(
+        IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`,
+      );
+    }
   };
 
   const handleDraw = async () => {
@@ -66,39 +72,42 @@ const DescribePicture = () => {
 
   image = image.replace(
     "(1)",
-    "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%"
+    "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
   ); //1
   image = image.replace("(2)", "?alt=media&token="); //2
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [isWaiting, setIsWaiting] = useState(false);
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
-    <div className="container-fluid app-bg vh-100">
+    <div className="container-fluid app-bg">
+      <LoadingEffect loading={isLoading} waiting={isWaiting} />
       <div className="row">
         <div className="col-8 center-block">
           <div className="row mt-5">
-            <div className="card invisible-border border-4 app-bg">
-              <div className="row">
-                <div className="col-1 mt-3 custom-font pt-2">
-                  {turn} / {totalTurn}
+            <div className="col-1 custom-font pt-4">
+              {turn} / {totalTurn}
+            </div>
+            <div className="col-10 mt-4">
+              <div className="card draw-header">
+                <img className="header-image" src={imgLogo}></img>
+                <p className="custom-font">
+                  NOW IT'S YOUR TURN TO DESCRIBE THIS SCENE
+                </p>
+              </div>
+              <div className="card draw-paper position-relative">
+                <div className="align-self-center ">
+                  <img className="drawn-picture" src={image}></img>
                 </div>
-                <div className="col-10 mt-2">
-                  <div className="card draw-header mt-3">
-                    <img className="header-image" src={imgLogo}></img>
-                    <p className="custom-font">
-                      NOW IT'S YOUR TURN TO DESCRIBE THIS SCENE
-                    </p>
-                    <p className="text-center w-100 fw-bold"></p>
-                  </div>
-                  <div className="card draw-paper position-relative">
-                    <div className="align-self-center ">
-                      <img className="drawn-picture" src={image}></img>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-1 mt-3 custom-font pt-2">{timer}</div>
               </div>
             </div>
-            <div className="row mt-3 mb-3">
-              <div className="col-6 ms-10rem">
+            <div className="col-1 custom-font pt-4">{timer}</div>
+
+            <div className="row mt-4">
+              <div className="col-12 center align">
                 {mode !== "KNOCK_OFF" && (
                   <input
                     type="text"
@@ -107,13 +116,8 @@ const DescribePicture = () => {
                     placeholder="Type your description for this scene here ..."
                   ></input>
                 )}
-              </div>
-              <div className="col-2">
                 {mode === "KNOCK_OFF" ? (
-                  <button
-                    className="d-btn-done"
-                    onClick={handleDraw}
-                  >
+                  <button className="d-btn-done" onClick={handleDraw}>
                     <BsFillCheckCircleFill /> DRAW!
                   </button>
                 ) : (

@@ -13,8 +13,9 @@ const CancelRoom = () => {
       <img src={imgCancelRoom} alt="" />
       <div>
         <button onClick={handleBack}>
-          <BsFillCaretLeftFill className="icon"/>
-          BACK TO HOME</button>
+          <BsFillCaretLeftFill className="icon" />
+          BACK TO HOME
+        </button>
       </div>
     </div>
   );
