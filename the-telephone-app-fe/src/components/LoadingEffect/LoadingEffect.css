@@ -1,28 +1,12 @@
-body {
-    font-family: Arial, Sans;
-    margin: 0;
-}
-
-.wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    text-align: center;
-    transform: translateX(-50%);
-}
-
 .spanner {
     position: absolute;
-    top: 50%;
     left: 0;
     background: #2a2a2a55;
     width: 100%;
     display: block;
     text-align: center;
-    height: 300px;
+    height: 100%;
     color: #FFF;
-    transform: translateY(-50%);
     z-index: 1000;
     visibility: hidden;
 }
@@ -41,24 +25,17 @@ body {
 
 .loader {
     color: var(--secondary-color);
-    font-size: 18px;
-    margin: 80px auto;
+    font-size: 17px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16rem;
     position: relative;
-    text-indent: -9999em;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
     transform: translateZ(0);
     -webkit-animation-delay: -0.16s;
     animation-delay: -0.16s;
-}
-
-.loading {
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
-    text-indent: -9999em;
+    display: block;
 }
 
 .loader:before,
@@ -119,4 +96,12 @@ body {
 .spanner.show,
 .overlay.show {
     opacity: 1
+}
+
+.loading-text {
+    text-shadow: 0px 0px 2px #000000, 0px 0px 2px #000000,
+        0px 0px 3px #000000, 0px 0px 3px #000000,
+        2px 2px 2px #000000, 2px 2px 2px #000000,
+        0px 0px 4px #000000, 0px 0px 4px #000000;
+    ;
 }

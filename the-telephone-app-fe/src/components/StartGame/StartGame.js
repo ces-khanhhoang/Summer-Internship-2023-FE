@@ -180,7 +180,6 @@ const StartGame = () => {
   };
 
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingTime, setLoadingTime] = useState(2);
 
   return (
     <div className="all">

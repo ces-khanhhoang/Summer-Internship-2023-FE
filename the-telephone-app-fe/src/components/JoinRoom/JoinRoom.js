@@ -68,16 +68,18 @@ const JoinRoom = () => {
     setUsers(response.data);
   };
 
-  const [selectedMode, setSelectedMode] = useState('IN_PROGRESS');
+  const [selectedMode, setSelectedMode] = useState("IN_PROGRESS");
 
   const handleModeChange = (event) => {
     setSelectedMode(event.target.value);
   };
 
-  const handlePlay = async (event) => {
-    const response = await axios.post(
-      IP + `user/start/${id_room}/${selectedMode}`
-    );
+  const handlePlay = (event) => {
+    setIsLoading(true);
+    const timerId = setTimeout(() => {
+      setIsLoading(false);
+      const response = axios.post(IP + `user/start/${id_room}/${selectedMode}`);
+    }, 1000);
   };
 
   const handleButtonBack = async () => {
@@ -199,7 +201,13 @@ const JoinRoom = () => {
               <div className="col-6">
                 <div>
                   <label className="button">
-                    <input type="radio" name="mode" value="IN_PROGRESS" checked = {selectedMode === "IN_PROGRESS"} onChange={handleModeChange} />
+                    <input
+                      type="radio"
+                      name="mode"
+                      value="IN_PROGRESS"
+                      checked={selectedMode === "IN_PROGRESS"}
+                      onChange={handleModeChange}
+                    />
                     NORMAL
                   </label>
                 </div>
@@ -207,7 +215,13 @@ const JoinRoom = () => {
               <div className="col-6">
                 <div>
                   <label className="button">
-                    <input type="radio" name="mode" value="KNOCK_OFF" checked = {selectedMode === "KNOCK_OFF"} onChange={handleModeChange} />
+                    <input
+                      type="radio"
+                      name="mode"
+                      value="KNOCK_OFF"
+                      checked={selectedMode === "KNOCK_OFF"}
+                      onChange={handleModeChange}
+                    />
                     KNOCK-OFF
                   </label>
                 </div>

@@ -1,6 +1,6 @@
 import "../DescribePicture/DescribePicture.css";
 import "./Draw.css";
-import imgLogo from "../../assets/header.png";
+import imgLogo from "../../assets/image-no-bg.png";
 import { ref, uploadBytes, getStorage, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { useOnDraw } from "../Hooks";
@@ -13,6 +13,7 @@ import { BsFillEraserFill } from "react-icons/bs";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import "../../assets/index.css";
 import { IP } from "../../config/config";
+import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
 const Draw = ({ width = "815rem", height = "350rem" }) => {
   const location = useLocation();
@@ -74,20 +75,24 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
   };
 
   const handleUploadImage = async (idRoom, nickname, image, turn) => {
-    image = image.replace(
-      "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
-      "(1)"
-    ); //1
-    image = image.replace("?alt=media&token=", "(2)"); //2
+    if (timer !== 0) {
+      setIsWaiting(true);
+      setIsLoading(true);
+      image = image.replace(
+        "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
+        "(1)"
+      ); //1
+      image = image.replace("?alt=media&token=", "(2)"); //2
 
-    if (mode === "KNOCK_OFF" && turn === 1) {
-      const response = await axios.post(
-        IP + `user/done/${idRoom}/${currentName}/${image}/${turn}`
-      );
-    } else {
-      const response = await axios.post(
-        IP + `user/done/${idRoom}/${dataReceive.receiver}/${image}/${turn}`
-      );
+      if (mode === "KNOCK_OFF" && turn === 1) {
+        const response = await axios.post(
+          IP + `user/done/${idRoom}/${currentName}/${image}/${turn}`
+        );
+      } else {
+        const response = await axios.post(
+          IP + `user/done/${idRoom}/${dataReceive.receiver}/${image}/${turn}`
+        );
+      }
     }
   };
 
@@ -176,8 +181,19 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
     setDrawModeId(mode.id);
   };
 
+  // ===== Loading Effect
+  const [isLoading, setIsLoading] = useState(true);
+  const [isWaiting, setIsWaiting] = useState(false);
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timerId);
+  }, []);
+
   return (
-    <div className="container-fluid app-bg vh-100">
+    <div className="container-fluid app-bg">
+      <LoadingEffect loading={isLoading} waiting={isWaiting} />
       <div className="row">
         <div className="col-2">
           <div className="row mt-5">
@@ -206,90 +222,84 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
             </div>
           </div>
         </div>
-        <div className="col-8">
-          <div className="row mt-5">
-            <div className="card invisible-border border-4 app-bg">
-              <div className="row">
-                <div className="col-1 mt-3 pt-2 custom-font">
-                  {turn} / {totalTurn}
-                </div>
-                <div className="col-10 mt-2">
-                  <div className="card draw-header mt-3">
-                    <img className="header-image" src={imgLogo}></img>
-                    <p className="draw-header-font">HEY, IT'S TIME TO DRAW!</p>
-                    {mode !== "KNOCK_OFF" && (
-                      <p className="written-sentence">
-                        {dataReceive.value
-                          .toString()
-                          .replace(new RegExp("_", "g"), " ")}
-                      </p>
-                    )}
-                  </div>
-                  <div className="card draw-paper">
-                    <canvas
-                      className={eraserMode ? "eraser-cursor" : "draw-cursor"}
-                      id="myCanvas"
-                      width={width}
-                      height={height}
-                      onMouseDown={onMouseDown}
-                      ref={setCanvasRef}
-                    />
-                  </div>
-                </div>
-                <div className="col-1 mt-3 ps-2 pt-2 custom-font">{timer}</div>
+        <div className="col-8 vh-100">
+          <div className="row pt-5">
+            <div className="col-1 pt-2 custom-font">
+              {turn} / {totalTurn}
+            </div>
+            <div className="col-10">
+              <div className="card draw-header">
+                <img className="header-image" src={imgLogo}></img>
+                <p className="draw-header-font">HEY, IT'S TIME TO DRAW!</p>
+                {mode !== "KNOCK_OFF" && (
+                  <p className="written-sentence">
+                    {dataReceive.value
+                      .toString()
+                      .replace(new RegExp("_", "g"), " ")}
+                  </p>
+                )}
+              </div>
+              <div className="card draw-paper">
+                <canvas
+                  className={eraserMode ? "eraser-cursor" : "draw-cursor"}
+                  id="myCanvas"
+                  width={width}
+                  height={height}
+                  onMouseDown={onMouseDown}
+                  ref={setCanvasRef}
+                />
+              </div>
+            </div>
+            <div className="col-1 ps-2 pt-2 custom-font">{timer}</div>
 
-                <div className="row mt-3 mb-3">
-                  <div className="col-5 width-change-area card">
-                    <div className="row">
-                      {widths.map((width) => (
-                        <div key={width} className="col-2">
-                          <div
-                            style={
-                              width === lineWidth
-                                ? { borderColor: drawColor }
-                                : {}
-                            }
-                            onClick={() => changeLineWidth(width)}
-                            className={`m-3 position-relative
+            <div className="row center align pt-3">
+              <div className="col-5 width-change-area card">
+                <div className="row">
+                  {widths.map((width) => (
+                    <div key={width} className="col-2">
+                      <div
+                        style={
+                          width === lineWidth ? { borderColor: drawColor } : {}
+                        }
+                        onClick={() => changeLineWidth(width)}
+                        className={`m-3 position-relative
                               ${
                                 width === lineWidth
                                   ? "chosen-width-button"
                                   : "width-button"
                               }`}
-                          >
-                            <div
-                              style={
-                                width === lineWidth
-                                  ? {
-                                      width: width + 2,
-                                      height: width + 2,
-                                      backgroundColor: drawColor,
-                                    }
-                                  : { width: width + 2, height: width + 2 }
-                              }
-                              className="width-button-size position-absolute top-50 start-50 translate-middle"
-                            ></div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="col-3">
-                    {isClicked ? (
-                      <button disabled className="d-btn-done">
-                        <BsFillCheckCircleFill /> DONE!
-                      </button>
-                    ) : (
-                      <button
-                        ref={buttonDoneRef}
-                        onClick={convertToImage}
-                        className="d-btn-done"
                       >
-                        <BsFillCheckCircleFill /> DONE!
-                      </button>
-                    )}
-                  </div>
+                        <div
+                          style={
+                            width === lineWidth
+                              ? {
+                                  width: width + 2,
+                                  height: width + 2,
+                                  backgroundColor: drawColor,
+                                }
+                              : { width: width + 2, height: width + 2 }
+                          }
+                          className="width-button-size position-absolute top-50 start-50 translate-middle"
+                        ></div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              </div>
+              <div className="col-3">
+                {isClicked ? (
+                  <button disabled className="d-btn-done">
+                    <BsFillCheckCircleFill /> DONE!
+                  </button>
+                ) : (
+                  <button
+                    ref={buttonDoneRef}
+                    onClick={convertToImage}
+                    className="d-btn-done"
+                  >
+                    <BsFillCheckCircleFill /> DONE!
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -297,7 +307,7 @@ const Draw = ({ width = "815rem", height = "350rem" }) => {
         <div className="col-2">
           <div className="row mt-5">
             <div className="col-11 ms-4 mt-5">
-              <div className="card custom-border-color app-bg mw-100 border-4 mt-5">
+              <div className="card custom-border-color app-bg border-4 mt-5">
                 <div className="card-body">
                   <div className="row">
                     {drawModes.map((mode, index) => (

@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { BiCrown } from "react-icons/bi";
 import { IP } from "../../config/config";
 import Avatar from "../Avatar";
+import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
 const ShowResult = () => {
   const navigate = useNavigate();
@@ -89,8 +90,17 @@ const ShowResult = () => {
     };
   }, [timer]);
 
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timerId);
+  }, []);
+
   return (
     <div className="all">
+      <LoadingEffect loading={isLoading} />
       <div className="main">
         <div className="row h-20">
           <div className="col-2 center align">
