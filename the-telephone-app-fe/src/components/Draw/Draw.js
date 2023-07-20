@@ -26,7 +26,7 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
   const [timer, setTimer] = useState(60);
   const buttonDoneRef = useRef(null);
 
-  if (mode !== "KNOCK_OFF") {
+  if (mode === "KNOCK_OFF" && turn > 1) {
     totalTurn = location.state?.totalTurn;
   } else {
     totalTurn = location.state?.data.length;

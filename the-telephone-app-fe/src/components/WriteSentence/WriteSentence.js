@@ -98,7 +98,7 @@ const WriteSentence = () => {
                   <input
                     type="text"
                     className="ws-1-input center-block"
-                    placeholder=" ... "
+                    placeholder={content}
                     onChange={handleChangeContent}
                   />
                   <button
