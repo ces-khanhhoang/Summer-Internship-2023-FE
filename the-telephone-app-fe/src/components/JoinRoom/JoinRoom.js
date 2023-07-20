@@ -55,7 +55,7 @@ const JoinRoom = () => {
 
   const handleKick = async (nickname) => {
     const response = await axios.post(
-      IP + `user/delete/${id_room}/${nickname}`,
+      IP + `user/delete/${id_room}/${nickname}`
     );
     setUsers(response.data);
   };

@@ -51,7 +51,7 @@ const DescribePicture = () => {
       setIsWaiting(true);
       setIsLoading(true);
       const response = await axios.post(
-        IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`,
+        IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`
       );
     }
   };
@@ -72,7 +72,7 @@ const DescribePicture = () => {
 
   image = image.replace(
     "(1)",
-    "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
+    "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%"
   ); //1
   image = image.replace("(2)", "?alt=media&token="); //2
 
@@ -89,7 +89,7 @@ const DescribePicture = () => {
         <div className="col-8 center-block">
           <div className="row mt-5">
             <div className="col-1 custom-font pt-4">
-              {turn} / {totalTurn}
+              {turn >= totalTurn ? totalTurn : turn} / {totalTurn}
             </div>
             <div className="col-10 mt-4">
               <div className="card draw-header">

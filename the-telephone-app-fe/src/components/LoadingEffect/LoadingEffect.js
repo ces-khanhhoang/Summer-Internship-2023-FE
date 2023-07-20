@@ -6,7 +6,6 @@ const LoadingEffect = ({ loading, waiting }) => {
 
   useEffect(() => {
     setIsLoading(loading);
-    console.log(loading);
   }, [loading]);
 
   return (
