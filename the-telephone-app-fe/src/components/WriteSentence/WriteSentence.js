@@ -56,7 +56,7 @@ const WriteSentence = () => {
     }
     let dataSend = content.replace(new RegExp(" ", "g"), "_");
     const response = await axios.post(
-      IP + `user/done/${id_room}/${currentName}/${dataSend}/${turn}`,
+      IP + `user/done/${id_room}/${currentName}/${dataSend}/${turn}`
     );
   };
 
@@ -76,7 +76,7 @@ const WriteSentence = () => {
           <div className="col-10 center-block">
             <div className="row h-90 mt-5">
               <div className="col-2 left align custom-font">
-                {turn} / {totalTurn}
+                {turn >= totalTurn ? totalTurn : turn} / {totalTurn}
               </div>
               <div className="col-8 center align">
                 <img src={imgLogo} alt="" className="img-logo" />

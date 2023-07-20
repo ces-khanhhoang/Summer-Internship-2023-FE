@@ -80,17 +80,17 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
       setIsLoading(true);
       image = image.replace(
         "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
-        "(1)",
+        "(1)"
       ); //1
       image = image.replace("?alt=media&token=", "(2)"); //2
 
       if (mode === "KNOCK_OFF" && turn === 1) {
         const response = await axios.post(
-          IP + `user/done/${idRoom}/${currentName}/${image}/${turn}`,
+          IP + `user/done/${idRoom}/${currentName}/${image}/${turn}`
         );
       } else {
         const response = await axios.post(
-          IP + `user/done/${idRoom}/${dataReceive.receiver}/${image}/${turn}`,
+          IP + `user/done/${idRoom}/${dataReceive.receiver}/${image}/${turn}`
         );
       }
     }
@@ -222,7 +222,7 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
         <div className="col-8">
           <div className="row mt-3">
             <div className="col-1 mt-5 pt-2 custom-font">
-              {turn} / {totalTurn}
+              {turn >= totalTurn ? totalTurn : turn} / {totalTurn}
             </div>
             <div className="col-10 mt-5">
               <div className="card draw-header">
@@ -248,7 +248,6 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
               </div>
             </div>
             <div className="col-1 mt-5 ps-2 pt-2 custom-font">{timer}</div>
-
             <div className="row center align pt-3">
               <div className="col-5 width-change-area card">
                 <div className="row">
