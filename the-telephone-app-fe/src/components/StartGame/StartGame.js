@@ -44,6 +44,16 @@ const StartGame = () => {
   };
 
   const { id_room } = useParams();
+
+  function isNameInNicknames(name, nicknamesArray) {
+    for (let i = 0; i < nicknamesArray.length; i++) {
+      if (nicknamesArray[i].nickname.includes(name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   var client = null;
   let mode;
   const onConnected = (id_room, data, role) => {
@@ -72,6 +82,9 @@ const StartGame = () => {
           navigate("/draw", {
             state: { id_room, name, turn, data, mode },
           });
+        }
+        if (!isNameInNicknames(name, data)) {
+          navigate("/exit");
         }
       } else {
         if (role === 1) {
