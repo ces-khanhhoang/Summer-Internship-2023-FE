@@ -14,10 +14,13 @@ import { useParams } from "react-router-dom";
 import "../../assets/index.css";
 import { IP } from "../../config/config";
 import Avatar from "../Avatar";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css";
+import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
 const StartGame = () => {
   const [name, setName] = useState(
-    "name0" + Math.round(Math.random() * 100000)
+    "Name0" + Math.round(Math.random() * 100000)
   );
 
   const [avatarId, setAvatarId] = useState(0);
@@ -33,7 +36,7 @@ const StartGame = () => {
     if (e.target.value) {
       setName(e.target.value);
     } else {
-      setName("Nickname" + Math.round(Math.random() * 1000));
+      setName("Name0" + Math.round(Math.random() * 10000));
     }
   };
 
@@ -130,15 +133,49 @@ const StartGame = () => {
     navigate("/lobby", { state: { data, id_room, role, name } });
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const errorScreen = () => {
+    confirmAlert({
+      customUI: ({}) => {
+        return (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-12">
+                <h1 className="text-title">NICKNAME IS NOT AVAILABLE.</h1>
+                <h1 className="text-title">PLEASE CHOOSE ANOTHER NICKNAME.</h1>
+                <button
+                  className="button center-block"
+                  onClick={() => {
+                    window.location.reload();
+                  }}
+                >
+                  OK!
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
   const handleStartClick = async () => {
+    setIsLoading(true);
     const response = await axios.post(IP + `user/create/${name}/${avatarId}`);
     const host = response.data;
-    var Sock = new SockJS(IP + "gameplay");
-    client = over(Sock);
-    client.connect({}, () => onConnected(host.id_room, host, 1), onError);
+    if (response.data == "nick name is duplicate") {
+      setIsLoading(false);
+      errorScreen();
+    } else {
+      var Sock = new SockJS(IP + "gameplay");
+      client = over(Sock);
+      client.connect({}, () => onConnected(host.id_room, host, 1), onError);
+    }
   };
 
   const handleJoinClick = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.post(
         IP + `user/join/${id_room}/${name}/${avatarId}`
@@ -148,6 +185,9 @@ const StartGame = () => {
         var Sock = new SockJS(IP + "gameplay");
         client = over(Sock);
         client.connect({}, () => onConnected(id_room, users, 0), onError);
+      } else if (users === "nick name is duplicate") {
+        setIsLoading(false);
+        errorScreen();
       } else {
         if (users === "room does not exist") {
           navigate("/error");
@@ -181,10 +221,9 @@ const StartGame = () => {
     setCurrentGuide(index);
   };
 
-  const [isLoading, setIsLoading] = useState(false);
-
   return (
     <div className="all">
+      <LoadingEffect loading={isLoading} />
       <div className="main">
         <div className="row h-20">
           <div className="col-4"></div>
