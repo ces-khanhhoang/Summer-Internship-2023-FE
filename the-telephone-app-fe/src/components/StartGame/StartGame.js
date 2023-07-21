@@ -254,7 +254,7 @@ const StartGame = () => {
                 </div>
               </div>
               <div className="row h-10 center align">
-                <div className="center mt-4">
+                <div className="center mt-2">
                   {id_room ? (
                     <button className="button" onClick={handleJoinClick}>
                       <BsFillCaretRightFill className="icon" />

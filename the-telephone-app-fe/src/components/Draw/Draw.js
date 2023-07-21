@@ -12,7 +12,7 @@ import { RxPencil1 } from "react-icons/rx";
 import { BsFillEraserFill } from "react-icons/bs";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import "../../assets/index.css";
-import { IP } from "../../config/config";
+import { IP, TIME } from "../../config/config";
 import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
 const Draw = ({ width = "830rem", height = "350rem" }) => {
@@ -23,7 +23,7 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
   const idRoom = location.state?.id_room;
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(TIME);
   const buttonDoneRef = useRef(null);
 
   if (mode === "KNOCK_OFF" && turn > 1) {
@@ -32,8 +32,9 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
     totalTurn = location.state?.data.length;
   }
 
+  let intervalId;
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
     }, 1000);
 
@@ -50,7 +51,13 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
   // ===== Convert Canvas to png file and upload to Firebase
 
   const convertToImage = () => {
-    setIsClicked(true);
+    if (timer > 0) {
+      setIsClicked(true);
+      setIsWaiting(true);
+      setIsLoading(true);
+      clearInterval(intervalId);
+    }
+    setIsLoading(true);
     const canvas = document.getElementById("myCanvas");
     const imageDataURL = canvas.toDataURL("image/png");
     const url = imageDataURL;
@@ -75,24 +82,20 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
   };
 
   const handleUploadImage = async (idRoom, nickname, image, turn) => {
-    if (timer !== 0) {
-      setIsWaiting(true);
-      setIsLoading(true);
-      image = image.replace(
-        "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
-        "(1)"
-      ); //1
-      image = image.replace("?alt=media&token=", "(2)"); //2
+    image = image.replace(
+      "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
+      "(1)"
+    ); //1
+    image = image.replace("?alt=media&token=", "(2)"); //2
 
-      if (mode === "KNOCK_OFF" && turn === 1) {
-        const response = await axios.post(
-          IP + `user/done/${idRoom}/${currentName}/${image}/${turn}`
-        );
-      } else {
-        const response = await axios.post(
-          IP + `user/done/${idRoom}/${dataReceive.receiver}/${image}/${turn}`
-        );
-      }
+    if (mode === "KNOCK_OFF" && turn === 1) {
+      const response = await axios.post(
+        IP + `user/done/${idRoom}/${currentName}/${image}/${turn}`
+      );
+    } else {
+      const response = await axios.post(
+        IP + `user/done/${idRoom}/${dataReceive.receiver}/${image}/${turn}`
+      );
     }
   };
 
@@ -283,19 +286,14 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
                 </div>
               </div>
               <div className="col-3">
-                {isClicked ? (
-                  <button disabled className="d-btn-done">
-                    <BsFillCheckCircleFill /> DONE!
-                  </button>
-                ) : (
-                  <button
-                    ref={buttonDoneRef}
-                    onClick={convertToImage}
-                    className="d-btn-done"
-                  >
-                    <BsFillCheckCircleFill /> DONE!
-                  </button>
-                )}
+                <button
+                  ref={buttonDoneRef}
+                  onClick={convertToImage}
+                  className="d-btn-done"
+                  disabled={isClicked ? true : false}
+                >
+                  <BsFillCheckCircleFill /> DONE!
+                </button>
               </div>
             </div>
           </div>

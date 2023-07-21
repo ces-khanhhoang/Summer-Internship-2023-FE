@@ -26,3 +26,5 @@ export const SENTENCES = [
   "Dead makeup artist stealing",
   "Rich butterfly in the park",
 ];
+
+export const TIME = 60;
