@@ -21,9 +21,17 @@ const DescribePicture = () => {
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
   let image = dataReceive.value;
+  const data = location.state?.data;
   const [timer, setTimer] = useState(TIME);
   const buttonDoneRef = useRef(null);
-
+  const buttonDrawRef = useRef(null);
+  let index;
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  for (let i = 0; i < data.length; i++) {
+    if(data[i].nickname === currentName){
+      index = i;
+    }
+  }
   let intervalId;
   useEffect(() => {
     intervalId = setInterval(() => {
@@ -32,7 +40,12 @@ const DescribePicture = () => {
 
     if (timer === 0) {
       clearInterval(intervalId);
-      buttonDoneRef.current.click();
+      if(mode == "KNOCK_OFF") {
+        buttonDrawRef.current.click();
+      }
+      else {
+        buttonDoneRef.current.click();
+      }
     }
 
     return () => {
@@ -54,6 +67,7 @@ const DescribePicture = () => {
     setIsLoading(true);
     clearInterval(intervalId);
     let dataSend = content.replace(new RegExp(" ", "g"), "_");
+    await delay(index*1000);
     const response = await axios.post(
       IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`
     );
@@ -61,7 +75,7 @@ const DescribePicture = () => {
 
   const handleDraw = async () => {
     navigate("/draw", {
-      state: { dataReceive, id_room, turn, totalTurn, mode },
+      state: { dataReceive, id_room, turn, totalTurn, mode, data },
     });
   };
 
@@ -120,7 +134,8 @@ const DescribePicture = () => {
                   ></input>
                 )}
                 {mode === "KNOCK_OFF" ? (
-                  <button className="d-btn-done" onClick={handleDraw}>
+                  <button ref={buttonDrawRef} className="d-btn-done" onClick={handleDraw}>
+                    
                     <BsFillCheckCircleFill /> DRAW!
                   </button>
                 ) : (

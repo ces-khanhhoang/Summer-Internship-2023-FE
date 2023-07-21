@@ -25,7 +25,14 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
   const dataReceive = location.state?.dataReceive;
   const [timer, setTimer] = useState(TIME);
   const buttonDoneRef = useRef(null);
-
+  const data = location.state?.data;
+  let index;
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  for (let i = 0; i < data.length; i++) {
+    if(data[i].nickname === currentName){
+      index = i;
+    }
+  }
   if (mode === "KNOCK_OFF" && turn > 1) {
     totalTurn = location.state?.totalTurn;
   } else {
@@ -87,6 +94,7 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
       "(1)"
     ); //1
     image = image.replace("?alt=media&token=", "(2)"); //2
+    await delay(index*1000);
 
     if (mode === "KNOCK_OFF" && turn === 1) {
       const response = await axios.post(
