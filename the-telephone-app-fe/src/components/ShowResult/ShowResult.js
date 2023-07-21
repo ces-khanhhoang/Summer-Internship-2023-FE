@@ -35,12 +35,10 @@ const ShowResult = () => {
   const nextPlayer = () => {
     setTimer(0);
     setPlayer(player + 1);
-    getResult(player);
   };
   const previousPlayer = () => {
     setTimer(0);
     setPlayer(player - 1);
-    getResult(player);
   };
 
   const getResult = async (player) => {
@@ -56,6 +54,10 @@ const ShowResult = () => {
   useEffect(() => {
     setTimer(0);
   }, [results]);
+
+  useEffect(() => {
+    getResult(player);
+  }, [player]);
 
   function ConvertUrl({ data }) {
     data = data.replace(

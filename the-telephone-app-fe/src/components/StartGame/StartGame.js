@@ -59,10 +59,12 @@ const StartGame = () => {
 
   var client = null;
   let mode;
+  let currentMode;
   const onConnected = (id_room, data, role) => {
     client.subscribe("/topic/" + id_room, function (response) {
       data = JSON.parse(response.body);
-      navigate("/lobby", { state: { data, id_room, role, name } });
+      currentMode = data[0].modeCurrent;
+      navigate("/lobby", { state: { data, id_room, role, name, currentMode } });
       if (data.length > 0) {
         startGame = data[0].status;
         if (startGame === "IN_PROGRESS") {
@@ -130,7 +132,7 @@ const StartGame = () => {
         axios.post(IP + `user/result/${data[0].nickname}/${id_room}`);
       }
     });
-    navigate("/lobby", { state: { data, id_room, role, name } });
+    navigate("/lobby", { state: { data, id_room, role, name, currentMode } });
   };
 
   const [isLoading, setIsLoading] = useState(false);
