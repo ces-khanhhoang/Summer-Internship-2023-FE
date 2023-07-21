@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
-import { IP } from "../../config/config";
+import { IP, TIME } from "../../config/config";
 import { useNavigate } from "react-router-dom";
 import { SENTENCES } from "../../config/config";
 import LoadingEffect from "../LoadingEffect/LoadingEffect";
@@ -21,11 +21,12 @@ const DescribePicture = () => {
   const currentName = location.state?.name;
   const dataReceive = location.state?.dataReceive;
   let image = dataReceive.value;
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(TIME);
   const buttonDoneRef = useRef(null);
 
+  let intervalId;
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
     }, 1000);
 
@@ -46,14 +47,16 @@ const DescribePicture = () => {
   };
 
   const handleDone = async () => {
-    let dataSend = content.replace(new RegExp(" ", "g"), "_");
-    if (timer !== 0) {
+    if (timer > 0) {
       setIsWaiting(true);
       setIsLoading(true);
-      const response = await axios.post(
-        IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`
-      );
     }
+    setIsLoading(true);
+    clearInterval(intervalId);
+    let dataSend = content.replace(new RegExp(" ", "g"), "_");
+    const response = await axios.post(
+      IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`
+    );
   };
 
   const handleDraw = async () => {

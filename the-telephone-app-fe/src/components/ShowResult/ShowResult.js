@@ -275,14 +275,14 @@ const ShowResult = () => {
                 )}
                 {role === 0 && (
                   <div className="row h-20 align">
-                    <div className="center text">
+                    <div className="center text pt-3">
                       WAITING FOR THE HOST TO SET UP AND TO START THE GAME
                     </div>
                   </div>
                 )}
               </div>
             ) : (
-              <div></div>
+              <div className="row mt-4"></div>
             )}
           </div>
         </div>

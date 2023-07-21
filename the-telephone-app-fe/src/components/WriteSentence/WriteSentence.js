@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { BsFillCheckCircleFill } from "react-icons/bs";
-import { IP } from "../../config/config";
+import { IP, TIME } from "../../config/config";
 import { SENTENCES } from "../../config/config";
 import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
@@ -19,11 +19,12 @@ const WriteSentence = () => {
   const currentName = location.state?.name;
   const turn = location.state?.turn;
   const totalTurn = location.state?.data.length;
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(TIME);
   const buttonDoneRef = useRef(null);
 
+  let intervalId;
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    intervalId = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
     }, 1000);
 
@@ -50,10 +51,12 @@ const WriteSentence = () => {
   };
 
   const handleDone = async () => {
-    if (timer !== 0) {
+    if (timer > 0) {
+      clearInterval(intervalId);
       setIsWaiting(true);
       setIsLoading(true);
     }
+    setIsLoading(true);
     let dataSend = content.replace(new RegExp(" ", "g"), "_");
     const response = await axios.post(
       IP + `user/done/${id_room}/${currentName}/${dataSend}/${turn}`
