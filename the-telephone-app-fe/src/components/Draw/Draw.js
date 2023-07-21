@@ -51,12 +51,6 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
   // ===== Convert Canvas to png file and upload to Firebase
 
   const convertToImage = () => {
-    if (timer > 0) {
-      setIsClicked(true);
-      setIsWaiting(true);
-      setIsLoading(true);
-      clearInterval(intervalId);
-    }
     setIsLoading(true);
     const canvas = document.getElementById("myCanvas");
     const imageDataURL = canvas.toDataURL("image/png");
@@ -81,7 +75,7 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
     });
   };
 
-  const handleUploadImage = async (idRoom, nickname, image, turn) => {
+  const sendImageToBackend = async (idRoom, image, turn) => {
     image = image.replace(
       "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
       "(1)"
@@ -96,6 +90,26 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
       const response = await axios.post(
         IP + `user/done/${idRoom}/${dataReceive.receiver}/${image}/${turn}`
       );
+    }
+  };
+
+  const handleUploadImage = async (idRoom, nickname, image, turn) => {
+    if (timer > 0) {
+      setIsClicked(true);
+      setIsWaiting(true);
+      setIsLoading(true);
+      clearInterval(intervalId);
+      sendImageToBackend(idRoom, image, turn);
+    } else if (timer === 0) {
+      setIsClicked(true);
+      setIsLoading(true);
+      for (let i = 0; i < location.state?.data.length; i++) {
+        if (currentName === location.state?.data[i].nickname) {
+          setTimeout(() => {
+            sendImageToBackend(idRoom, image, turn);
+          }, i * 100);
+        }
+      }
     }
   };
 

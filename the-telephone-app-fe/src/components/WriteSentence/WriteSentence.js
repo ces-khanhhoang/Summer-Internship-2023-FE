@@ -55,8 +55,20 @@ const WriteSentence = () => {
       clearInterval(intervalId);
       setIsWaiting(true);
       setIsLoading(true);
+      sendDataToBackEnd();
+    } else if (timer === 0) {
+      setIsLoading(true);
+      for (let i = 0; i < location.state?.data.length; i++) {
+        if (currentName === location.state?.data[i].nickname) {
+          setTimeout(() => {
+            sendDataToBackEnd();
+          }, i * 100);
+        }
+      }
     }
-    setIsLoading(true);
+  };
+
+  const sendDataToBackEnd = async () => {
     let dataSend = content.replace(new RegExp(" ", "g"), "_");
     const response = await axios.post(
       IP + `user/done/${id_room}/${currentName}/${dataSend}/${turn}`

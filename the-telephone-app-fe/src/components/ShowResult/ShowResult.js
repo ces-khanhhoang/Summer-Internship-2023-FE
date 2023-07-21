@@ -282,7 +282,13 @@ const ShowResult = () => {
                 )}
               </div>
             ) : (
-              <div className="row mt-4"></div>
+              <div className="row mt-4">
+                <div className="row h-20 align">
+                  <div className="center text invisible-text pt-3">
+                    THIS TEST IS HELPING FOR UI
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>

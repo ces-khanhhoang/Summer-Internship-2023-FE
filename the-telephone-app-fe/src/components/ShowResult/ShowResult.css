@@ -1,5 +1,4 @@
-.sr-screen {
-}
+.sr-screen {}
 
 .sr-content {
   width: 70%;
@@ -287,4 +286,8 @@
 
 ::-webkit-scrollbar {
   width: 15px;
+}
+
+.invisible-text {
+  color: var(--main-color);
 }

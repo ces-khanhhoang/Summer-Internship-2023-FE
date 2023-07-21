@@ -27,4 +27,4 @@ export const SENTENCES = [
   "Rich butterfly in the park",
 ];
 
-export const TIME = 60;
+export const TIME = 5;
