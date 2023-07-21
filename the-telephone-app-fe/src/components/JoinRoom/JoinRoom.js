@@ -22,6 +22,7 @@ import LoadingEffect from "../LoadingEffect/LoadingEffect";
 const JoinRoom = () => {
   const location = useLocation();
   const role = location.state?.role;
+  const currentMode = location.state?.currentMode;
   const [users, setUsers] = useState(location.state?.data);
   const [avatarId, setAvatarId] = useState(location.state?.data.id_image);
 
@@ -63,8 +64,14 @@ const JoinRoom = () => {
   const [selectedMode, setSelectedMode] = useState("IN_PROGRESS");
 
   const handleModeChange = (event) => {
-    setSelectedMode(event.target.value);
+    if (role === 1) {
+      setSelectedMode(event.target.value);
+    }
   };
+
+  useEffect(() => {
+    const response = axios.post(IP + `user/map/${id_room}/${selectedMode}`);
+  }, [selectedMode]);
 
   const handlePlay = (event) => {
     const response = axios.post(IP + `user/start/${id_room}/${selectedMode}`);
@@ -204,6 +211,10 @@ const JoinRoom = () => {
                         selectedMode === "IN_PROGRESS" && role == 1
                           ? "active-mode"
                           : ""
+                      } ${
+                        currentMode === "IN_PROGRESS" && role == 0
+                          ? "active-mode"
+                          : ""
                       }`}
                     >
                       <input
@@ -230,6 +241,10 @@ const JoinRoom = () => {
                     <label
                       className={`row h-100 center align ${
                         selectedMode === "KNOCK_OFF" && role == 1
+                          ? "active-mode"
+                          : ""
+                      } ${
+                        currentMode === "KNOCK_OFF" && role == 0
                           ? "active-mode"
                           : ""
                       }`}
