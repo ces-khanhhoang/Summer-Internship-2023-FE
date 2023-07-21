@@ -13,6 +13,7 @@ import { SENTENCES } from "../../config/config";
 import LoadingEffect from "../LoadingEffect/LoadingEffect";
 
 const WriteSentence = () => {
+
   const location = useLocation();
   const id_room = location.state?.id_room;
   const mode = location.state?.mode;
@@ -21,7 +22,14 @@ const WriteSentence = () => {
   const totalTurn = location.state?.data.length;
   const [timer, setTimer] = useState(TIME);
   const buttonDoneRef = useRef(null);
-
+  const data = location.state?.data;
+  let index;
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  for (let i = 0; i < data.length; i++) {
+    if(data[i].nickname === currentName){
+      index = i;
+    }
+  }
   let intervalId;
   useEffect(() => {
     intervalId = setInterval(() => {
@@ -58,6 +66,7 @@ const WriteSentence = () => {
     }
     setIsLoading(true);
     let dataSend = content.replace(new RegExp(" ", "g"), "_");
+    await delay(index*1000);
     const response = await axios.post(
       IP + `user/done/${id_room}/${currentName}/${dataSend}/${turn}`
     );
