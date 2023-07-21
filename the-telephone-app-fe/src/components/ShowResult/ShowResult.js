@@ -9,6 +9,9 @@ import { BiCrown } from "react-icons/bi";
 import { IP } from "../../config/config";
 import Avatar from "../Avatar";
 import LoadingEffect from "../LoadingEffect/LoadingEffect";
+import { FaForward } from "react-icons/fa";
+import { FaBackward } from "react-icons/fa";
+import { MdOutlineReplayCircleFilled } from "react-icons/md";
 
 const ShowResult = () => {
   const navigate = useNavigate();
@@ -30,10 +33,12 @@ const ShowResult = () => {
   const scrollPoint2 = useRef(null);
 
   const nextPlayer = () => {
+    setTimer(0);
     setPlayer(player + 1);
     getResult(player);
   };
   const previousPlayer = () => {
+    setTimer(0);
     setPlayer(player - 1);
     getResult(player);
   };
@@ -41,7 +46,7 @@ const ShowResult = () => {
   const getResult = async (player) => {
     const response = await axios.post(
       IP +
-        `user/result/${location.state?.data[player].nickname}/${location.state?.id_room}`,
+        `user/result/${location.state?.data[player].nickname}/${location.state?.id_room}`
     );
     const responseResult = response.data;
     setPlayerName(responseResult[0].namePlay);
@@ -55,7 +60,7 @@ const ShowResult = () => {
   function ConvertUrl({ data }) {
     data = data.replace(
       "(1)",
-      "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%",
+      "https://firebasestorage.googleapis.com/v0/b/ces-telephone.appspot.com/o/images%"
     ); //1
     data = data.replace("(2)", "?alt=media&token=");
     return <img className="sr-content-img" alt="result" src={data}></img>; //2
@@ -239,20 +244,14 @@ const ShowResult = () => {
                 {role === 1 && (
                   <div className="row h-20 align">
                     <div className="col-6">
-                      {player === 0 ? (
-                        <div>
-                          <button disabled className="button float-end me-1">
-                            Back
-                          </button>
-                        </div>
-                      ) : (
-                        <button
-                          onClick={previousPlayer}
-                          className="button float-end me-1"
-                        >
-                          Back
-                        </button>
-                      )}
+                      <button
+                        onClick={previousPlayer}
+                        className="button float-end me-1"
+                        disabled={player === 0 ? true : false}
+                      >
+                        <FaBackward className="icon me-1" />
+                        Back
+                      </button>
                     </div>
                     <div className="col-6">
                       {player === location.state?.data.length - 1 ? (
@@ -260,14 +259,15 @@ const ShowResult = () => {
                           className="button ms-1"
                           onClick={handlePlayAgain}
                         >
-                          Play Again
+                          Replay
+                          <MdOutlineReplayCircleFilled className="icon" />
                         </button>
                       ) : (
                         <button
                           onClick={nextPlayer}
                           className="button button ms-1"
                         >
-                          Next
+                          Next <FaForward className="icon" />
                         </button>
                       )}
                     </div>

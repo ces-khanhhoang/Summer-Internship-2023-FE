@@ -201,7 +201,9 @@ const JoinRoom = () => {
                     <label
                       htmlFor="normalMode"
                       className={`row h-100 center align ${
-                        selectedMode === "IN_PROGRESS" && role == 1 ? "active-mode" : ""
+                        selectedMode === "IN_PROGRESS" && role == 1
+                          ? "active-mode"
+                          : ""
                       }`}
                     >
                       <input
@@ -227,7 +229,9 @@ const JoinRoom = () => {
                   <div className="section-mode h-100 me-3">
                     <label
                       className={`row h-100 center align ${
-                        selectedMode === "KNOCK_OFF" && role == 1 ? "active-mode" : ""
+                        selectedMode === "KNOCK_OFF" && role == 1
+                          ? "active-mode"
+                          : ""
                       }`}
                       htmlFor="inProgressMode"
                     >
