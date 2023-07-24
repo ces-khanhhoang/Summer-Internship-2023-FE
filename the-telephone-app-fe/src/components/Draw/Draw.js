@@ -29,7 +29,7 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
   let index;
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   for (let i = 0; i < data.length; i++) {
-    if(data[i].nickname === currentName){
+    if (data[i].nickname === currentName) {
       index = i;
     }
   }
@@ -94,7 +94,7 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
       "(1)"
     ); //1
     image = image.replace("?alt=media&token=", "(2)"); //2
-    await delay(index*1000);
+    await delay(index * 100);
 
     if (mode === "KNOCK_OFF" && turn === 1) {
       const response = await axios.post(

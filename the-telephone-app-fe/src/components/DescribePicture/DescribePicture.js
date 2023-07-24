@@ -28,7 +28,7 @@ const DescribePicture = () => {
   let index;
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   for (let i = 0; i < data.length; i++) {
-    if(data[i].nickname === currentName){
+    if (data[i].nickname === currentName) {
       index = i;
     }
   }
@@ -40,10 +40,9 @@ const DescribePicture = () => {
 
     if (timer === 0) {
       clearInterval(intervalId);
-      if(mode == "KNOCK_OFF") {
+      if (mode == "KNOCK_OFF") {
         buttonDrawRef.current.click();
-      }
-      else {
+      } else {
         buttonDoneRef.current.click();
       }
     }
@@ -67,7 +66,7 @@ const DescribePicture = () => {
     setIsLoading(true);
     clearInterval(intervalId);
     let dataSend = content.replace(new RegExp(" ", "g"), "_");
-    await delay(index*1000);
+    await delay(index * 100);
     const response = await axios.post(
       IP + `user/done/${id_room}/${dataReceive.receiver}/${dataSend}/${turn}`
     );
@@ -134,8 +133,11 @@ const DescribePicture = () => {
                   ></input>
                 )}
                 {mode === "KNOCK_OFF" ? (
-                  <button ref={buttonDrawRef} className="d-btn-done" onClick={handleDraw}>
-                    
+                  <button
+                    ref={buttonDrawRef}
+                    className="d-btn-done"
+                    onClick={handleDraw}
+                  >
                     <BsFillCheckCircleFill /> DRAW!
                   </button>
                 ) : (
