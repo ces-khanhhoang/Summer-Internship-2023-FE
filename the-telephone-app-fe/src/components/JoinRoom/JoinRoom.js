@@ -30,6 +30,7 @@ const JoinRoom = () => {
     if (Array.isArray(location.state.data)) {
       setAvatarId(location.state?.data[0].id_image);
       setCurrentPlayersNumber(location.state?.data.length);
+      setMaxPlayersNumber(location.state?.data[0].maxPlayer);
     }
     setUsers(location.state?.data);
   }, [location.state?.data]);
@@ -95,7 +96,6 @@ const JoinRoom = () => {
 
   const handleSelectChange = (event) => {
     let value = event.target.value;
-    setMaxPlayersNumber(value);
     const response = axios.post(IP + `user/play/${value}/${id_room}`);
   };
 
