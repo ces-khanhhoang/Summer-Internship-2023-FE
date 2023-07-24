@@ -24,7 +24,7 @@ const JoinRoom = () => {
   const role = location.state?.role;
   const data = location.state?.data;
   let currentMode;
-  
+
   if (data.length > 1) {
     currentMode = data[0].modeCurrent;
   } else {

@@ -267,7 +267,7 @@ const ShowResult = () => {
                       ) : (
                         <button
                           onClick={nextPlayer}
-                          className="button button ms-1"
+                          className="button ms-1"
                         >
                           Next <FaForward className="icon" />
                         </button>
