@@ -9,6 +9,7 @@ import FullRoom from "./components/ErrorPage/FullRoom";
 import CancelRoom from "./components/ErrorPage/CancelRoom";
 import ExitGame from "./components/ErrorPage/ExitGame";
 import WriteSentence from "./components/WriteSentence/WriteSentence";
+import Begun from "./components/ErrorPage/Begun";
 import WebFont from "webfontloader";
 import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
@@ -34,6 +35,7 @@ function App() {
         <Route path={"/full"} element={<FullRoom />}></Route>
         <Route path={"/cancel"} element={<CancelRoom />}></Route>
         <Route path={"/exit"} element={<ExitGame />}></Route>
+        <Route path={"/begun"} element={<Begun />}></Route>
       </Routes>
     </>
   );

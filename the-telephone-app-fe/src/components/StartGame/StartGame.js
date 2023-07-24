@@ -63,8 +63,7 @@ const StartGame = () => {
   const onConnected = (id_room, data, role) => {
     client.subscribe("/topic/" + id_room, function (response) {
       data = JSON.parse(response.body);
-      currentMode = data[0].modeCurrent;
-      navigate("/lobby", { state: { data, id_room, role, name, currentMode } });
+      navigate("/lobby", { state: { data, id_room, role, name } });
       if (data.length > 0) {
         startGame = data[0].status;
         if (startGame === "IN_PROGRESS") {
@@ -74,7 +73,7 @@ const StartGame = () => {
         if (startGame === "AGAIN") {
           turn = 1;
           navigate("/lobby", {
-            state: { data, id_room, role, name },
+            state: { data, id_room, role, name, currentMode },
           });
         }
         if (startGame === "MAX") {
@@ -132,7 +131,7 @@ const StartGame = () => {
         axios.post(IP + `user/result/${data[0].nickname}/${id_room}`);
       }
     });
-    navigate("/lobby", { state: { data, id_room, role, name, currentMode } });
+    navigate("/lobby", { state: { data, id_room, role, name } });
   };
 
   const [isLoading, setIsLoading] = useState(false);
@@ -196,6 +195,9 @@ const StartGame = () => {
         }
         if (users === "the room is full") {
           navigate("/full");
+        }
+        if (users === "the game has already begun") {
+          navigate("/begun");
         }
       }
     } catch {

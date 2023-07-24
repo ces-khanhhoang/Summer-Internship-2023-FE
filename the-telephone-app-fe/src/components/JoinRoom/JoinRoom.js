@@ -22,7 +22,15 @@ import LoadingEffect from "../LoadingEffect/LoadingEffect";
 const JoinRoom = () => {
   const location = useLocation();
   const role = location.state?.role;
-  const currentMode = location.state?.currentMode;
+  const data = location.state?.data;
+  let currentMode;
+  
+  if (data.length > 1) {
+    currentMode = data[0].modeCurrent;
+  } else {
+    currentMode = data.modeCurrent;
+  }
+
   const [users, setUsers] = useState(location.state?.data);
   const [avatarId, setAvatarId] = useState(location.state?.data.id_image);
 
@@ -70,7 +78,9 @@ const JoinRoom = () => {
   };
 
   useEffect(() => {
-    const response = axios.post(IP + `user/map/${id_room}/${selectedMode}`);
+    if (role === 1) {
+      const response = axios.post(IP + `user/map/${id_room}/${selectedMode}`);
+    }
   }, [selectedMode]);
 
   const handlePlay = (event) => {
