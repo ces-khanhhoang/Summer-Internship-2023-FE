@@ -297,7 +297,7 @@ const Draw = ({ width = "830rem", height = "350rem" }) => {
                 <button
                   ref={buttonDoneRef}
                   onClick={convertToImage}
-                  className="d-btn-done"
+                  className="button d-btn-done"
                   disabled={isClicked ? true : false}
                 >
                   <BsFillCheckCircleFill /> DONE!

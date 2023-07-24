@@ -16,16 +16,7 @@
 }
 
 .d-btn-done {
-  padding: 10px 20px;
-  border-radius: 8px;
-  background-color: var(--secondary-color);
-  color: #3e4677;
-  border-color: #c5cce8;
-  width: 150px;
-  height: 48px;
-  font-family: var(--main-font-family);
   margin-left: 2rem;
-  box-shadow: var(--block-box-shadow);
 }
 
 .color-square {

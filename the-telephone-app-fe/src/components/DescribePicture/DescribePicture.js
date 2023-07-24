@@ -135,7 +135,7 @@ const DescribePicture = () => {
                 {mode === "KNOCK_OFF" ? (
                   <button
                     ref={buttonDrawRef}
-                    className="d-btn-done"
+                    className="d-btn-done button"
                     onClick={handleDraw}
                   >
                     <BsFillCheckCircleFill /> DRAW!
@@ -143,7 +143,7 @@ const DescribePicture = () => {
                 ) : (
                   <button
                     ref={buttonDoneRef}
-                    className="d-btn-done"
+                    className="d-btn-done button"
                     onClick={handleDone}
                   >
                     <BsFillCheckCircleFill /> DONE!
