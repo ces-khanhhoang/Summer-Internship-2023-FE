@@ -60,11 +60,11 @@ const DescribePicture = () => {
 
   const handleDone = async () => {
     if (timer > 0) {
+      clearInterval(intervalId);
       setIsWaiting(true);
       setIsLoading(true);
     }
     setIsLoading(true);
-    clearInterval(intervalId);
     let dataSend = content.replace(new RegExp(" ", "g"), "_");
     await delay(index * 100);
     const response = await axios.post(
