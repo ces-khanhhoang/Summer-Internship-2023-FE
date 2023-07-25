@@ -61,7 +61,7 @@ const StartGame = () => {
   let mode;
   let currentMode;
   const onConnected = (id_room, data, role) => {
-    client.subscribe("/topic/" + id_room, function (response) {
+    let roomSubscription = client.subscribe("/topic/" + id_room, function (response) {
       data = JSON.parse(response.body);
       navigate("/lobby", { state: { data, id_room, role, name } });
       if (data.length > 0) {
@@ -88,6 +88,7 @@ const StartGame = () => {
           });
         }
         if (!isNameInNicknames(name, data)) {
+          roomSubscription.unsubscribe();
           navigate("/exit");
         }
       } else {
