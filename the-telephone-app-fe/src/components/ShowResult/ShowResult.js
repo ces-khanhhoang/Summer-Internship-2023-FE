@@ -15,11 +15,6 @@ import { MdOutlineReplayCircleFilled } from "react-icons/md";
 
 const ShowResult = () => {
   const navigate = useNavigate();
-
-  const handleButtonHome = () => {
-    navigate("/");
-  };
-
   const location = useLocation();
   const [users, setUsers] = useState(location.state?.data);
   const role = location.state?.role;
@@ -107,12 +102,7 @@ const ShowResult = () => {
       <LoadingEffect loading={isLoading} />
       <div className="main">
         <div className="row h-20">
-          <div className="col-2 center align">
-            <button onClick={handleButtonHome} className="button">
-              <BsFillCaretLeftFill className="icon" />
-              HOME
-            </button>
-          </div>
+          <div className="col-2 center align"></div>
           <div className="col-8 center align">
             <img src={imgLogo} alt="" className="img-logo" />
           </div>
@@ -278,7 +268,7 @@ const ShowResult = () => {
                 {role === 0 && (
                   <div className="row h-20 align">
                     <div className="center text pt-3">
-                      WAITING FOR THE HOST TO SET UP AND TO START THE GAME
+                      WAITING FOR THE HOST
                     </div>
                   </div>
                 )}
