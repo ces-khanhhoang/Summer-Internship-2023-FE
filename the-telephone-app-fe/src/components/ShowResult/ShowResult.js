@@ -52,7 +52,7 @@ const ShowResult = () => {
   };
 
   useEffect(() => {
-    setTimer(0);
+    setTimer(2);
   }, [results]);
 
   useEffect(() => {
@@ -265,10 +265,7 @@ const ShowResult = () => {
                           <MdOutlineReplayCircleFilled className="icon" />
                         </button>
                       ) : (
-                        <button
-                          onClick={nextPlayer}
-                          className="button ms-1"
-                        >
+                        <button onClick={nextPlayer} className="button ms-1">
                           Next <FaForward className="icon" />
                         </button>
                       )}
