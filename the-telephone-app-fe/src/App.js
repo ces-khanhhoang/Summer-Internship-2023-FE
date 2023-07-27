@@ -13,6 +13,7 @@ import Begun from "./components/ErrorPage/Begun";
 import WebFont from "webfontloader";
 import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import { LocalToastProvider } from "react-local-toast";
 
 function App() {
   useEffect(() => {
@@ -24,19 +25,21 @@ function App() {
   }, []);
   return (
     <>
-      <Routes>
-        <Route path={"/lobby"} element={<JoinRoom />}></Route>
-        <Route path={"/:id_room?"} element={<StartGame />} />
-        <Route path={"/start"} element={<WriteSentence />}></Route>
-        <Route path={"/draw"} element={<Draw />}></Route>
-        <Route path={"/write"} element={<DescribePicture />}></Route>
-        <Route path={"/book"} element={<ShowResult />}></Route>
-        <Route path={"/error"} element={<ErrorPage />}></Route>
-        <Route path={"/full"} element={<FullRoom />}></Route>
-        <Route path={"/cancel"} element={<CancelRoom />}></Route>
-        <Route path={"/exit"} element={<ExitGame />}></Route>
-        <Route path={"/begun"} element={<Begun />}></Route>
-      </Routes>
+      <LocalToastProvider defaultPlacement="bottom">
+        <Routes>
+          <Route path={"/lobby"} element={<JoinRoom />}></Route>
+          <Route path={"/:id_room?"} element={<StartGame />} />
+          <Route path={"/start"} element={<WriteSentence />}></Route>
+          <Route path={"/draw"} element={<Draw />}></Route>
+          <Route path={"/write"} element={<DescribePicture />}></Route>
+          <Route path={"/book"} element={<ShowResult />}></Route>
+          <Route path={"/error"} element={<ErrorPage />}></Route>
+          <Route path={"/full"} element={<FullRoom />}></Route>
+          <Route path={"/cancel"} element={<CancelRoom />}></Route>
+          <Route path={"/exit"} element={<ExitGame />}></Route>
+          <Route path={"/begun"} element={<Begun />}></Route>
+        </Routes>
+      </LocalToastProvider>
     </>
   );
 }

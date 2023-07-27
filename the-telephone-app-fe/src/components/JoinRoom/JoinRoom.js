@@ -18,6 +18,7 @@ import { IP } from "../../config/config";
 import { INVITE } from "../../config/config";
 import Avatar from "../Avatar";
 import LoadingEffect from "../LoadingEffect/LoadingEffect";
+import { LocalToastTarget, useLocalToast } from "react-local-toast";
 
 const JoinRoom = () => {
   const location = useLocation();
@@ -61,6 +62,7 @@ const JoinRoom = () => {
     const link = `${INVITE}/${id_room}`;
     setRoomLink(link);
     navigator.clipboard.writeText(link);
+    showToast("btn", "Link copied!", { placement: "left" });
   };
 
   const handleKick = async (nickname) => {
@@ -117,6 +119,8 @@ const JoinRoom = () => {
     setIsLoading(false);
   }, []);
 
+  const { showToast, removeToast } = useLocalToast();
+
   return (
     <div className="all">
       <LoadingEffect loading={isLoading} />
@@ -133,7 +137,7 @@ const JoinRoom = () => {
           </div>
         </div>
         <div className="row h-80">
-          <div className="col-4 flex-column section">
+          <div className="col-4 flex-column section limited-height">
             <div className="row h-13 align center text-title">
               PLAYERS {currentPlayersNumber} / {maxPlayersNumber}
             </div>
@@ -284,13 +288,15 @@ const JoinRoom = () => {
             {role == 1 && (
               <div className="row h-25 align">
                 <div className="col-6">
-                  <button
-                    className="button float-end me-1"
-                    onClick={handleInviteClick}
-                  >
-                    <BsFillSendXFill className="icon" />
-                    INVITE
-                  </button>
+                  <LocalToastTarget name="btn">
+                    <button
+                      className="button float-end me-1"
+                      onClick={handleInviteClick}
+                    >
+                      <BsFillSendXFill className="icon" />
+                      INVITE
+                    </button>
+                  </LocalToastTarget>
                 </div>
                 <div className="col-6">
                   <button className="button ms-1" onClick={handlePlay}>
