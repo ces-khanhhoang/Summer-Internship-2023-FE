@@ -198,7 +198,7 @@
   color: var(--secondary-color);
   font-size: 28px;
   font-weight: bold;
-  -webkit-text-stroke: 0.5px #102667;
+  -webkit-text-stroke: 0.85px #102667;
   text-shadow: 1px 2px 2px var(--text-color);
   font-family: var(--main-font-family);
   text-align: center;

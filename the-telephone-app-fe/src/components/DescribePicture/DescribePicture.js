@@ -98,6 +98,12 @@ const DescribePicture = () => {
     setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    if (mode === "KNOCK_OFF") {
+      setTimer(30);
+    }
+  }, [mode]);
+
   return (
     <div className="container-fluid app-bg">
       <LoadingEffect loading={isLoading} waiting={isWaiting} />
