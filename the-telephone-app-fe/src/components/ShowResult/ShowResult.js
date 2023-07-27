@@ -158,7 +158,7 @@ const ShowResult = () => {
                               {timer >= (index + 2) * 3 ? (
                                 <>
                                   {mode === "KNOCK_OFF" ? (
-                                    <div className="content-img">
+                                    <div className="content-img float-end">
                                       <ConvertUrl data={result.data} />
                                       <div ref={scrollPoint}></div>
                                     </div>
@@ -264,9 +264,7 @@ const ShowResult = () => {
                 )}
                 {role === 0 && (
                   <div className="row h-20 align">
-                    <div className="center text pt-3">
-                      WAITING FOR THE HOST
-                    </div>
+                    <div className="center text pt-3">WAITING FOR THE HOST</div>
                   </div>
                 )}
               </div>

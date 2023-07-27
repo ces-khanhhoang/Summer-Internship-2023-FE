@@ -262,6 +262,6 @@ span {
   font-family: var(--main-font-family);
 }
 
-.custom-select:focus > option:checked {
+.custom-select:focus>option:checked {
   background-color: white;
 }
